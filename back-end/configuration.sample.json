@@ -1,5 +1,6 @@
 {
     "port": 3001,
+    "name_db": "my-cars",
     "user_db": "root",
-    "user_pass": ""
+    "pass_db": ""
 }

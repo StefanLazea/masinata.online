@@ -1,11 +1,12 @@
 let Sequelize = require('sequelize');
-const user = require('../configuration.json').user_db;
-const password = require('../configuration.json').user_pass;
+const DB_NAME = require('../configuration.json').name_db;
+const DB_USER = require('../configuration.json').user_db;
+const DB_PASSWORD = require('../configuration.json').pass_db;
 
 const sequelize = new Sequelize(
-    'my-cars',
-    user,
-    password,
+    DB_NAME,
+    DB_USER,
+    DB_PASSWORD,
     {
         dialect: 'mysql',
         host: 'localhost',
