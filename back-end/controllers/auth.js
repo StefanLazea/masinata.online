@@ -1,11 +1,33 @@
 const Users = require("../models").Users;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Joi = require('@hapi/joi');
 const { findUserByEmail } = require("../controllers/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
 const REFRESH_TOKEN_SECRET = require("../configuration.json").refresh_token;
 
 const register = async (req, res) => {
+    let credentials = {
+        email: req.body.email,
+        password: req.body.password,
+        repeat_password: req.body.repeat_password
+    }
+    let schema = Joi.object({
+        email: Joi.string().email(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+        repeat_password: Joi.ref('password')
+    });
+
+    try {
+        const value = await schema.validateAsync({
+            email: "lazeastefantes.ro",
+            password: "",
+            repeat_password: "test123123"
+        });
+    } catch (err) {
+        console.log(err.details);
+    }
+
     let userFound = await findUserByEmail(req.body.email);
 
     if (userFound) {
