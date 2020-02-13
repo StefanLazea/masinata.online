@@ -1,6 +1,5 @@
 const router = require('express').Router();
+const authController = require('../controllers/auth');
 
-router.get("/login", (req, res) => {
-    res.status(200).send({ message: "iaaa" })
-})
+router.post("/login", authController.login);
 module.exports = router;
