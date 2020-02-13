@@ -1,10 +1,10 @@
 const Users = require("../models").Users;
 
-const findUserByUsername = async (username) => {
+const findUserByEmail = async (email) => {
     let userFound;
     await Users.findOne({
         where: {
-            username: username
+            email: email
         }
     }).then((user) => userFound = user);
 
@@ -12,5 +12,5 @@ const findUserByUsername = async (username) => {
 }
 
 module.exports = {
-    findUserByUsername,
+    findUserByEmail,
 }
