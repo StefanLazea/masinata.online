@@ -13,28 +13,22 @@ const register = async (req, res) => {
         repeat_password: req.body.repeat_password
     }
     let schema = Joi.object({
-        email: Joi.string().email(),
+        email: Joi.string().email().required(),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        repeat_password: Joi.ref('password')
-    });
+        repeat_password: Joi.any().valid(Joi.ref('password')).required()
+    })
 
     let options = { abortEarly: false };
 
-    try {
-        const value = await schema.validateAsync(
-            {
-                email: "lazeastefantes.ro",
-                password: "",
-                repeat_password: "test123123"
-            }, options);
-        console.log(value);
-    } catch (err) {
+    const { error, value } = schema.validate(credentials, options);
 
-        console.log(err);
+    if (error) {
+        return res.status(400).send(error.details);
+    } else {
+        console.log(value);
     }
 
-
-    let userFound = await findUserByEmail(req.body.email);
+    let userFound = await findUserByEmail(credentials.email);
 
     if (userFound) {
         res.status(409).send({ message: "User exists..." });
@@ -42,10 +36,10 @@ const register = async (req, res) => {
     }
 
     const salt = bcrypt.genSaltSync(10);
-    ePassword = bcrypt.hashSync(req.body.password, salt);
+    ePassword = bcrypt.hashSync(credentials.password, salt);
 
     let user = {
-        email: req.body.email,
+        email: credentials.email,
         password: ePassword
     }
     try {
