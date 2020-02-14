@@ -18,15 +18,21 @@ const register = async (req, res) => {
         repeat_password: Joi.ref('password')
     });
 
+    let options = { abortEarly: false };
+
     try {
-        const value = await schema.validateAsync({
-            email: "lazeastefantes.ro",
-            password: "",
-            repeat_password: "test123123"
-        });
+        const value = await schema.validateAsync(
+            {
+                email: "lazeastefantes.ro",
+                password: "",
+                repeat_password: "test123123"
+            }, options);
+        console.log(value);
     } catch (err) {
-        console.log(err.details);
+
+        console.log(err);
     }
+
 
     let userFound = await findUserByEmail(req.body.email);
 
