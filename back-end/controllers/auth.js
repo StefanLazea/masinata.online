@@ -1,8 +1,8 @@
 const Users = require("../models").Users;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Joi = require('@hapi/joi');
-const { validateUser } = require("../helpers/validation/userValidation");
+const UserService = require("../services/users")
+const { validateUser } = require("../helpers/validation/user");
 const { findUserByEmail } = require("../controllers/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
 const REFRESH_TOKEN_SECRET = require("../configuration.json").refresh_token;
@@ -19,28 +19,7 @@ const register = async (req, res) => {
         return res.status(400).send({ errors: errors })
     }
 
-    let userFound = await findUserByEmail(credentials.email);
-
-    if (userFound) {
-        res.status(409).send({ message: "User exists..." });
-        return;
-    }
-
-    const salt = bcrypt.genSaltSync(10);
-    ePassword = bcrypt.hashSync(credentials.password, salt);
-
-    let user = {
-        email: credentials.email,
-        password: ePassword
-    }
-    try {
-        Users.create(user);
-    } catch (err) {
-        res.send(err);
-        return;
-    }
-
-    res.status(201).send({ message: `User created` });
+    UserService.authenticate(res, credentials);
 };
 
 const login = async (req, res) => {
