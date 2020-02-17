@@ -16,20 +16,23 @@ const register = async (req, res) => {
     let schema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        repeat_password: Joi.any().valid(Joi.ref('password')).required()
+        repeat_password: Joi.any().valid(Joi.ref('password')).required().messages({
+            "any.only": `"repeat_password" should match password field`
+        })
     });
 
     let options = { abortEarly: false };
 
     const { error, value } = schema.validate(credentials, options);
-    let errors = [];
+    let errors = {};
     if (error) {
         error.details.forEach((errorItem) => {
             let message = errorItem.message;
+            key = message.split('"')[1];
             message = message.split('"').join("");
-            errors.push(message)
+            errors[key] = message;
         })
-        return res.status(400).send({ error: errors })
+        return res.status(400).send({ errors: errors })
     }
 
     let userFound = await findUserByEmail(credentials.email);
