@@ -11,21 +11,25 @@ const register = async (req, res) => {
         email: req.body.email,
         password: req.body.password,
         repeat_password: req.body.repeat_password
-    }
+    };
+
     let schema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
         repeat_password: Joi.any().valid(Joi.ref('password')).required()
-    })
+    });
 
     let options = { abortEarly: false };
 
     const { error, value } = schema.validate(credentials, options);
-
+    let errors = [];
     if (error) {
-        return res.status(400).send(error.details);
-    } else {
-        console.log(value);
+        error.details.forEach((errorItem) => {
+            let message = errorItem.message;
+            message = message.split('"').join("");
+            errors.push(message)
+        })
+        return res.status(400).send({ error: errors })
     }
 
     let userFound = await findUserByEmail(credentials.email);
