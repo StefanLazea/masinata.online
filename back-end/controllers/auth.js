@@ -2,6 +2,7 @@ const Users = require("../models").Users;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Joi = require('@hapi/joi');
+const { validateUser } = require("../helpers/validation/userValidation");
 const { findUserByEmail } = require("../controllers/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
 const REFRESH_TOKEN_SECRET = require("../configuration.json").refresh_token;
@@ -13,25 +14,8 @@ const register = async (req, res) => {
         repeat_password: req.body.repeat_password
     };
 
-    let schema = Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        repeat_password: Joi.any().valid(Joi.ref('password')).required().messages({
-            "any.only": `"repeat_password" should match password field`
-        })
-    });
-
-    let options = { abortEarly: false };
-
-    const { error, value } = schema.validate(credentials, options);
-    let errors = {};
-    if (error) {
-        error.details.forEach((errorItem) => {
-            let message = errorItem.message;
-            key = message.split('"')[1];
-            message = message.split('"').join("");
-            errors[key] = message;
-        })
+    let errors = validateUser(credentials);
+    if (errors) {
         return res.status(400).send({ errors: errors })
     }
 
