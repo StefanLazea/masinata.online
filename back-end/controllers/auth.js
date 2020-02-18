@@ -36,19 +36,19 @@ const login = async (req, res) => {
         return res.status(400).send({ message: "Wrong password" });
     }
 
-    const token = jwt.sign({ user: userFound.id }, TOKEN_SECRET,
+    const token = jwt.sign({ id: userFound.id, role: userFound.role }, TOKEN_SECRET,
         {
-            expiresIn: "3h"
+            expiresIn: "30s"
         });
 
-    const refreshToken = jwt.sign({ user: userFound.id }, REFRESH_TOKEN_SECRET,
-        { expiresIn: "3 days" }
-    );
+    // const refreshToken = jwt.sign({ user: userFound.id }, REFRESH_TOKEN_SECRET,
+    //     { expiresIn: "3 days" }
+    // );
 
-    res.cookie("refreshToken", refreshToken, { signed: true, httpOnly: true })
+    res.cookie("refreshToken", token, { signed: true, httpOnly: true })
         .send({
-            token: "Bearer " + token,
-            refreshToken: "Bearer " + refreshToken
+            token: "Bearer " + token
+            // refreshToken: "Bearer " + refreshToken
         });
 };
 
