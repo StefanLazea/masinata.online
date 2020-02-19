@@ -1,4 +1,4 @@
-const Users = require("../models").Users;
+const User = require("../models").User;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { findUserByEmail } = require("../controllers/users");
@@ -21,7 +21,7 @@ const register = async (res, credentials) => {
         password: ePassword
     }
     try {
-        Users.create(user);
+        User.create(user);
     } catch (err) {
         res.send(err);
         return;
