@@ -1,21 +1,6 @@
 const jwt = require('jsonwebtoken');
 const secret = require('../configuration.json').token_secret;
 
-const verifyToken = function (token, req, res, next) {
-    const trimmedToken = token.split(" ")[1];
-    const verified = jwt.verify(trimmedToken, secret,
-        function (err, decoded) {
-            if (err) {
-                return res.status(403).send({ message: "Forbidden", err: err });
-            } else {
-                req.user = decoded;
-                console.log(req.user)
-                // next();
-            }
-        });
-}
-
-
 function authorize(roles = []) {
     console.log(roles)
     // roles param can be a single role string (e.g. Role.User or 'User') 
@@ -25,8 +10,6 @@ function authorize(roles = []) {
     }
 
     return [
-        // authenticate JWT token and attach user to request object (req.user)
-        // authorize based on user role
         (req, res, next) => {
             const token = req.headers.authorization;
             if (!token) {
@@ -50,6 +33,5 @@ function authorize(roles = []) {
 }
 
 module.exports = {
-    verifyToken,
-    authorize
+    authorize,
 }
