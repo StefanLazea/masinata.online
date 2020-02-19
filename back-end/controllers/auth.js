@@ -19,7 +19,7 @@ const register = async (req, res) => {
         return res.status(400).send({ errors: errors })
     }
 
-    UserService.authenticate(res, credentials);
+    UserService.register(res, credentials);
 };
 
 const login = async (req, res) => {
@@ -41,14 +41,9 @@ const login = async (req, res) => {
             expiresIn: "30s"
         });
 
-    // const refreshToken = jwt.sign({ user: userFound.id }, REFRESH_TOKEN_SECRET,
-    //     { expiresIn: "3 days" }
-    // );
-
-    res.cookie("refreshToken", token, { signed: true, httpOnly: true })
+    res.cookie("token", token, { signed: true, httpOnly: true })
         .send({
             token: "Bearer " + token
-            // refreshToken: "Bearer " + refreshToken
         });
 };
 
