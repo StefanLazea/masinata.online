@@ -1,28 +1,37 @@
 const Users = require("../models").Users;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const UserService = require("../services/users")
-const { validateUser } = require("../helpers/validation/user");
 const { findUserByEmail } = require("../controllers/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
-const REFRESH_TOKEN_SECRET = require("../configuration.json").refresh_token;
 
-const register = async (req, res) => {
-    let credentials = {
-        email: req.body.email,
-        password: req.body.password,
-        repeat_password: req.body.repeat_password
-    };
 
-    let errors = validateUser(credentials);
-    if (errors) {
-        return res.status(400).send({ errors: errors })
+const register = async (res, credentials) => {
+    let userFound = await findUserByEmail(credentials.email);
+
+    if (userFound) {
+        res.status(409).send({ message: "User exists..." });
+        return;
     }
 
-    UserService.register(res, credentials);
-};
+    const salt = bcrypt.genSaltSync(10);
+    ePassword = bcrypt.hashSync(credentials.password, salt);
 
-const login = async (req, res) => {
+    let user = {
+        email: credentials.email,
+        password: ePassword
+    }
+    try {
+        Users.create(user);
+    } catch (err) {
+        res.send(err);
+        return;
+    }
+
+    res.status(201).send({ message: `User created` });
+}
+
+const authenticate = async (req, res) => {
+
     let userFound = await findUserByEmail(req.body.email);
 
     if (!userFound) {
@@ -41,13 +50,14 @@ const login = async (req, res) => {
             expiresIn: "30s"
         });
 
-    res.cookie("token", token, { signed: true, httpOnly: true })
+    res.cookie("refreshToken", token, { signed: true, httpOnly: true })
         .send({
             token: "Bearer " + token
+            // refreshToken: "Bearer " + refreshToken
         });
-};
+}
 
 module.exports = {
-    login,
-    register
+    register,
+    authenticate
 }
