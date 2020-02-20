@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const UserService = require("../services/users")
 const { validateUser } = require("../helpers/validation/user");
-const { findUserByEmail } = require("../controllers/users");
+const { findUserByEmail } = require("../services/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
 
 const register = async (req, res) => {

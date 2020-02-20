@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true
             },
             type: Sequelize.STRING,
-            details: Sequelize.STRING
+            details: Sequelize.STRING,
+            expirationDate: Sequelize.DATE,
+            period: Sequelize.STRING,
+            cost: Sequelize.INTEGER
         },
         {
             underscored: true

@@ -1,7 +1,6 @@
 const User = require("../models").User;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { findUserByEmail } = require("../controllers/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
 
 
@@ -57,7 +56,19 @@ const authenticate = async (req, res) => {
         });
 }
 
+const findUserByEmail = async (email) => {
+    let userFound;
+    await User.findOne({
+        where: {
+            email: email
+        }
+    }).then((user) => userFound = user);
+
+    return userFound;
+}
+
 module.exports = {
     register,
-    authenticate
+    authenticate,
+    findUserByEmail
 }
