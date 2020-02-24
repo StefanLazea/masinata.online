@@ -9,6 +9,6 @@ router.get("/hello", authorize(Role.Admin), (req, res) => {
 })
 
 router.use("/auth", authRouter);
-router.use("/cars", carRouter);
+router.use("/cars", authorize(Role.User, Role.Admin, Role.AppAdmin), carRouter);
 
 module.exports = router;
