@@ -311,7 +311,8 @@ class DashboardPage extends React.Component {
         </Row>
 
         <Row>
-          <Col lg="4" md="12" sm="12" xs="12">
+          {/* before lg=4 */}
+          <Col lg="12" md="12" sm="12" xs="12">
             <InfiniteCalendar
               selected={today}
               minDate={lastWeek}
@@ -335,16 +336,7 @@ class DashboardPage extends React.Component {
             />
           </Col>
 
-          <Col lg="8" md="12" sm="12" xs="12">
-            <Card inverse className="bg-gradient-primary">
-              <CardHeader className="bg-gradient-primary">
-                Map with bubbles
-              </CardHeader>
-              <CardBody>
-                <MapWithBubbles />
-              </CardBody>
-            </Card>
-          </Col>
+
         </Row>
 
         <CardDeck style={{ marginBottom: '1rem' }}>

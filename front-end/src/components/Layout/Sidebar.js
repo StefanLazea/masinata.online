@@ -2,7 +2,6 @@ import logo200Image from '../../assets/img/logo/logo_200.png';
 import sidebarBgImage from '../../assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from '../../components/SourceLink';
 import React from 'react';
-import { FaGithub } from 'react-icons/fa';
 import {
   MdAccountCircle,
   MdArrowDropDownCircle,
@@ -14,12 +13,10 @@ import {
   MdGroupWork,
   MdInsertChart,
   MdKeyboardArrowDown,
-  MdNotificationsActive,
   MdPages,
   MdRadioButtonChecked,
   MdSend,
   MdStar,
-  MdTextFields,
   MdViewCarousel,
   MdViewDay,
   MdViewList,
@@ -38,7 +35,6 @@ import {
 import bn from '../../utils/bemnames';
 
 const sidebarBackground = {
-  backgroundImage: `url("${sidebarBgImage}")`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
 };
@@ -60,13 +56,11 @@ const navComponents = [
     Icon: MdArrowDropDownCircle,
   },
   { to: '/badges', name: 'badges', exact: false, Icon: MdStar },
-  { to: '/alerts', name: 'alerts', exact: false, Icon: MdNotificationsActive },
   { to: '/progress', name: 'progress', exact: false, Icon: MdBrush },
   { to: '/modals', name: 'modals', exact: false, Icon: MdViewDay },
 ];
 
 const navContents = [
-  { to: '/typography', name: 'typography', exact: false, Icon: MdTextFields },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
 ];
 
@@ -121,7 +115,7 @@ class Sidebar extends React.Component {
                 alt=""
               />
               <span className="text-white">
-                Reduction <FaGithub />
+                Licence
               </span>
             </SourceLink>
           </Navbar>
