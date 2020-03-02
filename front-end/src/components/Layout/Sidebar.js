@@ -1,6 +1,5 @@
 import logo200Image from '../../assets/img/logo/logo_200.png';
 import sidebarBgImage from '../../assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from '../../components/SourceLink';
 import React from 'react';
 import {
   MdAccountCircle,
@@ -80,7 +79,7 @@ class Sidebar extends React.Component {
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')}>
           <Navbar>
-            <SourceLink className="navbar-brand d-flex">
+            <div className="navbar-brand d-flex">
               <img
                 src={logo200Image}
                 width="40"
@@ -91,7 +90,7 @@ class Sidebar extends React.Component {
               <span className="text-white">
                 Licence
               </span>
-            </SourceLink>
+            </div>
           </Navbar>
           <Nav vertical>
             {navItems.map(({ to, name, exact, Icon }, index) => (

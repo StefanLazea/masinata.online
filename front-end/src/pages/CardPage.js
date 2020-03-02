@@ -6,9 +6,7 @@ import user1Image from '../assets/img/users/100_1.jpg';
 import { UserCard } from '../components/Card';
 import Page from '../components/Page';
 import { bgCards, gradientCards, overlayCards } from '../demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from '../demos/chartjs';
 import React from 'react';
-import { Line } from 'react-chartjs-2';
 import {
   Button,
   Card,
@@ -149,7 +147,7 @@ const CardPage = () => {
       </Row>
 
       <Row>
-        <Col md={5}>
+        <Col md={12}>
           <UserCard
             avatar={user1Image}
             title="Chris"
@@ -161,28 +159,7 @@ const CardPage = () => {
           />
         </Col>
 
-        <Col md={7}>
-          <Card>
-            <Line
-              data={getStackLineChart({
-                labels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                  'July',
-                ],
-                data: [0, 13000, 5000, 24000, 16000, 25000, 10000],
-              })}
-              options={stackLineChartOptions}
-            />
-            <CardBody className="text-primary" style={{ position: 'absolute' }}>
-              <CardTitle>Chart Card</CardTitle>
-            </CardBody>
-          </Card>
-        </Col>
+
       </Row>
 
       <Row>
@@ -205,11 +182,11 @@ const CardPage = () => {
 
       <Row>
         {gradientCards.map(({ color }, index) => (
-          <Col key={index} lg={4} md={6} sm={6} xs={12} className="mb-3">
+          <Col key={index} lg={4} md={6} sm={6} xs={12} className="mb-4">
             <Card
               inverse
               className={`bg-gradient-${color} text-center`}
-              style={{ height: 200 }}
+              style={{ height: 400 }}
             >
               <CardBody className="d-flex flex-column flex-wrap justify-content-center align-items-center">
                 <CardTitle>Gradient {color} title</CardTitle>
