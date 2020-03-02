@@ -14,12 +14,18 @@ class AuthForm extends React.Component {
 
   changeAuthState = authState => event => {
     event.preventDefault();
-
     this.props.onChangeAuthState(authState);
   };
 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   handleSubmit = event => {
     event.preventDefault();
+    console.log("merge");
   };
 
   renderButtonText() {
@@ -46,7 +52,6 @@ class AuthForm extends React.Component {
       confirmPasswordLabel,
       confirmPasswordInputProps,
       children,
-      onLogoClick,
     } = this.props;
 
     return (
@@ -58,7 +63,6 @@ class AuthForm extends React.Component {
               className="rounded"
               style={{ width: 60, height: 60, cursor: 'pointer' }}
               alt="logo"
-              onClick={onLogoClick}
             />
           </div>
         )}
@@ -145,7 +149,6 @@ AuthForm.defaultProps = {
     type: 'password',
     placeholder: 'confirm your password',
   },
-  onLogoClick: () => { },
 };
 
 export default AuthForm;
