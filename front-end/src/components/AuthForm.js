@@ -4,8 +4,12 @@ import React from 'react';
 import Axios from "axios";
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router";
+import { setTokenToLocalStorage } from "../services/Token";
 
+const getBasename = () => {
+  return process.env.REACT_APP_BACK_END_URL;
+};
 class AuthForm extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +17,8 @@ class AuthForm extends React.Component {
       password: ' ',
       email: ' ',
       confirmPassword: '',
-      redirectToDashboard: false
+      redirectToDashboard: false,
+      redirectToLogin: false
     }
   }
 
@@ -46,21 +51,45 @@ class AuthForm extends React.Component {
         repeat_password: this.state.confirmPassword
       }
 
-      // AuthService.register("/register", form);
-
-      Axios.post("http://localhost:3001/auth/register", JSON.stringify(form),
+      Axios.post(`${getBasename()}/auth/register`, JSON.stringify(form),
         {
           headers: { "Content-Type": "application/json" }
         })
         .then((res) => {
           toast(res.data.message);
-          this.setState({ redirectToDashboard: true });
-          this.props.history.push(`/buttons`);
+          this.setState({ redirectToLogin: true });
         })
         .catch(error => {
           if (error.response !== undefined) {
             let errorMessage = error.response.data.message
-            console.error(errorMessage, Object.values(errorMessage).length, typeof errorMessage)
+            if (typeof errorMessage === 'object') {
+              for (let error of Object.values(errorMessage)) {
+                toast(error);
+              }
+            } else {
+              toast(errorMessage);
+            }
+          }
+        });
+    }
+
+    if (this.props.authState === STATE_LOGIN) {
+      const form = {
+        email: this.state.email,
+        password: this.state.password,
+      }
+
+      Axios.post(`${getBasename()}/auth/login`, JSON.stringify(form),
+        {
+          headers: { "Content-Type": "application/json" }
+        })
+        .then((res) => {
+          setTokenToLocalStorage(res.data.token);
+          this.setState({ redirectToDashboard: true });
+        })
+        .catch(error => {
+          if (error.response !== undefined) {
+            let errorMessage = error.response.data.message
             if (typeof errorMessage === 'object') {
               for (let error of Object.values(errorMessage)) {
                 toast(error);
@@ -100,8 +129,12 @@ class AuthForm extends React.Component {
     } = this.props;
 
     if (this.state.redirectToDashboard === true) {
-      console.log(this.state.redirectToDashboard);
       return <Redirect to='/' />
+    }
+
+    if (this.state.redirectToLogin === true) {
+      toast("Please login to continue your experience!")
+      return <Redirect to="/login" />
     }
 
     return (

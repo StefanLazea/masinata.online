@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = process.env.TOKEN_SECRET;
+const secret = process.env.REACT_APP_TOKEN_SECRET;
 
 const getUserId = () => {
     let token = localStorage.getItem('token');
@@ -12,7 +12,12 @@ const getToken = () => {
     return localStorage.getItem('token');
 }
 
+const setTokenToLocalStorage = (token) => {
+    localStorage.setItem('token', token);
+}
+
 module.exports = {
     getUserId,
-    getToken
+    getToken,
+    setTokenToLocalStorage
 }

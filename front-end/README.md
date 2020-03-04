@@ -18,8 +18,8 @@ PUBLIC_URL=/
 REACT_APP_NAME=React Reduction
 REACT_APP_DESCRIPTION=React version of Reduction Admin Template
 REACT_APP_SOURCE_URL=https://github.com/reduction-admin/react-reduction
-BACK_END_URL=https://localhost:3001
-TOKEN_SECRET=ze5s78df7680g9y08xezrwexctudafasfdasgs
+REACT_APP_BACK_END_URL=https://localhost:3001
+REACT_APP_TOKEN_SECRET=yoursecret
 ```
 5.  After install, run: `npm run start` or `yarn start`
 6.  It will open your browser(http://localhost:3000)
