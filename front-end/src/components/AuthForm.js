@@ -2,6 +2,7 @@ import logo200Image from '../assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { toast } from 'react-toastify';
 
 class AuthForm extends React.Component {
   get isLogin() {
@@ -26,6 +27,7 @@ class AuthForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log("merge");
+    toast("merge");
   };
 
   renderButtonText() {

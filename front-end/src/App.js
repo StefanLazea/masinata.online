@@ -3,9 +3,12 @@ import { EmptyLayout, LayoutRoute, MainLayout } from './components/Layout';
 import PageSpinner from './components/PageSpinner';
 import AuthPage from './pages/AuthPage';
 import React from 'react';
+import { toast } from 'react-toastify';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const BadgePage = React.lazy(() => import('./pages/BadgePage'));
 const ButtonPage = React.lazy(() => import('./pages/ButtonPage'));
@@ -17,6 +20,7 @@ const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
 const TablePage = React.lazy(() => import('./pages/TablePage'));
 const WidgetPage = React.lazy(() => import('./pages/WidgetPage'));
 
+toast.configure();
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
