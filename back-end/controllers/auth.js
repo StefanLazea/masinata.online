@@ -14,7 +14,7 @@ const register = async (req, res) => {
 
     let errors = validateUser(credentials);
     if (errors) {
-        return res.status(400).send({ errors: errors })
+        return res.status(400).send({ message: errors })
     }
 
     UserService.register(res, credentials);

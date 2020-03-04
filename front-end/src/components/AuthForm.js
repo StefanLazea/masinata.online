@@ -50,12 +50,19 @@ class AuthForm extends React.Component {
         })
         .then((res) => {
           toast(res.data.message);
-          // this.props.history.push(`/`)
+          this.props.history.push(`/buttons`);
         })
         .catch(error => {
-          console.log(error);
           if (error.response !== undefined) {
-            toast(error.response.data.message)
+            let errorMessage = error.response.data.message
+            console.error(errorMessage, Object.values(errorMessage).length, typeof errorMessage)
+            if (typeof errorMessage === 'object') {
+              for (let error of Object.values(errorMessage)) {
+                toast(error);
+              }
+            } else {
+              toast(errorMessage);
+            }
           }
         });
     }
