@@ -2,6 +2,7 @@ import { STATE_LOGIN, STATE_SIGNUP } from './components/AuthForm';
 import { EmptyLayout, LayoutRoute, MainLayout } from './components/Layout';
 import PageSpinner from './components/PageSpinner';
 import AuthPage from './pages/AuthPage';
+import RequireAuth from './components/RequireAuth';
 import React from 'react';
 import { toast } from 'react-toastify';
 import componentQueries from 'react-component-queries';
@@ -50,7 +51,7 @@ class App extends React.Component {
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
               <Route exact path="/" component={DashboardPage} />
-              <Route exact path="/buttons" component={ButtonPage} />
+              <Route exact path="/buttons" component={RequireAuth(ButtonPage)} />
               <Route exact path="/cards" component={CardPage} />
               <Route exact path="/widgets" component={WidgetPage} />
               <Route exact path="/tables" component={TablePage} />
