@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors')
 const model = require('./models');
 const routes = require('./routes');
 const PORT = require("./configuration.json").port;
@@ -10,6 +11,9 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser(COOKIE_SECRET));
+
+app.use(cors());
+
 
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();

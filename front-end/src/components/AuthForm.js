@@ -1,10 +1,20 @@
 import logo200Image from '../assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Axios from "axios";
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
 
 class AuthForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      password: ' ',
+      email: ' ',
+      confirmPassword: '',
+    }
+  }
+
   get isLogin() {
     return this.props.authState === STATE_LOGIN;
   }
@@ -26,8 +36,29 @@ class AuthForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("merge");
-    toast("merge");
+    if (this.props.authState === STATE_SIGNUP) {
+
+      const form = {
+        email: this.state.email,
+        password: this.state.password,
+        repeat_password: this.state.confirmPassword
+      }
+
+      Axios.post("http://localhost:3001/auth/register", JSON.stringify(form),
+        {
+          headers: { "Content-Type": "application/json" }
+        })
+        .then((res) => {
+          toast(res.data.message);
+          // this.props.history.push(`/`)
+        })
+        .catch(error => {
+          console.log(error);
+          if (error.response !== undefined) {
+            toast(error.response.data.message)
+          }
+        });
+    }
   };
 
   renderButtonText() {
@@ -70,16 +101,16 @@ class AuthForm extends React.Component {
         )}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} />
+          <Input name="email" {...usernameInputProps} onChange={e => this.handleChange(e)} />
         </FormGroup>
         <FormGroup>
           <Label for={passwordLabel}>{passwordLabel}</Label>
-          <Input {...passwordInputProps} />
+          <Input name="password" {...passwordInputProps} onChange={e => this.handleChange(e)} />
         </FormGroup>
         {this.isSignup && (
           <FormGroup>
             <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
-            <Input {...confirmPasswordInputProps} />
+            <Input name="confirmPassword" {...confirmPasswordInputProps} onChange={e => this.handleChange(e)} />
           </FormGroup>
         )}
         <FormGroup check>
