@@ -50,6 +50,7 @@ class App extends React.Component {
 
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
+              {/* TODO bug RequireAuth(DashboardPage) */}
               <Route exact path="/" component={DashboardPage} />
               <Route exact path="/buttons" component={RequireAuth(ButtonPage)} />
               <Route exact path="/cards" component={CardPage} />
@@ -59,6 +60,7 @@ class App extends React.Component {
               <Route exact path="/dropdowns" component={DropdownPage} />
               <Route exact path="/forms" component={FormPage} />
               <Route exact path="/input-groups" component={InputGroupPage} />
+
             </React.Suspense>
           </MainLayout>
           <Redirect to="/" />

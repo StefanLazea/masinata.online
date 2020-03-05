@@ -14,7 +14,6 @@ app.use(cookieParser(COOKIE_SECRET));
 
 app.use(cors());
 
-
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();
 
