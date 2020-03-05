@@ -14,25 +14,13 @@ export default function (ComposedComponent) {
             }
         }
 
-        UNSAFE_componentWillMount() {
+        componentDidMount() {
             console.log(this.state.isAuthenticated, this.state.loginRedirect, getToken())
-            // if (getToken() !== null) {
-            //     console.log("is ok")
-            //     this.setState({ isAuthenticated: true });
 
-            // }
             if (!this.state.isAuthenticated && getToken() === null) {
                 this.setState({ loginRedirect: true })
             }
         }
-        // componentWillReceiveProps(nextProps) {
-        //     if (getToken() !== null) {
-        //         this.setState({ isAuthenticated: true });
-        //     }
-        //     if (!this.state.isAuthenticated) {
-        //         this.setState({ loginRedirect: true })
-        //     }
-        // }
 
         render() {
             if (this.state.loginRedirect === true) {

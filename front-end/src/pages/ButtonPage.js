@@ -14,7 +14,7 @@ import {
 
 import Page from '../components/Page';
 
-class ButtonPage extends React.Component {
+export default class ButtonPage extends React.Component {
   state = {
     rSelected: null,
     cSelected: [],
@@ -401,5 +401,3 @@ class ButtonPage extends React.Component {
     );
   }
 }
-
-export default ButtonPage;

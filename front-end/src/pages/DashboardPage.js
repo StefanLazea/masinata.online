@@ -14,7 +14,7 @@ import {
   Row,
 } from 'reactstrap';
 
-class DashboardPage extends React.Component {
+export default class DashboardPage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
@@ -65,4 +65,3 @@ class DashboardPage extends React.Component {
     );
   }
 }
-export default DashboardPage;
