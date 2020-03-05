@@ -30,7 +30,7 @@ export default class DashboardPage extends React.Component {
         <Row>
           <Col lg="6" md="12" sm="12" xs="12">
             <AnnouncementCard
-              color="gradient-secondary"
+              color="secondary"
               header="Announcement"
               avatarSize={60}
               name="Jamy"

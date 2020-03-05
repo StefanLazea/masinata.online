@@ -14,7 +14,7 @@ const AvatarCard = ({
   className,
   ...restProps
 }) => {
-  const classes = classNames('bg-gradient-theme-left', className);
+  const classes = classNames('bg-theme-left', className);
 
   return (
     <Card inverse className={classes} {...restProps}>

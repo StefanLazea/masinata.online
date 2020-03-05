@@ -102,7 +102,7 @@ const CardPage = () => {
           <Col key={index} md={6} sm={6} xs={12} className="mb-3">
             <Card
               inverse
-              className={`border-0 bg-gradient-theme${
+              className={`border-0 bg-theme${
                 !!color ? '-' : ''
                 }${color}`}
               style={{
@@ -185,7 +185,7 @@ const CardPage = () => {
           <Col key={index} lg={4} md={6} sm={6} xs={12} className="mb-4">
             <Card
               inverse
-              className={`bg-gradient-${color} text-center`}
+              className={`bg-${color} text-center`}
               style={{ height: 400 }}
             >
               <CardBody className="d-flex flex-column flex-wrap justify-content-center align-items-center">
