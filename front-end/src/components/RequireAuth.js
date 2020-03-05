@@ -1,6 +1,6 @@
 import React from 'react';
 import { getToken } from "../services/Token";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 
 export default function (ComposedComponent) {
 

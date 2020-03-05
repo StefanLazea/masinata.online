@@ -12,10 +12,6 @@ class AuthPage extends React.Component {
     }
   };
 
-  // handleLogoClick = () => {
-  //   this.props.history.push('/');
-  // };
-
   render() {
     return (
       <Row

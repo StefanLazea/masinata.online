@@ -41,6 +41,18 @@ class AuthForm extends React.Component {
     })
   }
 
+  handleError = (e) => {
+    if (e.response !== undefined) {
+      let errorMessage = e.response.data.message
+      if (typeof errorMessage === 'object') {
+        for (let error of Object.values(errorMessage)) {
+          toast(error);
+        }
+      } else {
+        toast(errorMessage);
+      }
+    }
+  }
   handleSubmit = event => {
     event.preventDefault();
     if (this.props.authState === STATE_SIGNUP) {
@@ -60,16 +72,7 @@ class AuthForm extends React.Component {
           this.setState({ redirectToLogin: true });
         })
         .catch(error => {
-          if (error.response !== undefined) {
-            let errorMessage = error.response.data.message
-            if (typeof errorMessage === 'object') {
-              for (let error of Object.values(errorMessage)) {
-                toast(error);
-              }
-            } else {
-              toast(errorMessage);
-            }
-          }
+          this.handleError(error);
         });
     }
 
