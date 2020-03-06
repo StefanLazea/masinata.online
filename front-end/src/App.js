@@ -50,16 +50,15 @@ class App extends React.Component {
 
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
-              <Route path="/" exact component={DashboardPage} />
+              <Route path="/" exact component={RequireAuth(DashboardPage)} />
               <Route path="/buttons" exact component={RequireAuth(ButtonPage)} />
-              <Route exact path="/cards" component={CardPage} />
-              <Route exact path="/widgets" component={WidgetPage} />
-              <Route exact path="/tables" component={TablePage} />
-              <Route exact path="/badges" component={BadgePage} />
-              <Route exact path="/dropdowns" component={DropdownPage} />
-              <Route exact path="/forms" component={FormPage} />
-              <Route exact path="/input-groups" component={InputGroupPage} />
-
+              <Route exact path="/cards" component={RequireAuth(CardPage)} />
+              <Route exact path="/widgets" component={RequireAuth(WidgetPage)} />
+              <Route exact path="/tables" component={RequireAuth(TablePage)} />
+              <Route exact path="/badges" component={RequireAuth(BadgePage)} />
+              <Route exact path="/dropdowns" component={RequireAuth(DropdownPage)} />
+              <Route exact path="/forms" component={RequireAuth(FormPage)} />
+              <Route exact path="/input-groups" component={RequireAuth(InputGroupPage)} />
             </React.Suspense>
           </MainLayout>
           <Redirect to="/" />
