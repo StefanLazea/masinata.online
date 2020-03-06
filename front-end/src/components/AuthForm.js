@@ -4,7 +4,7 @@ import React from 'react';
 import Axios from "axios";
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 import { setTokenToLocalStorage } from "../services/Token";
 
 const getBasename = () => {
@@ -91,16 +91,7 @@ class AuthForm extends React.Component {
           this.setState({ redirectToDashboard: true });
         })
         .catch(error => {
-          if (error.response !== undefined) {
-            let errorMessage = error.response.data.message
-            if (typeof errorMessage === 'object') {
-              for (let error of Object.values(errorMessage)) {
-                toast(error);
-              }
-            } else {
-              toast(errorMessage);
-            }
-          }
+          this.handleError(error);
         });
     }
   };
