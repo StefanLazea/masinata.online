@@ -18,7 +18,7 @@ router.get("/user/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), async
     return res.status(200).send({ cars: cars });
 });
 
-router.get("/", authorize([Role.Admin]), async (req, res) => {
+router.get("/", authorize([Role.User]), async (req, res) => {
     let carsFound;
     try {
         await Car.findAll().then((cars) => carsFound = cars);

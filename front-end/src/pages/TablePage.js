@@ -1,9 +1,19 @@
 import Page from '../components/Page';
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+// const CarsServices = require('../services/CarsService');
+import { getAllCars } from '../services/CarsService.js';
 
-
+const getCars = async () => {
+  try {
+    let response = await getAllCars();
+    console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
+}
 const TablePage = () => {
+  getCars();
   return (
     <Page
       title="Tables"

@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const secret = require('../configuration.json').token_secret;
 
 function authorize(roles = []) {
-    console.log(roles)
     // roles param can be a single role string (e.g. Role.User or 'User') 
     // or an array of roles (e.g. [Role.Admin, Role.User] or ['Admin', 'User'])
     if (typeof roles === 'string') {
