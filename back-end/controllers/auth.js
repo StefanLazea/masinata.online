@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const UserService = require("../services/users")
+const UserService = require("../services/users");
+const TokenService = require("../services/token");
 const { validateUser } = require("../helpers/validation/user");
 const { findUserByEmail } = require("../services/users");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
@@ -34,10 +35,7 @@ const login = async (req, res) => {
         return res.status(400).send({ message: "Wrong password" });
     }
 
-    const token = jwt.sign({ id: userFound.id, role: userFound.role }, TOKEN_SECRET,
-        {
-            expiresIn: "30s"
-        });
+    const token = TokenService.createToken(userFound);
 
     res.cookie("token", token, { signed: true, httpOnly: true })
         .send({

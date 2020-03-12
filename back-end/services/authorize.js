@@ -18,7 +18,7 @@ function authorize(roles = []) {
             const verified = jwt.verify(trimmedToken, secret,
                 function (err, decoded) {
                     if (err) {
-                        return res.status(403).send({ message: "Forbidden", err: err });
+                        return res.status(403).send({ message: err });
                     } else {
                         req.user = decoded;
                         console.log(req.user, roles, roles.length, req.user.role)
