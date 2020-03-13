@@ -9,7 +9,7 @@ import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Landing from './components/Landing';
 
 const BadgePage = React.lazy(() => import('./pages/BadgePage'));
 const ButtonPage = React.lazy(() => import('./pages/ButtonPage'));
@@ -47,6 +47,7 @@ class App extends React.Component {
               <AuthPage {...props} authState={STATE_SIGNUP} />
             )}
           />
+          <Route path="/landing" exact component={Landing} />
 
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>

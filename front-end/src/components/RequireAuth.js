@@ -16,7 +16,6 @@ export default function (ComposedComponent) {
 
         componentDidMount() {
             console.log(this.state.isAuthenticated, this.state.loginRedirect, getToken())
-
             if (!this.state.isAuthenticated && getToken() === null) {
                 this.setState({ loginRedirect: true })
             }
