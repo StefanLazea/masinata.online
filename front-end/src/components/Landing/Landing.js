@@ -14,7 +14,6 @@ export default class Landing extends React.Component {
         };
     }
     render() {
-        console.log(this.state.redirectToLogin, this.state.redirectToSignUp);
         if (this.state.redirectToSignUp) {
             return <Redirect to="/signup" />;
         }
