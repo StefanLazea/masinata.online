@@ -1,0 +1,41 @@
+#text { 
+    padding-left:inherit !important;
+    padding-right:inherit !important;
+}
+.center-text {
+    text-align: center;
+}
+.row {
+    width: 100%;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+#button {
+    display: block;
+    margin: 0 auto;
+}
+
+#img {
+    display: block;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 480px) {
+    #text {
+        margin-top: 50%;
+    }
+
+    #img {
+        max-width: 80%;
+        min-width: 80%;
+    }
+}
+@media screen and (min-height: 700px){
+    #img {
+        margin-top: 20%;
+    }
+    #text {
+        margin-top: 55%;
+    }
+}

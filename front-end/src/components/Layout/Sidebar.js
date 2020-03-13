@@ -3,18 +3,12 @@ import sidebarBgImage from '../../assets/img/sidebar/sidebar-4.jpg';
 import React from 'react';
 import {
   MdAccountCircle,
-  MdArrowDropDownCircle,
   MdBorderAll,
   MdChromeReaderMode,
   MdDashboard,
   MdExtension,
   MdKeyboardArrowDown,
-  MdRadioButtonChecked,
-  MdStar,
-  MdViewDay,
   MdViewList,
-  MdWeb,
-  MdWidgets,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -32,25 +26,14 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/buttons', name: 'buttons', exact: false, Icon: MdRadioButtonChecked },
   { to: '/forms', name: 'forms', exact: false, Icon: MdChromeReaderMode },
   { to: '/input-groups', name: 'input groups', exact: false, Icon: MdViewList },
-  {
-    to: '/dropdowns',
-    name: 'dropdowns',
-    exact: false,
-    Icon: MdArrowDropDownCircle,
-  },
-  { to: '/badges', name: 'badges', exact: false, Icon: MdStar },
-  { to: '/modals', name: 'modals', exact: false, Icon: MdViewDay },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
   { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle }
 ];
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
-  { to: '/widgets', name: 'widgets', exact: false, Icon: MdWidgets },
 ];
 
 const bem = bn.create('sidebar');

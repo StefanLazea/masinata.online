@@ -51,9 +51,6 @@ export const NOTIFICATION_SYSTEM_STYLE = {
       display: 'inline-flex',
       fontSize: 20,
       fontWeight: 'bold',
-      // left: '15px',
-      // position: 'absolute',
-      // top: '50%',
     },
   },
 

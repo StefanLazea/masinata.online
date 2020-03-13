@@ -2,6 +2,7 @@ import { STATE_LOGIN, STATE_SIGNUP } from './components/AuthForm';
 import { EmptyLayout, LayoutRoute, MainLayout } from './components/Layout';
 import PageSpinner from './components/PageSpinner';
 import AuthPage from './pages/AuthPage';
+import Landing from './components/Landing/Landing';
 import RequireAuth from './components/RequireAuth';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -9,17 +10,12 @@ import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import Landing from './components/Landing';
 
-const BadgePage = React.lazy(() => import('./pages/BadgePage'));
 const ButtonPage = React.lazy(() => import('./pages/ButtonPage'));
-const CardPage = React.lazy(() => import('./pages/CardPage'));
 const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
-const DropdownPage = React.lazy(() => import('./pages/DropdownPage'));
 const FormPage = React.lazy(() => import('./pages/FormPage'));
 const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
 const TablePage = React.lazy(() => import('./pages/TablePage'));
-const WidgetPage = React.lazy(() => import('./pages/WidgetPage'));
 
 toast.configure();
 const getBasename = () => {
@@ -53,11 +49,7 @@ class App extends React.Component {
             <React.Suspense fallback={<PageSpinner />}>
               <Route path="/" exact component={RequireAuth(DashboardPage)} />
               <Route path="/buttons" exact component={RequireAuth(ButtonPage)} />
-              <Route exact path="/cards" component={RequireAuth(CardPage)} />
-              <Route exact path="/widgets" component={RequireAuth(WidgetPage)} />
               <Route exact path="/tables" component={RequireAuth(TablePage)} />
-              <Route exact path="/badges" component={RequireAuth(BadgePage)} />
-              <Route exact path="/dropdowns" component={RequireAuth(DropdownPage)} />
               <Route exact path="/forms" component={RequireAuth(FormPage)} />
               <Route exact path="/input-groups" component={RequireAuth(InputGroupPage)} />
             </React.Suspense>
