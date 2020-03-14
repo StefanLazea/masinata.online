@@ -71,11 +71,8 @@
 }
 
 @media screen and (min-height:800px) and (min-width: 600px){
-    #text {
-        left: 5%;
-    }
-    
-    #root{
+  
+    #custom{
         position: absolute;
         top: 50%;
         margin-top: -200px;
