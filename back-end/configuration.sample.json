@@ -4,5 +4,6 @@
     "user_db": "root",
     "pass_db": "",
     "token_secret": "ze5s78df7680g9y08xezrwexctudafasfdas",
-    "cookie_secret": "sdasdsfjewuifdvewyfdewipc"
+    "cookie_secret": "sdasdsfjewuifdvewyfdewipc",
+    "expiration_date": "30s"
 }

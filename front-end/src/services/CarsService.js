@@ -9,14 +9,7 @@ const getAllCars = () => {
     return Axios.get(`${getBasename()}/cars`,
         {
             headers: { "Authorization": getToken() }
-        })
-    // .then(res => {
-    //     return res;
-    // })
-    // .catch(err => {
-    //     return err;
-    // })
-
+        });
 }
 
 module.exports = {
