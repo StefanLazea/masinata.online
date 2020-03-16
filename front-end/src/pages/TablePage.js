@@ -2,14 +2,7 @@ import Page from '../components/Page';
 import React from 'react';
 import CarsService from '../services/CarsService.js';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-
-// const getCars = () => {
-//   CarsService.getAllCars()
-//     .then((res) => {
-//       this.setState({ cars: res.data })
-//     })
-//     .catch((err) => { console.log(err.message); });
-// }
+import { toast } from 'react-toastify';
 
 export default class TablePage extends React.Component {
   constructor(props) {
@@ -20,13 +13,15 @@ export default class TablePage extends React.Component {
     this.getCars();
   }
 
-  getCars = async () => {
-    await CarsService.getAllCars()
+  getCars = () => {
+    CarsService.getAllCars()
       .then((res) => {
         this.setState({ cars: res.data })
         console.log(this.state.cars)
       })
-      .catch((err) => { console.log(err.message); });
+      .catch((err) => {
+        toast(err.response.data.message.name);
+      });
   }
 
   render() {
