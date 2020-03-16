@@ -6,9 +6,16 @@ const getBasename = () => {
 };
 
 const getAllCars = () => {
-    Axios
-        .get(`${getBasename()}/cars`,
-            { headers: { "Authorization": getToken() } });
+    return Axios.get(`${getBasename()}/cars`,
+        {
+            headers: { "Authorization": getToken() }
+        })
+    // .then(res => {
+    //     return res;
+    // })
+    // .catch(err => {
+    //     return err;
+    // })
 
 }
 
