@@ -1,5 +1,6 @@
 import Page from '../components/Page';
 import React from 'react';
+import { Redirect } from "react-router-dom";
 import CarsService from '../services/CarsService.js';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { toast } from 'react-toastify';
@@ -9,6 +10,7 @@ export default class TablePage extends React.Component {
     super(props);
     this.state = {
       cars: [],
+      hasTokenExpired: false,
     }
     this.getCars();
   }
@@ -20,11 +22,19 @@ export default class TablePage extends React.Component {
         console.log(this.state.cars)
       })
       .catch((err) => {
-        toast(err.response.data.message.name);
+        console.log(err.response)
+        if (err.response.status === 403) {
+          // toast(err.response.data.message.name);
+          toast("Your session has expired. Please login!");
+          this.setState({ hasTokenExpired: true });
+        }
       });
   }
 
   render() {
+    if (this.state.hasTokenExpired === true) {
+      return <Redirect to="/login" />
+    }
     return (
       <Page
         title="Tables"
