@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import CarsService from '../services/CarsService.js';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { toast } from 'react-toastify';
+import { Badge } from "reactstrap";
 
 export default class TablePage extends React.Component {
   constructor(props) {
@@ -31,6 +32,18 @@ export default class TablePage extends React.Component {
       });
   }
 
+  getBadge = (isEco) => {
+    if (isEco) {
+      return <Badge color="success" pill className="mr-1">
+        Eco
+      </Badge>;
+    } else {
+      return <Badge color="danger" pill className="mr-1">
+        Combustion
+      </Badge>;
+    }
+  }
+
   render() {
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
@@ -56,6 +69,7 @@ export default class TablePage extends React.Component {
                       <th>VIN</th>
                       <th>Year</th>
                       <th>User ID</th>
+                      <th>Ecologic</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,6 +82,7 @@ export default class TablePage extends React.Component {
                           <td>{car.vin}</td>
                           <td>{car.year}</td>
                           <td>{car.userId}</td>
+                          <td>{this.getBadge(car.eco)}</td>
                         </tr>
                       )
                     }
