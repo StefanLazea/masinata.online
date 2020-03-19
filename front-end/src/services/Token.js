@@ -21,9 +21,14 @@ const setTokenToLocalStorage = (token) => {
     localStorage.setItem('token', token);
 }
 
+const removeTokenFromLocalStorage = () => {
+    localStorage.removeItem('token');
+}
+
 module.exports = {
     getUserId,
     getToken,
     setTokenToLocalStorage,
     getDecodedToken,
+    removeTokenFromLocalStorage
 }

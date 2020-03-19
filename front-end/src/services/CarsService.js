@@ -10,8 +10,8 @@ const getAllCars = () => {
         {
             headers: { "Authorization": getToken() }
         });
-}
+};
 
 module.exports = {
     getAllCars,
-}
+};

@@ -2,6 +2,8 @@ import Avatar from '../Avatar';
 import { UserCard } from '../Card';
 import SearchInput from '../SearchInput';
 import React from 'react';
+import TokenService from '../../services/Token.js';
+import { Redirect } from 'react-router-dom';
 import {
   MdClearAll,
   MdExitToApp,
@@ -48,6 +50,12 @@ class Header extends React.Component {
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
 
+  handleSignoutEvent = () => {
+    console.log("signout");
+    TokenService.removeTokenFromLocalStorage();
+    return <Redirect to="/landing" />
+  };
+
   render() {
     return (
       <Navbar light expand className={bem.b('bg-white')}>
@@ -90,7 +98,7 @@ class Header extends React.Component {
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="border-light" onClick={this.handleSignoutEvent}>
                       <MdExitToApp /> Signout
                     </ListGroupItem>
                   </ListGroup>

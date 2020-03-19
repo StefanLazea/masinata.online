@@ -8,7 +8,8 @@ const post = async (form) => {
         {
             headers: { "Content-Type": "application/json" }
         });
-}
+};
+
 module.exports = {
     post
 }

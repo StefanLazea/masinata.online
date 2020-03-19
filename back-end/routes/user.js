@@ -19,7 +19,7 @@ router.get("/details/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), as
     if (userDetails != null) {
         return res.status(200).send(userDetails);
     }
-    return res.status(400).send({ "message": "Data unclear" })
+    return res.status(400).send({ "message": "Something went wrong with the data recieved." })
 
 });
 

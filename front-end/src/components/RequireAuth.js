@@ -1,5 +1,5 @@
 import React from 'react';
-import { getToken } from "../services/Token";
+import TokenService from "../services/Token.js";
 import { Redirect } from "react-router-dom";
 
 export default function (ComposedComponent) {
@@ -15,8 +15,8 @@ export default function (ComposedComponent) {
         }
 
         componentDidMount() {
-            console.log(this.state.isAuthenticated, this.state.loginRedirect, getToken())
-            if (!this.state.isAuthenticated && getToken() === null) {
+            console.log(this.state.isAuthenticated, this.state.loginRedirect, TokenService.getToken())
+            if (!this.state.isAuthenticated && TokenService.getToken() === null) {
                 this.setState({ loginRedirect: true })
             }
         }

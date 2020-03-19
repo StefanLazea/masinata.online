@@ -11,7 +11,6 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ButtonPage = React.lazy(() => import('./pages/ButtonPage'));
 const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
 const FormPage = React.lazy(() => import('./pages/FormPage'));
 const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
@@ -48,7 +47,6 @@ class App extends React.Component {
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
               <Route path="/" exact component={RequireAuth(DashboardPage)} />
-              <Route path="/buttons" exact component={RequireAuth(ButtonPage)} />
               <Route exact path="/tables" component={RequireAuth(TablePage)} />
               <Route exact path="/forms" component={RequireAuth(FormPage)} />
               <Route exact path="/input-groups" component={RequireAuth(InputGroupPage)} />
