@@ -1,8 +1,10 @@
 import React from 'react';
 import Page from '../components/Page';
 import {
+  Badge,
   Button,
   Card,
+  CardHeader,
   CardBody,
   Col,
   InputGroup,
@@ -14,16 +16,35 @@ import {
   Label,
   Row,
 } from 'reactstrap';
+import UserProfileService from '../services/UserProfileService.js';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from 'react-toastify';
 
 export default class UserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isPasswordShown: false,
+      firstname: '',
+      lastname: '',
+      email: '',
+      address: '',
+      phone: '',
+      role: 'Admin'
     }
+    this.getUserDetails();
+  }
+
+  getUserDetails = () => {
+    UserProfileService.getUserDetails();
+    // .then((res) => {
+    //   console.log(res)
+    // })
+    // .catch((err) => {
+    //   console.log(err.response)
+    // });
   }
 
   togglePasswordVisibility = () => {
@@ -38,6 +59,14 @@ export default class UserProfilePage extends React.Component {
         <Row>
           <Col xl={6} lg={12} md={12} className="mx-auto">
             <Card>
+              <CardHeader>
+                <Badge color="warning" pill className="float-right">
+                  Not fully completed
+                </Badge>
+                <Badge color="success" pill className="float-right">
+                  {this.state.role}
+                </Badge>
+              </CardHeader>
               <CardBody>
                 <Form>
                   <FormGroup row>
@@ -62,7 +91,7 @@ export default class UserProfilePage extends React.Component {
                       <Input
                         type="email"
                         name="email"
-                        placeholder="with a placeholder"
+                        placeholder="ionpopescu@gmail.com"
                       />
                     </Col>
                   </FormGroup>
@@ -76,7 +105,7 @@ export default class UserProfilePage extends React.Component {
                           data-toggle="password"
                           type={(isPasswordShown) ? "text" : "password"}
                           name="password"
-                          placeholder="password placeholder"
+                          placeholder="password"
                         />
                         <InputGroupAddon addonType="append">
                           <Button color="secondary" onClick={this.togglePasswordVisibility}>
@@ -87,11 +116,11 @@ export default class UserProfilePage extends React.Component {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label for="exampleText" sm={2}>
-                      Text Area
+                    <Label for="phone" sm={2}>
+                      Phone
                   </Label>
                     <Col sm={10}>
-                      <Input type="textarea" name="text" />
+                      <Input type="text" name="phone" placeholder="0748587117" />
                     </Col>
                   </FormGroup>
                   <FormGroup row>

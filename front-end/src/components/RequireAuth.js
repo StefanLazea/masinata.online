@@ -1,6 +1,7 @@
 import React from 'react';
 import TokenService from "../services/Token.js";
 import { Redirect } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function (ComposedComponent) {
 
@@ -9,15 +10,15 @@ export default function (ComposedComponent) {
         constructor(props) {
             super(props);
             this.state = {
-                isAuthenticated: false,
                 loginRedirect: false
             }
         }
 
         componentDidMount() {
-            console.log(this.state.isAuthenticated, this.state.loginRedirect, TokenService.getToken())
-            if (!this.state.isAuthenticated && TokenService.getToken() === null) {
+            // console.log(TokenService.getDecodedToken())
+            if (TokenService.getToken() === null) {
                 this.setState({ loginRedirect: true })
+                toast("Please be sure you are logged in!");
             }
         }
 
