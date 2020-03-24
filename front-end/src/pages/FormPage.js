@@ -16,14 +16,24 @@ import {
   Row,
 } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
-import { faEye } from "@fortawesome/free-solid-svg-icons"
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 export default class TablePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      isPasswordShown: false,
+    }
   }
 
+  togglePasswordVisibility = () => {
+    const { isPasswordShown } = this.state;
+    this.setState({ isPasswordShown: !isPasswordShown });
+  };
+
   render() {
+    const { isPasswordShown } = this.state;
     return (
       <Page title="Forms" breadcrumbs={[{ name: 'Forms', active: true }]} >
         <Row>
@@ -52,13 +62,13 @@ export default class TablePage extends React.Component {
                       <InputGroup>
                         <Input
                           data-toggle="password"
-                          type="password"
+                          type={(isPasswordShown) ? "text" : "password"}
                           name="password"
                           placeholder="password placeholder"
                         />
                         <InputGroupAddon addonType="append">
-                          <Button color="secondary">
-                            <FontAwesomeIcon icon={faEye} />
+                          <Button color="secondary" onClick={this.togglePasswordVisibility}>
+                            <FontAwesomeIcon icon={isPasswordShown ? faEye : faEyeSlash} />
                           </Button>
                         </InputGroupAddon>
                       </InputGroup>
