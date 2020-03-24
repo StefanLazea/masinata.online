@@ -9,7 +9,7 @@
 ```
 NODE_PATH=./src --deprecated
 PUBLIC_URL=/
-REACT_APP_NAME=React Reduction
+REACT_APP_NAME=Licence
 REACT_APP_DESCRIPTION=React version of Reduction Admin Template
 REACT_APP_SOURCE_URL=https://github.com/reduction-admin/react-reduction
 REACT_APP_BACK_END_URL=https://localhost:3001

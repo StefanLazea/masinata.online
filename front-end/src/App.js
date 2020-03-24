@@ -12,7 +12,7 @@ import './styles/reduction.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
-const FormPage = React.lazy(() => import('./pages/FormPage'));
+const UserProfilePage = React.lazy(() => import('./pages/UserProfilePage'));
 const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
 const TablePage = React.lazy(() => import('./pages/TablePage'));
 
@@ -48,7 +48,7 @@ class App extends React.Component {
             <React.Suspense fallback={<PageSpinner />}>
               <Route path="/" exact component={RequireAuth(DashboardPage)} />
               <Route exact path="/tables" component={RequireAuth(TablePage)} />
-              <Route exact path="/forms" component={RequireAuth(FormPage)} />
+              <Route exact path="/user-profile" component={RequireAuth(UserProfilePage)} />
               <Route exact path="/input-groups" component={RequireAuth(InputGroupPage)} />
             </React.Suspense>
           </MainLayout>
