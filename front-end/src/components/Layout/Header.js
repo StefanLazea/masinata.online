@@ -22,6 +22,7 @@ import {
   PopoverBody,
 } from 'reactstrap';
 import bn from '../../utils/bemnames';
+import { toast } from 'react-toastify';
 
 const bem = bn.create('header');
 
@@ -29,6 +30,7 @@ class Header extends React.Component {
   state = {
     isOpenNotificationPopover: false,
     isOpenUserCardPopover: false,
+    isSignout: false,
   };
 
   toggleNotificationPopover = () => {
@@ -53,10 +55,14 @@ class Header extends React.Component {
   handleSignoutEvent = () => {
     console.log("signout");
     TokenService.removeTokenFromLocalStorage();
-    return <Redirect to="/landing" />
+    toast("Goodbye! You have been signed out!");
+    this.setState({ isSignout: true })
   };
 
   render() {
+    if (this.state.isSignout) {
+      return <Redirect to="/landing" />
+    }
     return (
       <Navbar light expand className={bem.b('bg-white')}>
         <Nav navbar className="mr-2">
@@ -94,13 +100,13 @@ class Header extends React.Component {
                   <ListGroup flush>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdPersonPin /> Profile
-                    </ListGroupItem>
+                  </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
-                    </ListGroupItem>
+                  </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light" onClick={this.handleSignoutEvent}>
                       <MdExitToApp /> Signout
-                    </ListGroupItem>
+                  </ListGroupItem>
                   </ListGroup>
                 </UserCard>
               </PopoverBody>

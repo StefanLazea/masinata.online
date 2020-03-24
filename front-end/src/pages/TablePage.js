@@ -25,7 +25,6 @@ export default class TablePage extends React.Component {
       .catch((err) => {
         console.log(err.response)
         if (err.response.status === 403) {
-          // toast(err.response.data.message.name);
           toast("Your session has expired. Please login!");
           this.setState({ hasTokenExpired: true });
         }
