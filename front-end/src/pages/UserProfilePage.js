@@ -41,8 +41,13 @@ export default class UserProfilePage extends React.Component {
         console.log(err.response);
       });
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state.user)
+    UserProfileService.postUserDetails(this.state.user)
+      .then((res) => { console.log(res) })
+      .catch((err) => { console.log(err) });
   }
 
   togglePasswordVisibility = () => {
