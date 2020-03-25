@@ -20,31 +20,29 @@ import UserProfileService from '../services/UserProfileService.js';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { toast } from 'react-toastify';
 
 export default class UserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isPasswordShown: false,
-      firstname: '',
-      lastname: '',
-      email: '',
-      address: '',
-      phone: '',
-      role: 'Admin'
+      user: {}
     }
     this.getUserDetails();
   }
 
   getUserDetails = () => {
-    UserProfileService.getUserDetails();
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    // .catch((err) => {
-    //   console.log(err.response)
-    // });
+    UserProfileService.getUserDetails()
+      .then((res) => {
+        console.log(res)
+        this.setState({ user: res.data });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }
+  handleSubmit = (e) => {
+    e.preventDefault();
   }
 
   togglePasswordVisibility = () => {
@@ -64,7 +62,7 @@ export default class UserProfilePage extends React.Component {
                   Not fully completed
                 </Badge>
                 <Badge color="success" pill className="float-right">
-                  {this.state.role}
+                  {this.state.user.role}
                 </Badge>
               </CardHeader>
               <CardBody>
@@ -73,13 +71,21 @@ export default class UserProfilePage extends React.Component {
                     <Col md={6}>
                       <FormGroup>
                         <Label for="firstname">Firstname</Label>
-                        <Input type="firstname" name="firstname" id="firstname" placeholder="Ion" />
+                        <Input
+                          type="firstname"
+                          name="firstname"
+                          id="firstname"
+                          placeholder={this.state.user.firstname ? this.state.user.firstname : "Add firstname"} />
                       </FormGroup>
                     </Col>
                     <Col md={6}>
                       <FormGroup>
                         <Label for="lastname">Lastname</Label>
-                        <Input type="lastname" name="lastname" id="lastname" placeholder="Popescu" />
+                        <Input
+                          id="lastname"
+                          type="lastname"
+                          name="lastname"
+                          placeholder={this.state.user.lastname ? this.state.user.lastname : "Add lastname"} />
                       </FormGroup>
                     </Col>
                   </FormGroup>
@@ -170,7 +176,7 @@ export default class UserProfilePage extends React.Component {
                   </Row>
                   <FormGroup row>
                     <Col className="text-center">
-                      <Button>Save</Button>
+                      <Button onClick={(e) => { this.handleSubmit(e) }}>Save</Button>
                     </Col>
                   </FormGroup>
                 </Form>

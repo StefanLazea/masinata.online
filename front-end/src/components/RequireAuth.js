@@ -15,7 +15,6 @@ export default function (ComposedComponent) {
         }
 
         componentDidMount() {
-            // console.log(TokenService.getDecodedToken())
             if (TokenService.getToken() === null) {
                 this.setState({ loginRedirect: true })
                 toast("Please be sure you are logged in!");

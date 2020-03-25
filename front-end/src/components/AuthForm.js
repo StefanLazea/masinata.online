@@ -182,7 +182,7 @@ class AuthForm extends React.Component {
             ) : (
                 <a href="#signup" onClick={this.changeAuthState(STATE_SIGNUP)}>
                   Signup
-              </a>
+                </a>
               )}
           </h6>
         </div>
