@@ -2,7 +2,7 @@ const User = require("../models").User;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const TOKEN_SECRET = require("../configuration.json").token_secret;
-
+const Role = require("../helpers/role");
 
 const register = async (res, credentials) => {
     let userFound = await findUserByEmail(credentials.email);
@@ -17,8 +17,10 @@ const register = async (res, credentials) => {
 
     let user = {
         email: credentials.email,
-        password: ePassword
+        password: ePassword,
+        role: Role.User
     }
+
     try {
         User.create(user);
     } catch (err) {

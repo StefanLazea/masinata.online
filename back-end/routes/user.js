@@ -1,26 +1,13 @@
 const router = require('express').Router();
 const User = require("../models").User;
+const UserController = require("../controllers/user");
 const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");
 
-router.get("/details/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), async (req, res) => {
-    let userDetails = await User.findOne({
-        attributes: [
-            "role",
-            "lastname",
-            "firstname",
-            "address",
-            "phone"
-        ], where: {
-            id: req.params.id
-        }
-    });
+router.get("/details/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), UserController.getDetailsById);
 
-    if (userDetails != null) {
-        return res.status(200).send(userDetails);
-    }
-    return res.status(400).send({ "message": "Something went wrong with the data recieved." })
+router.put("/details/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), UserController.updateDetailsById);
 
-});
+router.get("/details", authorize([Role.User, Role.Admin, Role.AppAdmin]), UserController.getAllUsersData);
 
 module.exports = router;

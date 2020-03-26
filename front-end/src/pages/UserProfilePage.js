@@ -17,6 +17,8 @@ import {
   Row,
 } from 'reactstrap';
 import UserProfileService from '../services/UserProfileService.js';
+import { Redirect } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -26,9 +28,13 @@ export default class UserProfilePage extends React.Component {
     super(props);
     this.state = {
       isPasswordShown: false,
-      user: {}
+      user: {
+        firstname: '',
+      },
+      hasTokenExpired: false,
     }
     this.getUserDetails();
+    this.handleChange = this.handleChange.bind(this);
   }
 
   getUserDetails = () => {
@@ -38,8 +44,19 @@ export default class UserProfilePage extends React.Component {
         this.setState({ user: res.data });
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err.response)
+        if (err.response.status === 403) {
+          toast("Your session has expired. Please login!");
+          this.setState({ hasTokenExpired: true });
+        }
       });
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+
+    })
   }
 
   handleSubmit = (e) => {
@@ -57,6 +74,10 @@ export default class UserProfilePage extends React.Component {
 
   render() {
     const { isPasswordShown } = this.state;
+    if (this.state.hasTokenExpired === true) {
+      return <Redirect to="/login" />
+    }
+
     return (
       <Page title="User profile" breadcrumbs={[{ name: 'user profile', active: true }]} >
         <Row>
@@ -80,7 +101,9 @@ export default class UserProfilePage extends React.Component {
                           type="firstname"
                           name="firstname"
                           id="firstname"
-                          placeholder={this.state.user.firstname ? this.state.user.firstname : "Add firstname"} />
+                          defaultValue={this.state.user.firstname}
+                          onChange={this.handleChange}
+                        />
                       </FormGroup>
                     </Col>
                     <Col md={6}>
@@ -90,7 +113,10 @@ export default class UserProfilePage extends React.Component {
                           id="lastname"
                           type="lastname"
                           name="lastname"
-                          placeholder={this.state.user.lastname ? this.state.user.lastname : "Add lastname"} />
+                          defaultValue={this.state.user.lastname}
+                          onChange={this.handleChange}
+                        // placeholder={this.state.user.lastname ? this.state.user.lastname : "Add lastname"} 
+                        />
                       </FormGroup>
                     </Col>
                   </FormGroup>
@@ -102,7 +128,8 @@ export default class UserProfilePage extends React.Component {
                       <Input
                         type="email"
                         name="email"
-                        placeholder="ionpopescu@gmail.com"
+                        defaultValue={this.state.user.email}
+                        onChange={this.handleChange}
                       />
                     </Col>
                   </FormGroup>
@@ -131,7 +158,11 @@ export default class UserProfilePage extends React.Component {
                       Phone
                   </Label>
                     <Col sm={10}>
-                      <Input type="text" name="phone" placeholder="0748587117" />
+                      <Input
+                        type="text"
+                        name="phone"
+                        defaultValue={this.state.user.phone}
+                        onChange={this.handleChange} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -150,7 +181,12 @@ export default class UserProfilePage extends React.Component {
                   <FormGroup row>
                     <Label sm={2} for="exampleAddress">Address</Label>
                     <Col sm={10}>
-                      <Input type="text" name="address" id="exampleAddress" placeholder="1234 Main St" />
+                      <Input
+                        type="text"
+                        name="address"
+                        id="exampleAddress"
+                        defaultValue={this.state.user.address}
+                        onChange={this.handleChange} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
