@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+
 export default class UserProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +41,6 @@ export default class UserProfilePage extends React.Component {
   getUserDetails = () => {
     UserProfileService.getUserDetails()
       .then((res) => {
-        console.log(res)
         this.setState({ user: res.data });
       })
       .catch((err) => {
@@ -53,16 +53,14 @@ export default class UserProfilePage extends React.Component {
   }
 
   handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-
-    })
+    const user = { ...this.state.user, [e.target.name]: e.target.value }
+    this.setState(() => ({ user }))
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.user)
-    UserProfileService.postUserDetails(this.state.user)
+    console.log(this.state.user);
+    UserProfileService.updateUserDetails(this.state.user)
       .then((res) => { console.log(res) })
       .catch((err) => { console.log(err) });
   }

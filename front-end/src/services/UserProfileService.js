@@ -10,13 +10,13 @@ const getUserDetails = () => {
         headers: { "Authorization": getToken() }
     });
 };
-const postUserDetails = (user) => {
-    Axios.post(`${getBasename()}/user/details/${getUserId()}`, JSON.stringify(user), {
-        headers: { "Authorization": getToken() }
+const updateUserDetails = (user) => {
+    return Axios.put(`${getBasename()}/user/details/${getUserId()}`, JSON.stringify(user), {
+        headers: { "Content-Type": "application/json", "Authorization": getToken() }
     })
 }
 
 module.exports = {
     getUserDetails,
-    postUserDetails
+    updateUserDetails
 };
