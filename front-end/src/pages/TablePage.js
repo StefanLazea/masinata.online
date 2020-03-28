@@ -20,10 +20,8 @@ export default class TablePage extends React.Component {
     CarsService.getAllCars()
       .then((res) => {
         this.setState({ cars: res.data })
-        console.log(this.state.cars)
       })
       .catch((err) => {
-        console.log(err.response)
         if (err.response.status === 403) {
           toast("Your session has expired. Please login!");
           this.setState({ hasTokenExpired: true });
