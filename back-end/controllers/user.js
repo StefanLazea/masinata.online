@@ -34,7 +34,7 @@ const updateDetailsById = async (req, res) => {
             where:
                 { id: req.params.id }
         }
-    ).then(res.status(200).send({ message: "ok", "user": userDetails }));
+    ).then(res.status(200).send({ message: "User details updated successfully!" }));
 };
 
 const getAllUsersData = async (req, res) => {

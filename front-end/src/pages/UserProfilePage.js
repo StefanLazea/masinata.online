@@ -59,10 +59,16 @@ export default class UserProfilePage extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.user);
     UserProfileService.updateUserDetails(this.state.user)
-      .then((res) => { console.log(res) })
-      .catch((err) => { console.log(err) });
+      .then((res) => { toast(res.data.message); })
+      .catch((err) => {
+        console.log(err.response)
+        toast("An error occurred, please try later!");
+        if (err.response.status === 403) {
+          toast("Your session has expired. Please login!");
+          this.setState({ hasTokenExpired: true });
+        }
+      });
   }
 
   togglePasswordVisibility = () => {
@@ -72,6 +78,7 @@ export default class UserProfilePage extends React.Component {
 
   render() {
     const { isPasswordShown } = this.state;
+
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
     }

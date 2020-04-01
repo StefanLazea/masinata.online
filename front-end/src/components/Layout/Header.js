@@ -27,11 +27,15 @@ import { toast } from 'react-toastify';
 const bem = bn.create('header');
 
 class Header extends React.Component {
-  state = {
-    isOpenNotificationPopover: false,
-    isOpenUserCardPopover: false,
-    isSignout: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpenNotificationPopover: false,
+      isOpenUserCardPopover: false,
+      isSignout: false,
+      isProfileSelected: false,
+    };
+  }
 
   toggleNotificationPopover = () => {
     this.setState({
@@ -48,21 +52,30 @@ class Header extends React.Component {
   handleSidebarControlButton = event => {
     event.preventDefault();
     event.stopPropagation();
-
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
 
   handleSignoutEvent = () => {
-    console.log("signout");
     TokenService.removeTokenFromLocalStorage();
     toast("Goodbye! You have been signed out!");
-    this.setState({ isSignout: true })
+    this.setState({ isSignout: true });
+  };
+
+  handleProfileEvent = () => {
+    toast("Goodbye! You have been signed out!");
+    this.setState({ isProfileSelected: true });
+    console.log(this.state.isProfileSelected)
   };
 
   render() {
     if (this.state.isSignout) {
       return <Redirect to="/landing" />
     }
+
+    if (this.state.isProfileSelected) {
+      return <Redirect to="/user-profile" />
+    }
+
     return (
       <Navbar light expand className={bem.b('bg-white')}>
         <Nav navbar className="mr-2">
@@ -95,25 +108,24 @@ class Header extends React.Component {
                   title="Jane"
                   subtitle="jane@jane.com"
                   text="Last updated 3 mins ago"
-                  className="border-light"
-                >
+                  className="border-light">
                   <ListGroup flush>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdPersonPin /> Profile
-                  </ListGroupItem>
+                    </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
-                  </ListGroupItem>
+                    </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light" onClick={this.handleSignoutEvent}>
                       <MdExitToApp /> Signout
-                  </ListGroupItem>
+                    </ListGroupItem>
                   </ListGroup>
                 </UserCard>
               </PopoverBody>
             </Popover>
           </NavItem>
         </Nav>
-      </Navbar>
+      </Navbar >
     );
   }
 }
