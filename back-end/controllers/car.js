@@ -24,8 +24,14 @@ const getAllCars = async (req, res) => {
         return res.status(409).send({ message: "No elements found in the database" });
     }
     return res.status(200).send(carsFound);
+};
+
+const saveCarForUser = (req, res) => {
+    res.send({ message: "aoolo" })
 }
+
 module.exports = {
     getCarsByUserId,
-    getAllCars
+    getAllCars,
+    saveCarForUser
 }
