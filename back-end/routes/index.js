@@ -9,5 +9,4 @@ router.use("/auth", authRouter);
 router.use("/cars", authorize(Role.User, Role.Admin, Role.AppAdmin), carRouter);
 router.use("/user", authorize(Role.User, Role.Admin, Role.AppAdmin), userRouter);
 
-
 module.exports = router;
