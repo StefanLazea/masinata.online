@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const authRouter = require('./auth');
-const carRouter = require('./cars');
+const carRouter = require('./car');
 const userRouter = require('./user');
 const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");

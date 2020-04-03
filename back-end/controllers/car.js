@@ -1,9 +1,6 @@
-const router = require('express').Router();
-const Car = require("../models").Car;
-const { authorize } = require("../services/authorize");
-const Role = require("../helpers/role");
+const Car = require('../models').Car;
 
-router.get("/user/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), async (req, res) => {
+const getCarsByUserId = async (req, res) => {
     let cars;
     try {
         await Car.findAll({
@@ -16,9 +13,9 @@ router.get("/user/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), async
     }
 
     return res.status(200).send({ cars: cars });
-});
+};
 
-router.get("/", authorize([Role.User]), async (req, res) => {
+const getAllCars = async (req, res) => {
     let carsFound;
     try {
         await Car.findAll().then((cars) => carsFound = cars);
@@ -27,6 +24,8 @@ router.get("/", authorize([Role.User]), async (req, res) => {
         return res.status(409).send({ message: "No elements found in the database" });
     }
     return res.status(200).send(carsFound);
-})
-
-module.exports = router;
+}
+module.exports = {
+    getCarsByUserId,
+    getAllCars
+}
