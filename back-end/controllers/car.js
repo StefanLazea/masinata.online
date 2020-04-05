@@ -26,8 +26,30 @@ const getAllCars = async (req, res) => {
     return res.status(200).send(carsFound);
 };
 
-const saveCarForUser = (req, res) => {
-    res.send({ message: "aoolo" })
+const saveCarForUser = async (req, res) => {
+    console.log(req.body)
+
+    let car = {
+        model: req.body.model,
+        brand: req.body.brand,
+        type: req.body.type,
+        license: req.body.license,
+        vin: req.body.vin,
+        engine_type: req.body.engine_type,
+        year: req.body.year,
+        eco: req.body.eco,
+        userId: req.body.user_id
+    }
+    try {
+        Car.create(car);
+    } catch (err) {
+        res.send(err);
+        return;
+    }
+
+    return res.status(201).send({ message: "Car created successfully" })
+
+
 }
 
 module.exports = {
