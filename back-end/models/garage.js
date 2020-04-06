@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: Sequelize.UUIDV1,
                 primaryKey: true
             },
-            name: Sequelize.STRING
+            'name': Sequelize.STRING,
+            'createdAt': { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
         },
         {
             underscored: true

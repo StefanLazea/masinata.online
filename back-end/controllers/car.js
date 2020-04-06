@@ -48,8 +48,6 @@ const saveCarForUser = async (req, res) => {
     }
 
     return res.status(201).send({ message: "Car created successfully" })
-
-
 }
 
 module.exports = {
