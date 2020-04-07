@@ -11,9 +11,9 @@ Garage.hasOne(Car);
 Car.hasMany(Note);
 Car.hasMany(Paper);
 
-User.hasMany(Car);
-
 module.exports = {
+    Car,
+    Note,
     User,
     Garage,
     Paper,

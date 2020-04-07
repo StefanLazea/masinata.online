@@ -9,7 +9,7 @@ const getCarsByUserId = async (req, res) => {
             (carsFound) => { cars = carsFound });
     }
     catch (err) {
-        return res.status(404).send({ message: "Not found" + namesTransportTypes });
+        return res.status(404).send({ message: "Not found" });
     }
 
     return res.status(200).send({ cars: cars });
@@ -27,27 +27,25 @@ const getAllCars = async (req, res) => {
 };
 
 const saveCarForUser = async (req, res) => {
-    console.log(req.body)
-
     let car = {
         model: req.body.model,
         brand: req.body.brand,
         type: req.body.type,
-        license: req.body.license,
+        licence_plate: req.body.licence_plate,
         vin: req.body.vin,
         engine_type: req.body.engine_type,
         year: req.body.year,
         eco: req.body.eco,
-        userId: req.body.user_id
+        user_id: req.body.user_id,
+        garage_id: req.body.garage_id
     }
+    // return res.send({ car })
     try {
-        Car.create(car);
+        await Car.create(car);
     } catch (err) {
-        res.send(err);
-        return;
+        return res.status(500).send({ message: err });
     }
-
-    return res.status(201).send({ message: "Car created successfully" })
+    return res.status(200).send({ message: "Car created successfully" })
 }
 
 module.exports = {
