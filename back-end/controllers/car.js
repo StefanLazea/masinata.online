@@ -12,7 +12,7 @@ const getCarsByUserId = async (req, res) => {
         return res.status(404).send({ message: "Not found" });
     }
 
-    return res.status(200).send({ cars: cars });
+    return res.status(200).send(cars);
 };
 
 const getAllCars = async (req, res) => {
