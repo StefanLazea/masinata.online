@@ -2,7 +2,14 @@ const Garage = require('../models').Garage;
 const GarageWithCars = require('../models').GarageCars;
 
 
-const getGarages = (req, res) => { }
+const getGarages = async (req, res) => {
+    try {
+        await Garage.findAll().then((garages) => { return res.status(200).send(garages); });
+    }
+    catch (err) {
+        return res.status(409).send({ message: "No elements found in the database" });
+    }
+}
 
 const createGarage = async (req, res) => {
     let garage = {
