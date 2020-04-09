@@ -36,10 +36,9 @@ const saveCarForUser = async (req, res) => {
         engine_type: req.body.engine_type,
         year: req.body.year,
         eco: req.body.eco,
-        user_id: req.body.user_id,
-        garage_id: req.body.garage_id
+        userId: req.body.user_id,
+        garageId: req.body.garage_id
     }
-    // return res.send({ car })
     try {
         await Car.create(car);
     } catch (err) {
