@@ -57,7 +57,7 @@ const addGarageToCar = async (req, res) => {
             where:
                 { id: req.body.car_id }
         }
-    ).then(res.status(200).send({ message: "Added the garage to car!" }));
+    ).then(() => { return res.status(200).send({ message: "Added the garage to car!" }) });
 };
 
 const getCarsFromGarage = async (req, res) => {
@@ -85,15 +85,19 @@ const updateCarById = async (req, res) => {
         year: req.body.year,
         eco: req.body.eco,
     }
-    await Car.update(
-        car,
-        {
-            where:
-                { id: req.params.id }
-        }
-    ).then(res.status(200).send({ message: "Car details updated successfully!" }));
+    try {
+        await Car.update(
+            car,
+            {
+                where:
+                    { id: req.params.id }
+            }
+        );
 
-    return res.status(500).send({ message: "Something went wrong" });
+        return res.status(200).send({ message: "Car details updated successfully!" });
+    } catch (err) {
+        return res.status(500).send({ message: "Something went wrong" });
+    }
 };
 
 const deleteCarById = async (req, res) => {
