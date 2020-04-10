@@ -75,21 +75,34 @@ const getCarsFromGarage = async (req, res) => {
 };
 
 const updateCarById = async (req, res) => {
-    const car = {
-        lastname: req.body.lastname,
-        firstname: req.body.firstname,
-        address: req.body.address,
-        phone: req.body.phone,
-        secondAddress: req.body.second_address
+    let car = {
+        model: req.body.model,
+        brand: req.body.brand,
+        type: req.body.type,
+        licence_plate: req.body.licence_plate,
+        vin: req.body.vin,
+        engine_type: req.body.engine_type,
+        year: req.body.year,
+        eco: req.body.eco,
     }
-    await User.update(
-        userDetails,
+    await Car.update(
+        car,
         {
             where:
                 { id: req.params.id }
         }
-    ).then(res.status(200).send({ message: "User details updated successfully!" }));
-}
+    ).then(res.status(200).send({ message: "Car details updated successfully!" }));
+
+    return res.status(500).send({ message: "Something went wrong" });
+};
+
+const deleteCarById = async (req, res) => {
+    let carFound = await Car.findByPk(req.params.id);
+    if (!carFound) {
+        return res.status(404).send({ message: "Car not found" });
+    }
+    await carFound.destroy().then(() => { return res.send({ message: "Car deleted" }) });
+};
 
 module.exports = {
     getCarsByUserId,
@@ -98,4 +111,5 @@ module.exports = {
     addGarageToCar,
     getCarsFromGarage,
     updateCarById,
+    deleteCarById,
 }
