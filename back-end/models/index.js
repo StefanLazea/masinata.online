@@ -1,25 +1,28 @@
 const sequelize = require('./db.js');
-const User = sequelize.import('./user');
-const Car = sequelize.import('./car');
-const Garage = sequelize.import('./garage');
-const garagecars = sequelize.import('./garageCars');
-const carpapers = sequelize.import('./carPapers');
-const Paper = sequelize.import('./paper');
-
-Car.belongsToMany(Garage, { through: 'garagecars' });
-Garage.belongsToMany(Car, { through: 'garagecars' });
+const User = sequelize.import('./users');
+const Car = sequelize.import('./cars');
+const Garage = sequelize.import('./garages');
+const Paper = sequelize.import('./papers');
+const Note = sequelize.import('./notes');
 
 User.hasMany(Car);
+Car.belongsTo(User);
 
-Car.belongsToMany(Paper, { through: 'carpapers' });
-Paper.belongsToMany(Car, { through: 'carpapers' });
+Garage.hasOne(Car);
+Car.belongsTo(Garage);
 
+Car.hasMany(Note);
+Note.belongsTo(Car);
+Car.hasMany(Paper);
+Paper.belongsTo(Car);
+
+//{as: 'teacher',foreignKey: 'teacherId'}
 
 module.exports = {
-    User,
     Car,
+    Note,
+    User,
     Garage,
-    garagecars,
     Paper,
     sequelize
 }
