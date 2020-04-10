@@ -6,10 +6,17 @@ const Paper = sequelize.import('./papers');
 const Note = sequelize.import('./notes');
 
 User.hasMany(Car);
+Car.belongsTo(User);
+
 Garage.hasOne(Car);
+Car.belongsTo(Garage);
 
 Car.hasMany(Note);
+Note.belongsTo(Car);
 Car.hasMany(Paper);
+Paper.belongsTo(Car);
+
+//{as: 'teacher',foreignKey: 'teacherId'}
 
 module.exports = {
     Car,

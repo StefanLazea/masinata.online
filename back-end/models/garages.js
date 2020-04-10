@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true
             },
             'name': Sequelize.STRING,
-            'createdAt': { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
+            'createdAt': { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
         },
         {
             underscored: true

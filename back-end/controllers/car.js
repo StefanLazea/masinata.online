@@ -1,4 +1,5 @@
 const Car = require('../models').Car;
+const Garage = require('../models').Garage;
 
 const getCarsByUserId = async (req, res) => {
     let cars;
@@ -37,7 +38,6 @@ const saveCarForUser = async (req, res) => {
         year: req.body.year,
         eco: req.body.eco,
         userId: req.body.user_id,
-        garageId: req.body.garage_id
     }
     try {
         await Car.create(car);
@@ -47,8 +47,55 @@ const saveCarForUser = async (req, res) => {
     return res.status(200).send({ message: "Car created successfully" })
 }
 
+const addGarageToCar = async (req, res) => {
+    const carWithGarage = {
+        garageId: req.body.garage_id
+    }
+    await Car.update(
+        carWithGarage,
+        {
+            where:
+                { id: req.body.car_id }
+        }
+    ).then(res.status(200).send({ message: "Added the garage to car!" }));
+};
+
+const getCarsFromGarage = async (req, res) => {
+    console.log(req.params.id);
+    await Car.findAll({
+        include: [{
+            model: Garage,
+            where: { id: req.params.id }
+        }]
+    }).then(cars => {
+        return res.status(200).send(cars);
+    });
+
+    return res.status(500).send({ message: "Something went wrong" });
+};
+
+const updateCarById = async (req, res) => {
+    const car = {
+        lastname: req.body.lastname,
+        firstname: req.body.firstname,
+        address: req.body.address,
+        phone: req.body.phone,
+        secondAddress: req.body.second_address
+    }
+    await User.update(
+        userDetails,
+        {
+            where:
+                { id: req.params.id }
+        }
+    ).then(res.status(200).send({ message: "User details updated successfully!" }));
+}
+
 module.exports = {
     getCarsByUserId,
     getAllCars,
-    saveCarForUser
+    saveCarForUser,
+    addGarageToCar,
+    getCarsFromGarage,
+    updateCarById,
 }
