@@ -70,7 +70,7 @@ class Sidebar extends React.Component {
                 alt=""
               />
               <span className="text-white">
-                Licence
+                {process.env.REACT_APP_NAME}
               </span>
             </div>
           </Navbar>
