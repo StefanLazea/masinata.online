@@ -1,24 +1,23 @@
-import { AnnouncementCard } from '../components/Card';
-import Page from '../components/Page';
-import SupportTicket from '../components/SupportTicket';
+import { AnnouncementCard } from '../../components/Card';
+import Page from '../../components/Page';
+import SupportTicket from '../../components/SupportTicket';
 import {
   supportTicketsData,
-} from '../demos/dashboardPage';
+} from '../../demos/dashboardPage';
 import React from 'react';
 import {
   Button,
   Card,
   CardBody,
   CardHeader,
+  CardTitle,
+  CardSubtitle,
+  CardImg,
   Col,
-  Row,
+  Row
 } from 'reactstrap';
 
 export default class DashboardPage extends React.Component {
-  componentDidMount() {
-    // this is needed, because InfiniteCalendar forces window scroll
-    window.scrollTo(0, 0);
-  }
 
   render() {
     return (
@@ -28,7 +27,7 @@ export default class DashboardPage extends React.Component {
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
         <Row>
-          <Col lg="6" md="12" sm="12" xs="12">
+          <Col lg="4" md="12" sm="12" xs="12">
             <AnnouncementCard
               color="secondary"
               header="Announcement"
@@ -43,7 +42,29 @@ export default class DashboardPage extends React.Component {
             />
           </Col>
 
-          <Col lg="6" md="12" sm="12" xs="12">
+          <Col lg="4" md="12" sm="12" xs="12">
+            <Card>
+              <CardHeader>
+                <div className="d-flex align-items-center">
+                  <CardTitle><strong>AG 77 VOB</strong></CardTitle>
+                  <Button className="ml-auto btn-warning">
+                    <i className="fa fa-pencil"></i>
+                  </Button>
+                  <Button className="btn-danger">
+                    <i className="fa fa-trash"></i>
+                  </Button>
+                </div>
+                <CardSubtitle>VIN s4d5f67g980h9j</CardSubtitle>
+              </CardHeader>
+              <CardImg width="50%" height="50%" src="https://via.placeholder.com/75.png" alt="Card image cap" />
+
+              <CardBody>
+                <CardTitle>Dacia Logan</CardTitle>
+              </CardBody>
+            </Card>
+          </Col>
+
+          <Col lg="4" md="12" sm="12" xs="12">
             <Card>
               <CardHeader>
                 <div className="d-flex justify-content-between align-items-center">

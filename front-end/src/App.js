@@ -11,7 +11,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
-const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
+const DashboardPage = React.lazy(() => import('./pages/Dashboard/DashboardPage'));
 const UserProfilePage = React.lazy(() => import('./pages/UserProfilePage'));
 const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
 const TablePage = React.lazy(() => import('./pages/TablePage'));
