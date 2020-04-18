@@ -3,34 +3,39 @@ import PropTypes from '../../utils/propTypes';
 
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody } from 'reactstrap';
 
+
 const UserCard = ({
-    avatar,
-    avatarSize,
-    title,
-    subtitle,
-    text,
+    car_id,
+    brand,
+    model,
+    licence_plate,
+    vin,
+    year,
     ...restProps
 }) => {
+    const clickBtn = (e) => {
+        console.log(car_id);
+    }
 
     return (
         <Col lg="4" md="12" sm="12" xs="12">
             <Card>
                 <CardHeader>
                     <div className="d-flex align-items-center">
-                        <CardTitle><strong>AG 72 VOB</strong></CardTitle>
+                        <CardTitle><strong>{licence_plate}</strong></CardTitle>
                         <Button className="ml-auto btn-warning">
                             <i className="fa fa-pencil"></i>
                         </Button>
-                        <Button className="btn-danger">
+                        <Button className="btn-danger" onClick={(e) => { clickBtn(e) }}>
                             <i className="fa fa-trash"></i>
                         </Button>
                     </div>
-                    <CardSubtitle>VIN s4d5f67g980h9j</CardSubtitle>
+                    <CardSubtitle>VIN {vin}</CardSubtitle>
                 </CardHeader>
                 <CardImg width="50%" height="50%" src="https://via.placeholder.com/75.png" alt="Card image cap" />
 
                 <CardBody>
-                    <CardTitle>Dacia Logan</CardTitle>
+                    <CardTitle>{brand} {model}</CardTitle>
                 </CardBody>
             </Card>
         </Col>
