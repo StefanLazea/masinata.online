@@ -32,7 +32,7 @@ export default class DashboardPage extends React.Component {
       })
       .catch((err) => {
         if (err.response.status === 403) {
-          toast("Your session has expired. Please login!");
+          toast("Your session has expired. Please re-login!");
           this.setState({ hasTokenExpired: true });
         }
       });
