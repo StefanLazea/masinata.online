@@ -15,6 +15,7 @@ const DashboardPage = React.lazy(() => import('./pages/Dashboard/DashboardPage')
 const UserProfilePage = React.lazy(() => import('./pages/UserProfilePage'));
 const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
 const TablePage = React.lazy(() => import('./pages/TablePage'));
+const CarProfilePage = React.lazy(() => import('./pages/CarProfile/CarProfile'));
 
 toast.configure();
 const getBasename = () => {
@@ -50,6 +51,7 @@ class App extends React.Component {
               <Route exact path="/tables" component={RequireAuth(TablePage)} />
               <Route exact path="/user-profile" component={RequireAuth(UserProfilePage)} />
               <Route exact path="/input-groups" component={RequireAuth(InputGroupPage)} />
+              <Route exact path="/car-profile" component={RequireAuth(CarProfilePage)} />
             </React.Suspense>
           </MainLayout>
           <Redirect to="/" />

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from '../../utils/propTypes';
 
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom'
+import CarProfile from "../../pages/CarProfile/CarProfile"
 
-
-const UserCard = ({
+const CarDetailsCard = ({
     car_id,
     brand,
     model,
@@ -17,10 +18,14 @@ const UserCard = ({
         console.log(car_id);
     }
 
+    const redirectToProfile = (e) => {
+        console.log("aici")
+    }
+
     return (
         <Col lg="4" md="12" sm="12" xs="12">
             <Card>
-                <CardHeader>
+                <CardHeader onClick={(e) => { redirectToProfile(e) }}>
                     <div className="d-flex align-items-center">
                         <CardTitle><strong>{licence_plate}</strong></CardTitle>
                         <Button className="ml-auto btn-warning">
@@ -42,7 +47,7 @@ const UserCard = ({
     );
 };
 
-UserCard.propTypes = {
+CarDetailsCard.propTypes = {
     avatar: PropTypes.string,
     avatarSize: PropTypes.number,
     title: PropTypes.string,
@@ -51,8 +56,8 @@ UserCard.propTypes = {
     className: PropTypes.string,
 };
 
-UserCard.defaultProps = {
+CarDetailsCard.defaultProps = {
     avatarSize: 80,
 };
 
-export default UserCard;
+export default CarDetailsCard;

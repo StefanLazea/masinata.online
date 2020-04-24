@@ -37,6 +37,7 @@ export default class DashboardPage extends React.Component {
         }
       });
   }
+
   render() {
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
@@ -59,12 +60,14 @@ export default class DashboardPage extends React.Component {
             />)
             :
             <Col lg="4" md="12" sm="12" xs="12">
-              <Card>
-                <CardBody className="text-center">
-                  <CardTitle>Nu exista nici o masina!</CardTitle>
-                  <Button className="btn-success">Adauga masina</Button>
-                </CardBody>
-              </Card>
+              <div>
+                <Card>
+                  <CardBody className="text-center">
+                    <CardTitle>Nu exista nici o masina!</CardTitle>
+                    <Button className="btn-success">Adauga masina</Button>
+                  </CardBody>
+                </Card>
+              </div>
             </Col>
 
 
