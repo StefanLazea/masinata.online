@@ -4,7 +4,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle } from 'reactstrap';
 import PropTypes from '../../utils/propTypes';
 import Avatar from '../Avatar';
 
-const AvatarCard = ({
+export default function AvatarCard({
   avatar,
   avatarSize,
   title,
@@ -13,7 +13,7 @@ const AvatarCard = ({
   children,
   className,
   ...restProps
-}) => {
+}) {
   const classes = classNames('bg-theme-left', className);
 
   return (
@@ -45,5 +45,3 @@ AvatarCard.propTypes = {
 AvatarCard.defaultProps = {
   avatarSize: 80,
 };
-
-export default AvatarCard;

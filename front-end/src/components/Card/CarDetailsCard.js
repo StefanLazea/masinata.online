@@ -5,7 +5,7 @@ import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBo
 import { Link } from 'react-router-dom'
 import CarProfile from "../../pages/CarProfile/CarProfile"
 
-const CarDetailsCard = ({
+export default function CarDetailsCard({
     car_id,
     brand,
     model,
@@ -13,7 +13,7 @@ const CarDetailsCard = ({
     vin,
     year,
     ...restProps
-}) => {
+}) {
     const clickBtn = (e) => {
         console.log(car_id);
     }
@@ -60,4 +60,3 @@ CarDetailsCard.defaultProps = {
     avatarSize: 80,
 };
 
-export default CarDetailsCard;

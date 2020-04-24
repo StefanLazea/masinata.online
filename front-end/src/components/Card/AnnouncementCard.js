@@ -7,7 +7,7 @@ import Avatar from '../Avatar';
 
 import classNames from 'classnames';
 
-const AnnouncementCard = ({
+export default function AnnouncementCard({
   color,
   header,
   avatar,
@@ -18,7 +18,7 @@ const AnnouncementCard = ({
   className,
   buttonProps,
   ...restProps
-}) => {
+}) {
   const bgColor = `bg-${color}`;
   const classes = classNames(bgColor, className);
 
@@ -58,5 +58,3 @@ AnnouncementCard.defaultProps = {
   color: 'primary',
   avatarSize: 60,
 };
-
-export default AnnouncementCard;
