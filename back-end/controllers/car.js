@@ -74,6 +74,14 @@ const getCarsFromGarage = async (req, res) => {
     return res.status(500).send({ message: "Something went wrong" });
 };
 
+const getCarById = async (req, res) => {
+    let carFound = await Car.findByPk(req.params.id);
+    if (!carFound) {
+        return res.status(404).send({ message: "Car not found" });
+    }
+    return res.status(200).send({ message: carFound });
+}
+
 const updateCarById = async (req, res) => {
     let car = {
         model: req.body.model,
@@ -115,5 +123,6 @@ module.exports = {
     addGarageToCar,
     getCarsFromGarage,
     updateCarById,
+    getCarById,
     deleteCarById,
 }

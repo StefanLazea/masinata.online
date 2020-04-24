@@ -12,6 +12,14 @@ const getAllCars = () => {
         });
 };
 
+const getCarById = (id) => {
+    return Axios.get(`${getBasename()}/cars/${id}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+};
+
 module.exports = {
     getAllCars,
+    getCarById,
 };

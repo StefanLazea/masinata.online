@@ -25,7 +25,6 @@ export default class DashboardPage extends React.Component {
   }
 
   getCars = () => {
-    console.log(this.props)
     CarsService.getAllCars()
       .then((res) => {
         this.setState({ cars: res.data })
@@ -51,15 +50,16 @@ export default class DashboardPage extends React.Component {
       >
         <Row>
           {this.state.cars.length > 0 ?
-            this.state.cars.map(car => <CarDetailsCard
-              key={car.id}
-              car_id={car.id}
-              licence_plate={car.licence_plate}
-              model={car.model}
-              brand={car.brand}
-              vin={car.vin}
-              history={this.props.history}
-            />)
+            this.state.cars.map(car =>
+              <CarDetailsCard
+                key={car.id}
+                car_id={car.id}
+                licence_plate={car.licence_plate}
+                model={car.model}
+                brand={car.brand}
+                vin={car.vin}
+                history={this.props.history}
+              />)
             :
             <Col lg="4" md="12" sm="12" xs="12">
               <div>
