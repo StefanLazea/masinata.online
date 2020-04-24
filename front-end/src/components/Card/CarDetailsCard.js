@@ -1,10 +1,7 @@
-import React from 'react';
+import React from "react";
 import PropTypes from '../../utils/propTypes';
 
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody } from 'reactstrap';
-import { Link } from 'react-router-dom'
-import CarProfile from "../../pages/CarProfile/CarProfile"
-
 export default function CarDetailsCard({
     car_id,
     brand,
@@ -12,20 +9,22 @@ export default function CarDetailsCard({
     licence_plate,
     vin,
     year,
+    history,
     ...restProps
 }) {
     const clickBtn = (e) => {
-        console.log(car_id);
+        console.log(restProps)
+        console.log(car_id, redirectToProfile);
     }
-
     const redirectToProfile = (e) => {
-        console.log("aici")
+        history.push(`/car-profile/${car_id}`)
     }
 
-    return (
+    return (<>
+
         <Col lg="4" md="12" sm="12" xs="12">
             <Card>
-                <CardHeader onClick={(e) => { redirectToProfile(e) }}>
+                <CardHeader>
                     <div className="d-flex align-items-center">
                         <CardTitle><strong>{licence_plate}</strong></CardTitle>
                         <Button className="ml-auto btn-warning">
@@ -33,6 +32,9 @@ export default function CarDetailsCard({
                         </Button>
                         <Button className="btn-danger" onClick={(e) => { clickBtn(e) }}>
                             <i className="fa fa-trash"></i>
+                        </Button>
+                        <Button className="mr-auto btn-success" onClick={(e) => { redirectToProfile(e) }}>
+                            <i className="fa fa-eye"></i>
                         </Button>
                     </div>
                     <CardSubtitle>VIN {vin}</CardSubtitle>
@@ -44,6 +46,7 @@ export default function CarDetailsCard({
                 </CardBody>
             </Card>
         </Col>
+    </>
     );
 };
 
@@ -54,6 +57,7 @@ CarDetailsCard.propTypes = {
     subtitle: PropTypes.string,
     text: PropTypes.string,
     className: PropTypes.string,
+    history: PropTypes.object
 };
 
 CarDetailsCard.defaultProps = {

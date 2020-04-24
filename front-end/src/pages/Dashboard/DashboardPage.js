@@ -25,6 +25,7 @@ export default class DashboardPage extends React.Component {
   }
 
   getCars = () => {
+    console.log(this.props)
     CarsService.getAllCars()
       .then((res) => {
         this.setState({ cars: res.data })
@@ -57,6 +58,7 @@ export default class DashboardPage extends React.Component {
               model={car.model}
               brand={car.brand}
               vin={car.vin}
+              history={this.props.history}
             />)
             :
             <Col lg="4" md="12" sm="12" xs="12">
