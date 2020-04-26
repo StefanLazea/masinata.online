@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from '../../utils/propTypes';
-
-import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody } from 'reactstrap';
+import PropTypes from '../../../utils/propTypes';
+import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody, Badge } from 'reactstrap';
+import './CarDetailsCard.css'
 export default function CarDetailsCard({
     car_id,
     brand,
@@ -42,7 +42,15 @@ export default function CarDetailsCard({
                     <CardImg width="50%" height="50%" src="https://via.placeholder.com/75.png" alt="Card image cap" />
 
                     <CardBody>
-                        <CardTitle>{brand} {model}</CardTitle>
+                        <div className="d-flex align-items-center">
+                            <CardTitle>
+                                {brand} {model}
+                            </CardTitle>
+                            <Badge color="success" pill className="ml-auto">ITP</Badge>
+                            <Badge color="warning" pill className="mr-1">RCA</Badge>
+                            <Badge color="danger" pill className="mr-1">Rovigneta</Badge>
+                        </div>
+
                     </CardBody>
                 </Card>
             </Col>
