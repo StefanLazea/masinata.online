@@ -1,7 +1,7 @@
-import Page from '../components/Page';
+import Page from '../../components/Page';
 import React from 'react';
 import { Redirect } from "react-router-dom";
-import CarsService from '../services/CarsService.js';
+import CarsService from '../../services/CarsService.js';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { Badge } from "reactstrap";

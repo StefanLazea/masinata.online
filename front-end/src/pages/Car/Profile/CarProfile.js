@@ -1,7 +1,7 @@
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import { Row, Col } from 'reactstrap';
 import React from 'react';
-import CarsService from '../../services/CarsService';
+import CarsService from '../../../services/CarsService';
 import { toast } from 'react-toastify';
 
 export default class CarProfile extends React.Component {

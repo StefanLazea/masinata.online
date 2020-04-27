@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
             vin: Sequelize.STRING,
             engine_type: Sequelize.STRING,
             year: Sequelize.INTEGER,
-            eco: Sequelize.BOOLEAN
+            eco: Sequelize.BOOLEAN,
+            avatar_photo: Sequelize.STRING
         },
         {
             underscored: true

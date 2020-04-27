@@ -14,8 +14,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const DashboardPage = React.lazy(() => import('./pages/Dashboard/DashboardPage'));
 const UserProfilePage = React.lazy(() => import('./pages/UserProfilePage'));
 const InputGroupPage = React.lazy(() => import('./pages/InputGroupPage'));
-const TablePage = React.lazy(() => import('./pages/TablePage'));
-const CarProfilePage = React.lazy(() => import('./pages/CarProfile/CarProfile'));
+const TablePage = React.lazy(() => import('./pages/Car/TableListingPage'));
+const CarProfilePage = React.lazy(() => import('./pages/Car/Profile/CarProfile'));
 
 toast.configure();
 const getBasename = () => {
