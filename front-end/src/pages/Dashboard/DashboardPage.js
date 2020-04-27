@@ -47,6 +47,7 @@ export default class DashboardPage extends React.Component {
         className="DashboardPage"
         title="Dashboard"
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
+        addCar={true}
       >
         <Row>
           {this.state.cars.length > 0 ?

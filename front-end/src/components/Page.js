@@ -3,20 +3,21 @@ import PropTypes from '../utils/propTypes';
 
 import bn from '../utils/bemnames';
 
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 
 import Typography from './Typography';
 
 const bem = bn.create('page');
 
-const Page = ({
+export default function Page({
   title,
   breadcrumbs,
   tag: Tag,
   className,
   children,
+  addCar,
   ...restProps
-}) => {
+}) {
   const classes = bem.b('px-3', className);
 
   return (
@@ -40,6 +41,10 @@ const Page = ({
               ))}
           </Breadcrumb>
         )}
+        {addCar ?
+          <Button className="btn-success ml-auto" onClick={(e) => console.log(restProps)}>Adauga o masina</Button>
+          : null
+        }
       </div>
       {children}
     </Tag>
@@ -57,11 +62,11 @@ Page.propTypes = {
       active: PropTypes.bool,
     })
   ),
+  addCar: PropTypes.bool
 };
 
 Page.defaultProps = {
   tag: 'div',
   title: '',
+  addCar: false
 };
-
-export default Page;

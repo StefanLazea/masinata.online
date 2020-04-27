@@ -27,7 +27,7 @@ const getAllCars = async (req, res) => {
     return res.status(200).send(carsFound);
 };
 
-const saveCarForUser = async (req, res) => {
+const createCar = async (req, res) => {
     let car = {
         model: req.body.model,
         brand: req.body.brand,
@@ -119,7 +119,7 @@ const deleteCarById = async (req, res) => {
 module.exports = {
     getCarsByUserId,
     getAllCars,
-    saveCarForUser,
+    createCar,
     addGarageToCar,
     getCarsFromGarage,
     updateCarById,
