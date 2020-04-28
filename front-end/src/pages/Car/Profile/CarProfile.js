@@ -16,15 +16,19 @@ import {
 import React from 'react';
 import CarsService from '../../../services/CarsService';
 import { toast } from 'react-toastify';
+import './CarProfile.css';
 
 export default class CarProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            car: null
+            car: {}
         }
-        this.getCarsById();
         console.log("aici")
+    }
+
+    componentDidMount = () => {
+        this.getCarsById();
     }
 
     getCarsById = () => {
@@ -32,7 +36,7 @@ export default class CarProfile extends React.Component {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
                 this.setState({ car: res.data.message });
-                console.log(res.data)
+                console.log(this.state.car.licence_plate)
             })
             .catch((err) => {
                 if (err.response.status === 403) {
@@ -48,13 +52,19 @@ export default class CarProfile extends React.Component {
                 title="Car Profile"
                 breadcrumbs={[{ name: 'Car Profile', active: true }]}
             >
-
                 <Row>
                     <Col className="col-xs-12 col-sm-12 col-md-12">
                         <Card>
                             <CardHeader>
                                 <CardTitle>
-                                    <Badge color="light"><h4>AG 72 VOB</h4></Badge>
+                                    <div className="d-flex align-items-center">
+                                        <Badge color="primary">
+                                            <span className="pb-2 align-middle badge-text-size">{this.state.car.licence_plate}
+                                            </span>
+                                        </Badge>
+                                        <Badge color="success" className="ml-auto">{this.state.car.vin}</Badge>
+                                    </div>
+
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
