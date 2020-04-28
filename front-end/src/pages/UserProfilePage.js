@@ -179,7 +179,7 @@ export default class UserProfilePage extends React.Component {
                         This is some placeholder block-level help text for the
                         above input. It's a bit lighter and easily wraps to a new
                         line.
-                    </FormText>
+                      </FormText>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
