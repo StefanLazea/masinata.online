@@ -16,6 +16,7 @@ export default function Page({
   className,
   children,
   addCar,
+  history,
   ...restProps
 }) {
   const classes = bem.b('px-3', className);
@@ -42,7 +43,7 @@ export default function Page({
           </Breadcrumb>
         )}
         {addCar ?
-          <Button className="btn-success ml-auto" onClick={(e) => console.log(restProps)}>Adauga o masina</Button>
+          <Button className="btn-success ml-auto" onClick={(e) => history.push('/car-profile')}>Adauga o masina</Button>
           : null
         }
       </div>
@@ -62,7 +63,8 @@ Page.propTypes = {
       active: PropTypes.bool,
     })
   ),
-  addCar: PropTypes.bool
+  addCar: PropTypes.bool,
+  history: PropTypes.object,
 };
 
 Page.defaultProps = {

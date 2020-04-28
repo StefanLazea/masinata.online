@@ -42,12 +42,14 @@ export default class DashboardPage extends React.Component {
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
     }
+
     return (
       <Page
         className="DashboardPage"
         title="Dashboard"
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
         addCar={true}
+        history={this.props.history}
       >
         <Row>
           {this.state.cars.length > 0 ?

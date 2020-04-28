@@ -51,6 +51,7 @@ class App extends React.Component {
               <Route exact path="/tables" component={RequireAuth(TablePage)} />
               <Route exact path="/user-profile" component={RequireAuth(UserProfilePage)} />
               <Route exact path="/input-groups" component={RequireAuth(InputGroupPage)} />
+              <Route exact path="/car-profile" component={RequireAuth(CarProfilePage)} />
               <Route exact path="/car-profile/:id" component={RequireAuth(CarProfilePage)} />
             </React.Suspense>
           </MainLayout>

@@ -11,6 +11,7 @@ export default class CarProfile extends React.Component {
             car: null
         }
         this.getCarsById();
+        console.log("aici")
     }
 
     getCarsById = () => {
@@ -29,7 +30,6 @@ export default class CarProfile extends React.Component {
     }
     render() {
         return (
-
             <Page
                 className="CarProfile"
                 title="Car Profile"
