@@ -48,7 +48,7 @@ export default class DashboardPage extends React.Component {
         className="DashboardPage"
         title="Dashboard"
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
-        addCar={true}
+        addCarButton={true}
         history={this.props.history}
       >
         <Row>

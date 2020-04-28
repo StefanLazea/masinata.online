@@ -1,5 +1,18 @@
 import Page from '../../../components/Page';
-import { Row, Col } from 'reactstrap';
+import {
+    Row,
+    Col,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Badge,
+    Label,
+    Input,
+    FormGroup,
+} from 'reactstrap';
+
+
 import React from 'react';
 import CarsService from '../../../services/CarsService';
 import { toast } from 'react-toastify';
@@ -37,7 +50,29 @@ export default class CarProfile extends React.Component {
             >
 
                 <Row>
-                    <Col>
+                    <Col className="col-xs-12 col-sm-12 col-md-12">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    <Badge color="light"><h4>AG 72 VOB</h4></Badge>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardBody>
+                                <Row>
+                                    <Col md={6}>
+                                        <FormGroup row>
+                                            <Label for="exampleEmail" sm={2}>Email</Label>
+                                            <Col>
+                                                <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+                                            </Col>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col className="col-xs-6 col-sm-6 col-md-6">
+                                        <img className="img-fluid rounded mx-auto d-block" src="https://via.placeholder.com/375.png" alt="Card cap" />
+                                    </Col>
+                                </Row>
+                            </CardBody>
+                        </Card>
                     </Col>
                 </Row>
             </Page>
