@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             vin: Sequelize.STRING,
             engine_type: Sequelize.STRING,
             year: Sequelize.INTEGER,
+            pollution_grade: Sequelize.STRING,
             eco: Sequelize.BOOLEAN,
             avatar_photo: Sequelize.STRING
         },

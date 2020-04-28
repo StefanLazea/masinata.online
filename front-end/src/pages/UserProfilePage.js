@@ -120,7 +120,6 @@ export default class UserProfilePage extends React.Component {
                           name="lastname"
                           defaultValue={this.state.user.lastname}
                           onChange={this.handleChange}
-                        // placeholder={this.state.user.lastname ? this.state.user.lastname : "Add lastname"} 
                         />
                       </FormGroup>
                     </Col>

@@ -1,7 +1,14 @@
 .badge-text-size {
-    font-size: 1.2rem !important;
+    font-size: 1.2rem;
 }
 
 .card {
     margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 420px) {
+   
+    .badge-success {
+        font-size: 70% !important;
+    }
 }

@@ -10,6 +10,7 @@ import {
     Label,
     Input,
     FormGroup,
+    Button,
 } from 'reactstrap';
 
 
@@ -22,13 +23,20 @@ export default class CarProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            car: {}
+            car: {},
         }
     }
 
     componentDidMount = () => {
         this.getCarsById();
     }
+
+    handleChange = (e) => {
+        const car = { ...this.state.car, [e.target.name]: e.target.value }
+        this.setState(() => ({ car }))
+        console.log(this.state.car)
+    }
+
 
     getCarsById = () => {
         CarsService.getCarById(this.props.match.params.id)
@@ -66,22 +74,95 @@ export default class CarProfile extends React.Component {
                             <CardBody>
                                 <Row>
                                     <Col md={6}>
-                                        <FormGroup row>
-                                            <Label for="exampleEmail" sm={2}>Email</Label>
-                                            <Col>
-                                                <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-                                            </Col>
+                                        <FormGroup>
+                                            <Row>
+                                                <Label for="model" sm={2}>Model</Label>
+                                                <Col>
+                                                    <Input
+                                                        type="text"
+                                                        name="model"
+                                                        id="model"
+                                                        defaultValue={this.state.car.model}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                                <Label for="brand" sm={2}>Marca</Label>
+                                                <Col>
+                                                    <Input
+                                                        type="text"
+                                                        name="brand"
+                                                        id="brand"
+                                                        defaultValue={this.state.car.brand}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Label for="type" sm={2}>Tip</Label>
+                                                <Col>
+                                                    <Input
+                                                        type="text"
+                                                        name="type"
+                                                        id="type"
+                                                        defaultValue={this.state.car.type}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                                <Label for="year" sm={2}>An</Label>
+                                                <Col>
+                                                    <Input
+                                                        type="text"
+                                                        name="year"
+                                                        id="year"
+                                                        defaultValue={this.state.car.year}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Label for="engine_type" sm={2}>Combustibil</Label>
+                                                <Col>
+                                                    <Input
+                                                        type="text"
+                                                        name="engine_type"
+                                                        id="engine_type"
+                                                        defaultValue={this.state.car.engine_type}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                                <Label for="eco" sm={2}>Norma</Label>
+                                                <Col>
+                                                    <Input
+                                                        type="text"
+                                                        name="eco"
+                                                        id="eco"
+                                                        defaultValue={this.state.car.pollution_grade}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                            </Row>
                                         </FormGroup>
+
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
                                         <img className="img-fluid rounded mx-auto d-block" src="https://via.placeholder.com/370.png" alt="Card cap" />
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col md={6}>
-                                        <h5>face parte din garaj</h5>
-                                    </Col>
-                                </Row>
+                                {this.state.car.garageId
+                                    ?
+                                    <Row>
+                                        <Col md={6}>
+                                            <h5>face parte din garaj</h5>
+                                        </Col>
+                                    </Row>
+                                    :
+                                    <Row>
+                                        <Col md={12} className="d-flex align-items-center">
+                                            <h5 className="mx-auto">Adauga masina la un garaj</h5>
+                                        </Col>
+                                    </Row>
+                                }
+
                             </CardBody>
                         </Card>
                         <Card>
@@ -114,6 +195,13 @@ export default class CarProfile extends React.Component {
                             </CardHeader>
                             <CardBody>
                             </CardBody>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    <Button className="d-flex mx-auto">Salveaza modificarile</Button>
+                                </CardTitle>
+                            </CardHeader>
                         </Card>
                     </Col>
                 </Row>
