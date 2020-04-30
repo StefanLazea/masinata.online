@@ -12,7 +12,7 @@ export default function CarDetailsCard({
     history,
     ...restProps
 }) {
-    const clickBtn = (e) => {
+    const deleteCar = (e) => {
         console.log(restProps)
         console.log(car_id, redirectToProfile);
     }
@@ -30,7 +30,7 @@ export default function CarDetailsCard({
                             <Button className="ml-auto btn-warning">
                                 <i className="fa fa-pencil"></i>
                             </Button>
-                            <Button className="btn-danger" onClick={(e) => { clickBtn(e) }}>
+                            <Button className="btn-danger" onClick={(e) => { deleteCar(e) }}>
                                 <i className="fa fa-trash"></i>
                             </Button>
                             <Button className="btn-success" onClick={(e) => { redirectToProfile(e) }}>

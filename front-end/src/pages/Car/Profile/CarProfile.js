@@ -15,7 +15,7 @@ import {
 
 
 import React from 'react';
-import CarsService from '../../../services/CarsService';
+import CarsService from '../../../services/CarsService.js';
 import { toast } from 'react-toastify';
 import './CarProfile.css';
 
@@ -121,7 +121,7 @@ export default class CarProfile extends React.Component {
                                             </Row>
                                             <Row>
                                                 <Label for="engine_type" sm={3}>Combustibil</Label>
-                                                <Col>
+                                                <Col sm={3}>
                                                     <Input
                                                         type="text"
                                                         name="engine_type"

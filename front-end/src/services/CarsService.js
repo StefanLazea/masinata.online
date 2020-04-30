@@ -19,7 +19,18 @@ const getCarById = (id) => {
         });
 };
 
+const createCar = (data) => {
+    return Axios.post(`${getBasename()}/cars`, JSON.stringify(data),
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
+
 module.exports = {
+    createCar,
     getAllCars,
-    getCarById,
+    getCarById
 };

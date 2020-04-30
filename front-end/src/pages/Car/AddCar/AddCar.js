@@ -10,10 +10,8 @@ import {
     Button,
     FormText
 } from 'reactstrap';
-
-
+import CarsService from '../../../services/CarsService.js';
 import React from 'react';
-import CarsService from '../../../services/CarsService';
 import { toast } from 'react-toastify';
 
 export default class AddCar extends React.Component {
@@ -24,30 +22,26 @@ export default class AddCar extends React.Component {
         }
     }
 
-    componentDidMount = () => {
-        this.getCarsById();
-    }
-
     handleChange = (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
         this.setState(() => ({ car }))
         console.log(this.state.car)
     }
 
-
-    getCarsById = () => {
-        CarsService.getCarById(this.props.match.params.id)
-            .then((res) => {
-                this.setState({ car: res.data.message });
-                console.log(res.data.message)
-            })
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        CarsService.createCar(this.state.car)
+            .then((res) => { console.log(res) })
             .catch((err) => {
+                console.log(err)
+                toast("An error occurred, please try later!");
                 if (err.response.status === 403) {
                     toast("Your session has expired. Please login!");
                     this.setState({ hasTokenExpired: true });
                 }
             });
     }
+
     render() {
         return (
             <Page
@@ -129,8 +123,8 @@ export default class AddCar extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Label for="engine_type" sm={2}>Combustibil</Label>
-                                                <Col>
+                                                <Label for="engine_type" sm={3}>Combustibil</Label>
+                                                <Col sm={3}>
                                                     <Input
                                                         type="text"
                                                         name="engine_type"
@@ -168,7 +162,7 @@ export default class AddCar extends React.Component {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Button className="mx-auto">Salveaza masina</Button>
+                                    <Button className="mx-auto" onClick={(e) => { this.handleSubmit(e) }}>Salveaza masina</Button>
                                 </Row>
                             </CardBody>
                         </Card>

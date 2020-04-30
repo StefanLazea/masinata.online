@@ -221,7 +221,7 @@ export default class UserProfilePage extends React.Component {
                   </Row>
                   <FormGroup row>
                     <Col className="text-center">
-                      <Button onClick={(e) => { this.handleSubmit(e) }}>Save</Button>
+                      <Button onClick={(e) => { this.handleSubmit(e) }}>Salveaza</Button>
                     </Col>
                   </FormGroup>
                 </Form>
