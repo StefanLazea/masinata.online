@@ -1,4 +1,5 @@
 import Page from '../../../components/Page';
+import { Redirect } from "react-router-dom";
 import {
     Row,
     Col,
@@ -24,6 +25,7 @@ export default class CarProfile extends React.Component {
         super(props);
         this.state = {
             car: {},
+            hasTokenExpired: false
         }
     }
 
@@ -52,6 +54,9 @@ export default class CarProfile extends React.Component {
             });
     }
     render() {
+        if (this.state.hasTokenExpired) {
+            return <Redirect to="/login" />
+        }
         return (
             <Page
                 className="CarProfile"

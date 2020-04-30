@@ -10,6 +10,7 @@ import {
     Button,
     FormText
 } from 'reactstrap';
+import { Redirect } from "react-router-dom";
 import CarsService from '../../../services/CarsService.js';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -19,6 +20,7 @@ export default class AddCar extends React.Component {
         super(props);
         this.state = {
             car: {},
+            hasTokenExpired: false
         }
     }
 
@@ -43,6 +45,9 @@ export default class AddCar extends React.Component {
     }
 
     render() {
+        if (this.state.hasTokenExpired === true) {
+            return <Redirect to="/login" />
+        }
         return (
             <Page
                 className="AddCar"
