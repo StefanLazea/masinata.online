@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from '../../../utils/propTypes';
+import { toast } from 'react-toastify';
+import CarsService from '../../../services/CarsService';
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody, Badge } from 'reactstrap';
 import './CarDetailsCard.css'
 export default function CarDetailsCard({
@@ -13,8 +15,16 @@ export default function CarDetailsCard({
     ...restProps
 }) {
     const deleteCar = (e) => {
-        console.log(restProps)
-        console.log(car_id, redirectToProfile);
+        CarsService.deleteCar(car_id).then((response) => {
+            toast(response.data.message)
+        }).catch((err) => {
+            console.log(err)
+            toast("An error occurred, please try later!");
+            if (err.response.status === 403) {
+                toast("Your session has expired. Please login!");
+                this.setState({ hasTokenExpired: true });
+            }
+        });;
     }
     const redirectToProfile = (e) => {
         history.push(`/car-profile/${car_id}`)

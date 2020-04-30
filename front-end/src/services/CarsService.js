@@ -29,8 +29,19 @@ const createCar = (data) => {
         });
 }
 
+const deleteCar = (id) => {
+    return Axios.delete(`${getBasename()}/cars/${id}`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
+
 module.exports = {
     createCar,
     getAllCars,
-    getCarById
+    getCarById,
+    deleteCar
 };
