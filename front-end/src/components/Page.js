@@ -39,7 +39,7 @@ export default function Page({
           </Breadcrumb>
         )}
         {addCarButton ?
-          <Button className="btn-success ml-auto" onClick={(e) => history.push("/car-profile")}>Adauga o masina</Button>
+          <Button className="btn-success ml-auto" onClick={(e) => history.push("/add/car")}>Adauga o noua masina</Button>
           : null
         }
       </div>

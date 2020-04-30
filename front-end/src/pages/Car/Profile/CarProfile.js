@@ -120,7 +120,7 @@ export default class CarProfile extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Label for="engine_type" sm={2}>Combustibil</Label>
+                                                <Label for="engine_type" sm={3}>Combustibil</Label>
                                                 <Col>
                                                     <Input
                                                         type="text"
