@@ -18,7 +18,9 @@ app.use(cors());
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();
 
-app.use('/', routes);
+app.use('/', express.static('../frontend/build'));
+
+app.use('/api', routes);
 
 app.listen(PORT, () => {
     console.log(`App started on http://localhost:${PORT}`);
