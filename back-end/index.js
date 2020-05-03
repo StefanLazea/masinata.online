@@ -18,7 +18,7 @@ app.use(cors());
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();
 
-app.use('/', express.static('../frontend/build'));
+app.use('/', express.static('../front-end/build'));
 
 app.use('/api', routes);
 
