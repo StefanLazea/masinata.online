@@ -4,14 +4,13 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors')
 const model = require('./models');
 const routes = require('./routes');
-const PORT = require("./configuration.json").port;
-const COOKIE_SECRET = require("./configuration.json").cookie_secret;
+const dotenv = require('dotenv')
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cookieParser(COOKIE_SECRET));
-
+app.use(cookieParser(process.env.COOKIE_SECRET));
+dotenv.config();
 
 app.use(cors());
 
@@ -22,6 +21,6 @@ app.use('/', express.static('../front-end/build'));
 
 app.use('/api', routes);
 
-app.listen(PORT, () => {
-    console.log(`App started on http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`App started on http://localhost:${process.env.PORT}`);
 });

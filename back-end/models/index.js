@@ -16,8 +16,6 @@ Note.belongsTo(Car);
 Car.hasMany(Paper);
 Paper.belongsTo(Car);
 
-//{as: 'teacher',foreignKey: 'teacherId'}
-
 module.exports = {
     Car,
     Note,

@@ -1,8 +1,11 @@
 const User = require("../models").User;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const TOKEN_SECRET = require("../configuration.json").token_secret;
 const Role = require("../helpers/role");
+const dotenv = require('dotenv');
+dotenv.config();
+
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const register = async (res, credentials) => {
     let userFound = await findUserByEmail(credentials.email);

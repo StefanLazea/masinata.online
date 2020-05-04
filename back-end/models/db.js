@@ -1,12 +1,11 @@
 let Sequelize = require('sequelize');
-const DB_NAME = require('../configuration.json').name_db;
-const DB_USER = require('../configuration.json').user_db;
-const DB_PASSWORD = require('../configuration.json').pass_db;
+let dotenv = require('dotenv');
+dotenv.config();
 
 const sequelize = new Sequelize(
-    DB_NAME,
-    DB_USER,
-    DB_PASSWORD,
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
     {
         dialect: 'mysql',
         host: 'localhost',

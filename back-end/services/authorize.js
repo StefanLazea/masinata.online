@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
-const secret = require('../configuration.json').token_secret;
+const dotenv = require('dotenv');
+dotenv.config();
+
+const secret = process.env.TOKEN_SECRET;
 
 function authorize(roles = []) {
     // roles param can be a single role string (e.g. Role.User or 'User') 

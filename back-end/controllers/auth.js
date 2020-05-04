@@ -4,7 +4,6 @@ const UserService = require("../services/users");
 const TokenService = require("../services/token");
 const { validateUser } = require("../helpers/validation/user");
 const { findUserByEmail } = require("../services/users");
-const TOKEN_SECRET = require("../configuration.json").token_secret;
 
 const register = async (req, res) => {
     let credentials = {
