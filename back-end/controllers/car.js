@@ -36,6 +36,7 @@ const createCar = async (req, res) => {
         vin: req.body.vin,
         engine_type: req.body.engine_type,
         year: req.body.year,
+        pollution_grade: req.body.pollution_grade,
         eco: req.body.eco,
         userId: req.body.user_id,
     }
@@ -90,6 +91,7 @@ const updateCarById = async (req, res) => {
         licence_plate: req.body.licence_plate,
         vin: req.body.vin,
         engine_type: req.body.engine_type,
+        pollution_grade: req.body.pollution_grade,
         year: req.body.year,
         eco: req.body.eco,
     }
