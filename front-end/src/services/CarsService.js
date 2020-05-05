@@ -1,5 +1,5 @@
 const Axios = require('axios');
-const { getToken } = require("./Token.js");
+const { getToken, getUserId } = require("./Token.js");
 
 const getBasename = () => {
     return process.env.REACT_APP_BACK_END_URL;
@@ -11,6 +11,14 @@ const getAllCars = () => {
             headers: { "Authorization": getToken() }
         });
 };
+
+const getAllCarsByUserId = () => {
+    console.log("auici")
+    return Axios.get(`${getBasename()}/cars/user/${getUserId()}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+}
 
 const getCarById = (id) => {
     return Axios.get(`${getBasename()}/cars/${id}`,
@@ -52,6 +60,7 @@ const deleteCar = (id) => {
 module.exports = {
     createCar,
     getAllCars,
+    getAllCarsByUserId,
     getCarById,
     deleteCar,
     updateCar,

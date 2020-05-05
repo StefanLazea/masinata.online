@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 import CarsService from '../../../services/CarsService.js';
+import TokenService from '../../../services/Token.js';
 import React from 'react';
 import { toast } from 'react-toastify';
 
@@ -34,7 +35,8 @@ export default class AddCar extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        CarsService.createCar(this.state.car)
+        const car = { ...this.state.car, "user_id": TokenService.getUserId() }
+        CarsService.createCar(car)
             .then((res) => {
                 toast(res.data.message);
                 this.setState({ redirectToDashboard: true });

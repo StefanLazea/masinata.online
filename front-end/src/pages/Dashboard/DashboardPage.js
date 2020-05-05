@@ -26,7 +26,7 @@ export default class DashboardPage extends React.Component {
   }
 
   getCars = () => {
-    CarsService.getAllCars()
+    CarsService.getAllCarsByUserId()
       .then((res) => {
         this.setState({ cars: res.data })
         console.log(res.data)
