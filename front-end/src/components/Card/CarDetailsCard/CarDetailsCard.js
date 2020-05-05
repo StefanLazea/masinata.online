@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from '../../../utils/propTypes';
-import { toast } from 'react-toastify';
-import CarsService from '../../../services/CarsService';
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody, Badge } from 'reactstrap';
 import './CarDetailsCard.css'
 export default function CarDetailsCard({
@@ -12,20 +10,10 @@ export default function CarDetailsCard({
     vin,
     year,
     history,
+    onItemClickDeleteCar,
     ...restProps
 }) {
-    const deleteCar = (e) => {
-        CarsService.deleteCar(car_id).then((response) => {
-            toast(response.data.message)
-        }).catch((err) => {
-            console.log(err)
-            toast("An error occurred, please try later!");
-            if (err.response.status === 403) {
-                toast("Your session has expired. Please login!");
-                this.setState({ hasTokenExpired: true });
-            }
-        });;
-    }
+
     const redirectToProfile = (e) => {
         history.push(`/car-profile/${car_id}`)
     }
@@ -40,7 +28,7 @@ export default function CarDetailsCard({
                             <Button className="ml-auto btn-warning">
                                 <i className="fa fa-pencil"></i>
                             </Button>
-                            <Button className="btn-danger" onClick={(e) => { deleteCar(e) }}>
+                            <Button className="btn-danger" onClick={(e) => { onItemClickDeleteCar(e, car_id) }}>
                                 <i className="fa fa-trash"></i>
                             </Button>
                             <Button className="btn-success" onClick={(e) => { redirectToProfile(e) }}>
@@ -75,7 +63,7 @@ CarDetailsCard.propTypes = {
     subtitle: PropTypes.string,
     text: PropTypes.string,
     className: PropTypes.string,
-    history: PropTypes.object
+    history: PropTypes.object,
 };
 
 CarDetailsCard.defaultProps = {

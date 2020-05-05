@@ -20,8 +20,8 @@ export default class DashboardPage extends React.Component {
     this.state = {
       cars: [],
       hasTokenExpired: false,
+      isDeleteButtonClicked: false
     }
-    this.getCars();
   }
 
   getCars = () => {
@@ -36,6 +36,24 @@ export default class DashboardPage extends React.Component {
           this.setState({ hasTokenExpired: true });
         }
       });
+  }
+
+  onItemClickDeleteCar = (e, car_id) => {
+    CarsService.deleteCar(car_id).then((response) => {
+      toast(response.data.message);
+      this.getCars();
+    }).catch((err) => {
+      console.log(err)
+      toast("An error occurred, please try later!");
+      if (err.response.status === 403) {
+        toast("Your session has expired. Please login!");
+        this.setState({ hasTokenExpired: true });
+      }
+    });
+  };
+
+  componentDidMount() {
+    this.getCars();
   }
 
   render() {
@@ -62,6 +80,7 @@ export default class DashboardPage extends React.Component {
                 brand={car.brand}
                 vin={car.vin}
                 history={this.props.history}
+                onItemClickDeleteCar={this.onItemClickDeleteCar}
               />)
             :
             <Col lg="4" md="12" sm="12" xs="12">
@@ -74,8 +93,6 @@ export default class DashboardPage extends React.Component {
                 </Card>
               </div>
             </Col>
-
-
           }
         </Row>
       </Page>
