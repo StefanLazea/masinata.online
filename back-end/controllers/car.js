@@ -22,7 +22,7 @@ const getAllCars = async (req, res) => {
         await Car.findAll().then((cars) => carsFound = cars);
     }
     catch (err) {
-        return res.status(409).send({ message: "No elements found in the database" });
+        return res.status(409).send({ message: "No elements found in the database", err });
     }
     return res.status(200).send(carsFound);
 };

@@ -7,7 +7,6 @@ import {
   MdDashboard,
   MdExtension,
   MdKeyboardArrowDown,
-  MdViewList,
   MdPerson,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
@@ -27,7 +26,6 @@ const sidebarBackground = {
 
 const navComponents = [
   { to: '/user-profile', name: 'User profile', exact: false, Icon: MdPerson },
-  { to: '/input-groups', name: 'input groups', exact: false, Icon: MdViewList },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
   { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle }
 ];

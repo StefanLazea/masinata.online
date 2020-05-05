@@ -8,7 +8,7 @@ import {
     Input,
     FormGroup,
     Button,
-    FormText
+    FormText,
 } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 import CarsService from '../../../services/CarsService.js';
@@ -20,7 +20,9 @@ export default class AddCar extends React.Component {
         super(props);
         this.state = {
             car: {},
-            hasTokenExpired: false
+            hasTokenExpired: false,
+            redirectToDashboard: false,
+            dropdownOpen: false
         }
     }
 
@@ -33,7 +35,10 @@ export default class AddCar extends React.Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         CarsService.createCar(this.state.car)
-            .then((res) => { console.log(res) })
+            .then((res) => {
+                toast(res.data.message);
+                this.setState({ redirectToDashboard: true });
+            })
             .catch((err) => {
                 console.log(err)
                 toast("An error occurred, please try later!");
@@ -45,8 +50,11 @@ export default class AddCar extends React.Component {
     }
 
     render() {
-        if (this.state.hasTokenExpired === true) {
+        if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
+        }
+        if (this.state.redirectToDashboard) {
+            return <Redirect to="/" />
         }
         return (
             <Page
@@ -106,15 +114,20 @@ export default class AddCar extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Label for="type" sm={2}>Tip</Label>
-                                                <Col>
+                                                <Label for="type" sm={3}>Caroserie</Label>
+                                                <Col sm={3}>
                                                     <Input
-                                                        type="text"
+                                                        type="select"
                                                         name="type"
                                                         id="type"
-                                                        defaultValue={this.state.car.type}
                                                         onChange={this.handleChange}
-                                                    />
+                                                    >
+                                                        <option value="Sedan">Berlina</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Suv">SUV</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Cabriolet">Cabriolet</option>
+                                                    </Input>
                                                 </Col>
                                                 <Label for="year" sm={2}>An</Label>
                                                 <Col>
@@ -138,16 +151,39 @@ export default class AddCar extends React.Component {
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
-                                                <Label for="eco" sm={2}>Norma</Label>
+                                                <Label for="pollution_grade" sm={2}>Norma</Label>
                                                 <Col>
                                                     <Input
                                                         type="text"
-                                                        name="eco"
-                                                        id="eco"
+                                                        name="pollution_grade"
+                                                        id="pollution_grade"
                                                         defaultValue={this.state.car.pollution_grade}
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
+                                            </Row>
+                                            <Row>
+                                                <Label for="engine_capacity" sm={3}>Capacitate cilindrica</Label>
+                                                <Col sm={3}>
+                                                    <Input
+                                                        type="text"
+                                                        name="engine_capacity"
+                                                        id="engine_capacity"
+                                                        defaultValue={this.state.car.engine_capacity}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                                <Label for="mileage" sm={3}>Kilometraj</Label>
+                                                <Col sm={3}>
+                                                    <Input
+                                                        type="text"
+                                                        name="mileage"
+                                                        id="mileage"
+                                                        defaultValue={this.state.car.mileage}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+
                                             </Row>
                                             <Col sm={10}>
                                                 <Input type="file" name="file" />

@@ -20,7 +20,8 @@ export default class DashboardPage extends React.Component {
     this.state = {
       cars: [],
       hasTokenExpired: false,
-      isDeleteButtonClicked: false
+      isDeleteButtonClicked: false,
+      redirectToAddCarPage: false
     }
   }
 
@@ -60,13 +61,15 @@ export default class DashboardPage extends React.Component {
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
     }
-
+    if (this.state.redirectToAddCarPage) {
+      return <Redirect to="/add/car" />
+    }
     return (
       <Page
         className="DashboardPage"
         title="Dashboard"
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
-        addCarButton={true}
+        addCarButton={this.state.cars.length === 0 ? false : true}
         history={this.props.history}
       >
         <Row>
@@ -88,7 +91,7 @@ export default class DashboardPage extends React.Component {
                 <Card>
                   <CardBody className="text-center">
                     <CardTitle>Nu exista nici o masina!</CardTitle>
-                    <Button className="btn-success">Adauga masina</Button>
+                    <Button className="btn-success" onClick={(e) => this.setState({ redirectToAddCarPage: true })} >Adauga masina</Button>
                   </CardBody>
                 </Card>
               </div>

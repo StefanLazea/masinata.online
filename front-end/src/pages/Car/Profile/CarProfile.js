@@ -30,7 +30,7 @@ export default class CarProfile extends React.Component {
     }
 
     componentDidMount = () => {
-        this.getCarsById();
+        this.getCarById();
     }
 
     handleChange = (e) => {
@@ -39,8 +39,7 @@ export default class CarProfile extends React.Component {
         console.log(this.state.car)
     }
 
-
-    getCarsById = () => {
+    getCarById = () => {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
                 this.setState({ car: res.data.message });
@@ -52,6 +51,10 @@ export default class CarProfile extends React.Component {
                     this.setState({ hasTokenExpired: true });
                 }
             });
+    }
+
+    updateCar = (e) => {
+
     }
     render() {
         if (this.state.hasTokenExpired) {
@@ -204,7 +207,7 @@ export default class CarProfile extends React.Component {
                         <Card>
                             <CardHeader>
                                 <CardTitle>
-                                    <Button className="d-flex mx-auto">Salveaza modificarile</Button>
+                                    <Button className="d-flex mx-auto" onClick={(e) => this.updateCar(e)}>Salveaza modificarile</Button>
                                 </CardTitle>
                             </CardHeader>
                         </Card>

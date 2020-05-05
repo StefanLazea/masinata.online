@@ -16,8 +16,7 @@ export default function Page({
   history,
   ...restProps
 }) {
-  const classes = bem.b('px-3', className);
-  return (
+  const classes = bem.b('px-3', className); return (
     <Tag className={classes} {...restProps}>
       <div className={bem.e('header')}>
         {title && typeof title === 'string' ? (
@@ -29,7 +28,7 @@ export default function Page({
           )}
         {breadcrumbs && (
           <Breadcrumb className={bem.e('breadcrumb')}>
-            <BreadcrumbItem>Home</BreadcrumbItem>
+            <BreadcrumbItem>Acasa</BreadcrumbItem>
             {breadcrumbs.length &&
               breadcrumbs.map(({ name, active }, index) => (
                 <BreadcrumbItem key={index} active={active}>
@@ -66,5 +65,4 @@ Page.propTypes = {
 Page.defaultProps = {
   tag: 'div',
   title: '',
-  addCarButton: false
 };
