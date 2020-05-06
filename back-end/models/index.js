@@ -11,6 +11,9 @@ Car.belongsTo(User);
 Garage.hasOne(Car);
 Car.belongsTo(Garage);
 
+User.hasMany(Garage);
+Garage.belongsTo(User);
+
 Car.hasMany(Note);
 Note.belongsTo(Car);
 Car.hasMany(Paper);

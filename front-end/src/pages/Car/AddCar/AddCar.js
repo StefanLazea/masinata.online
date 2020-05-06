@@ -13,6 +13,7 @@ import {
 import { Redirect } from "react-router-dom";
 import CarsService from '../../../services/CarsService.js';
 import TokenService from '../../../services/Token.js';
+import GarageService from '../../../services/GarageService.js';
 import React from 'react';
 import { toast } from 'react-toastify';
 
@@ -25,6 +26,22 @@ export default class AddCar extends React.Component {
             redirectToDashboard: false,
             dropdownOpen: false
         }
+        this.getGarages();
+    }
+
+    getGarages = (e) => {
+        GarageService.getGaragesByUserId()
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
     }
 
     handleChange = (e) => {
@@ -185,18 +202,33 @@ export default class AddCar extends React.Component {
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
-
                                             </Row>
-                                            <Col sm={10}>
-                                                <Input type="file" name="file" />
-                                                <FormText color="muted">
-                                                    Adauga fotografia principala pe care vrei sa o afisam in profilul
-                                                    masinii tale.
-                                                </FormText>
-                                            </Col>
-                                            <Col>
-                                                <h4>Adauga masina unui garaj</h4>
-                                            </Col>
+                                            <Row>
+                                                <Col sm={10}>
+                                                    <Input type="file" name="file" />
+                                                    <FormText color="muted">
+                                                        Adauga fotografia principala pe care vrei sa o afisam in profilul
+                                                        masinii tale.
+                                                    </FormText>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Label for="type" sm={3}>Adaugati un garaj</Label>
+                                                <Col sm={3}>
+                                                    <Input
+                                                        type="select"
+                                                        name="type"
+                                                        id="garage_id"
+                                                        onChange={this.handleChange}
+                                                    >
+                                                        <option value="Sedan">Berlina</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Suv">SUV</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Cabriolet">Cabriolet</option>
+                                                    </Input>
+                                                </Col>
+                                            </Row>
                                         </FormGroup>
 
                                     </Col>
