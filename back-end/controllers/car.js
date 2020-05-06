@@ -40,6 +40,7 @@ const createCar = async (req, res) => {
         pollution_grade: req.body.pollution_grade,
         eco: req.body.eco,
         userId: req.body.user_id,
+        garageId: req.body.garage_id,
     }
 
     try {

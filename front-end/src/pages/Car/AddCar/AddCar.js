@@ -24,15 +24,15 @@ export default class AddCar extends React.Component {
             car: {},
             hasTokenExpired: false,
             redirectToDashboard: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            garages: []
         }
-        this.getGarages();
     }
 
     getGarages = (e) => {
         GarageService.getGaragesByUserId()
             .then((res) => {
-                console.log(res)
+                this.setState({ garages: res.data });
             })
             .catch((err) => {
                 console.log(err)
@@ -44,9 +44,9 @@ export default class AddCar extends React.Component {
             });
     }
 
-    handleChange = (e) => {
+    handleChange = async (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
-        this.setState(() => ({ car }))
+        await this.setState(() => ({ car }))
         console.log(this.state.car)
     }
 
@@ -68,6 +68,10 @@ export default class AddCar extends React.Component {
             });
     }
 
+    componentDidMount() {
+        this.getGarages();
+    }
+
     render() {
         if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
@@ -75,6 +79,8 @@ export default class AddCar extends React.Component {
         if (this.state.redirectToDashboard) {
             return <Redirect to="/" />
         }
+
+
         return (
             <Page
                 className="AddCar"
@@ -141,11 +147,7 @@ export default class AddCar extends React.Component {
                                                         id="type"
                                                         onChange={this.handleChange}
                                                     >
-                                                        <option value="Sedan">Berlina</option>
-                                                        <option value="Hatchback">Hatchback</option>
-                                                        <option value="Suv">SUV</option>
-                                                        <option value="Coupe">Coupe</option>
-                                                        <option value="Cabriolet">Cabriolet</option>
+
                                                     </Input>
                                                 </Col>
                                                 <Label for="year" sm={2}>An</Label>
@@ -213,19 +215,20 @@ export default class AddCar extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Label for="type" sm={3}>Adaugati un garaj</Label>
-                                                <Col sm={3}>
+                                                <Label for="type" sm={5}>Adaugati un garaj</Label>
+                                                <Col sm={7}>
                                                     <Input
                                                         type="select"
-                                                        name="type"
+                                                        name="garage_id"
                                                         id="garage_id"
                                                         onChange={this.handleChange}
                                                     >
-                                                        <option value="Sedan">Berlina</option>
-                                                        <option value="Hatchback">Hatchback</option>
-                                                        <option value="Suv">SUV</option>
-                                                        <option value="Coupe">Coupe</option>
-                                                        <option value="Cabriolet">Cabriolet</option>
+                                                        <option>Selectecteaza garaj</option>
+                                                        {
+                                                            this.state.garages.map(g => {
+                                                                return <option key={g.id} value={g.id}>{g.name}</option>
+                                                            })
+                                                        }
                                                     </Input>
                                                 </Col>
                                             </Row>

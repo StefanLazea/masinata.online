@@ -5,6 +5,9 @@
 .card {
     margin-bottom: 1rem;
 }
+.btn {
+    margin-bottom: 0 !important;
+}
 
 @media screen and (max-width: 420px) {
    

@@ -25,10 +25,7 @@ export default function CarDetailsCard({
                     <CardHeader>
                         <div className="d-flex align-items-center">
                             <CardTitle><strong>{licence_plate}</strong></CardTitle>
-                            <Button className="ml-auto btn-warning">
-                                <i className="fa fa-pencil"></i>
-                            </Button>
-                            <Button className="btn-danger" onClick={(e) => { onItemClickDeleteCar(e, car_id) }}>
+                            <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteCar(e, car_id) }}>
                                 <i className="fa fa-trash"></i>
                             </Button>
                             <Button className="btn-success" onClick={(e) => { redirectToProfile(e) }}>
