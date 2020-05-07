@@ -147,7 +147,13 @@ export default class AddCar extends React.Component {
                                                         id="type"
                                                         onChange={this.handleChange}
                                                     >
-
+                                                        <option>Tip caroserie</option>
+                                                        <option value="SUV">SUV</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Berlina">Berlina</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Pick-up">Pick-up</option>
+                                                        <option value="4x4">4x4</option>
                                                     </Input>
                                                 </Col>
                                                 <Label for="year" sm={2}>An</Label>
@@ -165,22 +171,35 @@ export default class AddCar extends React.Component {
                                                 <Label for="engine_type" sm={3}>Combustibil</Label>
                                                 <Col sm={3}>
                                                     <Input
-                                                        type="text"
+                                                        type="select"
                                                         name="engine_type"
                                                         id="engine_type"
-                                                        defaultValue={this.state.car.engine_type}
                                                         onChange={this.handleChange}
-                                                    />
+                                                    >
+                                                        <option>Tip combustibil</option>
+                                                        <option value="Motorina">Motorina</option>
+                                                        <option value="Benzina">Benzina</option>
+                                                        <option value="Hidrogen">Hidrogen</option>
+                                                        <option value="Electric">Electric</option>
+                                                    </Input>
                                                 </Col>
                                                 <Label for="pollution_grade" sm={2}>Norma</Label>
                                                 <Col>
                                                     <Input
-                                                        type="text"
+                                                        type="select"
                                                         name="pollution_grade"
                                                         id="pollution_grade"
-                                                        defaultValue={this.state.car.pollution_grade}
                                                         onChange={this.handleChange}
-                                                    />
+                                                    >
+                                                        <option>Norma poluare</option>
+                                                        <option value="non-euro">Motorina</option>
+                                                        <option value="Euro 1">Benzina</option>
+                                                        <option value="Euro 2">Hidrogen</option>
+                                                        <option value="Euro 3">Electric</option>
+                                                        <option value="Euro 4">Electric</option>
+                                                        <option value="Euro 5">Electric</option>
+                                                        <option value="Euro 6">Electric</option>
+                                                    </Input>
                                                 </Col>
                                             </Row>
                                             <Row>
