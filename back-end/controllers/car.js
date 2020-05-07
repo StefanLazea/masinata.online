@@ -1,6 +1,7 @@
 const Car = require('../models').Car;
 const Garage = require('../models').Garage;
 const TokenService = require("../services/token");
+const path = require("path");
 
 const getCarsByUserId = async (req, res) => {
     let cars;
@@ -29,15 +30,31 @@ const getAllCars = async (req, res) => {
 };
 
 const createCar = async (req, res) => {
+    let location = "";
+    if (req.files) {
+        let image = req.files.avatar_photo;
+        let relativeLocation = "../private/images/" + req.body.vin + ".png";
+        location = path.resolve(__dirname, relativeLocation);
+
+        image.mv(location, err => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send({ message: "A aparut o eroare la incarcarea imaginii!" })
+            }
+        });
+    }
     let car = {
         model: req.body.model,
         brand: req.body.brand,
         type: req.body.type,
         licence_plate: req.body.licence_plate,
+        mileage: req.body.mileage,
         vin: req.body.vin,
         engine_type: req.body.engine_type,
+        engine_capacity: req.body.engine_capacity,
         year: req.body.year,
         pollution_grade: req.body.pollution_grade,
+        avatar_photo: location,
         eco: req.body.eco,
         userId: req.body.user_id,
         garageId: req.body.garage_id,
