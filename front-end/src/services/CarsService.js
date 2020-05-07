@@ -36,6 +36,15 @@ const createCar = (data) => {
             }
         });
 }
+const createCarUsingFormData = (data) => {
+    return Axios.post(`${getBasename()}/cars`, JSON.stringify(data),
+        {
+            headers: {
+                "Content-Type": 'multipart/form-data',
+                "Authorization": getToken()
+            }
+        });
+}
 
 const updateCar = (id, data) => {
     return Axios.post(`${getBasename()}/cars/${id}`, JSON.stringify(data),
@@ -59,6 +68,7 @@ const deleteCar = (id) => {
 
 module.exports = {
     createCar,
+    createCarUsingFormData,
     getAllCars,
     getAllCarsByUserId,
     getCarById,

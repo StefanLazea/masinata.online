@@ -1,18 +1,21 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const cors = require('cors')
+const cors = require('cors');
+const uploader = require('express-fileupload');
 const model = require('./models');
 const routes = require('./routes');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 
 const app = express();
-
-app.use(bodyParser.json());
-app.use(cookieParser(process.env.COOKIE_SECRET));
 dotenv.config();
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(uploader());
 app.use(cors());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();

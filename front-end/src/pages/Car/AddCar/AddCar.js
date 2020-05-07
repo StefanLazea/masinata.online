@@ -25,7 +25,8 @@ export default class AddCar extends React.Component {
             hasTokenExpired: false,
             redirectToDashboard: false,
             dropdownOpen: false,
-            garages: []
+            garages: [],
+            file: null,
         }
     }
 
@@ -50,7 +51,14 @@ export default class AddCar extends React.Component {
         console.log(this.state.car)
     }
 
-    handleSubmit = async (e) => {
+    handleChangeFile = async (e) => {
+        await this.setState({
+            file: e.target.files[0],
+        })
+        console.log(this.state.file)
+    }
+
+    handleSubmit2 = async (e) => {
         e.preventDefault();
         const car = { ...this.state.car, "user_id": TokenService.getUserId() }
         CarsService.createCar(car)
@@ -68,6 +76,42 @@ export default class AddCar extends React.Component {
             });
     }
 
+
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        const car = { ...this.state.car, "user_id": TokenService.getUserId() }
+
+
+        let formData = new FormData();    //formdata object
+        formData.append('model', car.model);
+        formData.append('brand', car.brand);
+        formData.append('type', car.type);
+        formData.append('licence_plate', car.licence_plate);
+        formData.append('mileage', car.mileage);
+        formData.append('vin', car.vin);
+        formData.append('engine_type', car.engine_type);
+        formData.append('engine_capacity', car.engine_capacity);
+        formData.append('year', car.year);
+        formData.append('pollution_grade', car.pollution_grade);
+        formData.append('avatar_photo', this.state.file);
+        formData.append('user_id', car.user_id);
+        formData.append('garage_id', car.garage_id);
+
+
+        CarsService.createCarUsingFormData(formData)
+            .then((res) => {
+                toast(res.data.message);
+                this.setState({ redirectToDashboard: true });
+            })
+            .catch((err) => {
+                console.log(err)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
+    }
     componentDidMount() {
         this.getGarages();
     }
@@ -180,7 +224,6 @@ export default class AddCar extends React.Component {
                                                         <option value="Motorina">Motorina</option>
                                                         <option value="Benzina">Benzina</option>
                                                         <option value="Hidrogen">Hidrogen</option>
-                                                        <option value="Electric">Electric</option>
                                                     </Input>
                                                 </Col>
                                                 <Label for="pollution_grade" sm={2}>Norma</Label>
@@ -192,13 +235,14 @@ export default class AddCar extends React.Component {
                                                         onChange={this.handleChange}
                                                     >
                                                         <option>Norma poluare</option>
-                                                        <option value="non-euro">Motorina</option>
-                                                        <option value="Euro 1">Benzina</option>
-                                                        <option value="Euro 2">Hidrogen</option>
-                                                        <option value="Euro 3">Electric</option>
-                                                        <option value="Euro 4">Electric</option>
-                                                        <option value="Euro 5">Electric</option>
-                                                        <option value="Euro 6">Electric</option>
+                                                        <option value="non-euro">non-euro</option>
+                                                        <option value="eco">eco</option>
+                                                        <option value="Euro 1">Euro 1</option>
+                                                        <option value="Euro 2">Euro 2</option>
+                                                        <option value="Euro 3">Euro 3</option>
+                                                        <option value="Euro 4">Euro 4</option>
+                                                        <option value="Euro 5">Euro 5</option>
+                                                        <option value="Euro 6">Euro 6</option>
                                                     </Input>
                                                 </Col>
                                             </Row>
@@ -226,7 +270,7 @@ export default class AddCar extends React.Component {
                                             </Row>
                                             <Row>
                                                 <Col sm={10}>
-                                                    <Input type="file" name="file" />
+                                                    <Input type="file" name="file" onChange={(e) => this.handleChangeFile(e)} />
                                                     <FormText color="muted">
                                                         Adauga fotografia principala pe care vrei sa o afisam in profilul
                                                         masinii tale.
