@@ -27,6 +27,7 @@ export default class AddCar extends React.Component {
             dropdownOpen: false,
             garages: [],
             file: null,
+            preview: "https://via.placeholder.com/370.png"
         }
     }
 
@@ -51,31 +52,20 @@ export default class AddCar extends React.Component {
         console.log(this.state.car)
     }
 
-    handleChangeFile = async (e) => {
+    handleImagePreview = async (e) => {
         await this.setState({
             file: e.target.files[0],
         })
         console.log(this.state.file)
     }
 
-    handleSubmit2 = async (e) => {
-        e.preventDefault();
-        const car = { ...this.state.car, "user_id": TokenService.getUserId() }
-        CarsService.createCar(car)
-            .then((res) => {
-                toast(res.data.message);
-                this.setState({ redirectToDashboard: true });
-            })
-            .catch((err) => {
-                console.log(err)
-                toast("An error occurred, please try later!");
-                if (err.response.status === 403) {
-                    toast("Your session has expired. Please login!");
-                    this.setState({ hasTokenExpired: true });
-                }
-            });
-    }
+    handleChangeFile = async (e) => {
+        console.log(URL.createObjectURL(e.target.files[0]))
 
+        await this.setState({
+            preview: URL.createObjectURL(e.target.files[0]),
+        })
+    }
 
     handleSubmit = async (e) => {
         e.preventDefault();
@@ -96,8 +86,7 @@ export default class AddCar extends React.Component {
         formData.append('avatar_photo', this.state.file);
         formData.append('user_id', car.user_id);
         formData.append('garage_id', car.garage_id);
-
-
+        console.log(this.state.file, formData)
         CarsService.createCarUsingFormData(formData)
             .then((res) => {
                 toast(res.data.message);
@@ -270,7 +259,11 @@ export default class AddCar extends React.Component {
                                             </Row>
                                             <Row>
                                                 <Col sm={10}>
-                                                    <Input type="file" name="file" onChange={(e) => this.handleChangeFile(e)} />
+                                                    <Input type="file" name="file" onChange={(e) => {
+                                                        this.handleImagePreview(e);
+                                                        this.handleChangeFile(e);
+                                                    }
+                                                    } />
                                                     <FormText color="muted">
                                                         Adauga fotografia principala pe care vrei sa o afisam in profilul
                                                         masinii tale.
@@ -299,7 +292,7 @@ export default class AddCar extends React.Component {
 
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
-                                        <img className="img-fluid rounded mx-auto d-block" src="https://via.placeholder.com/370.png" alt="Card cap" />
+                                        <img className="img-fluid rounded mx-auto d-block" src={this.state.preview} alt="Card cap" />
                                     </Col>
                                 </Row>
                                 <Row>

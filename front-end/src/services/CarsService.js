@@ -13,7 +13,6 @@ const getAllCars = () => {
 };
 
 const getAllCarsByUserId = () => {
-    console.log("auici")
     return Axios.get(`${getBasename()}/cars/user/${getUserId()}`,
         {
             headers: { "Authorization": getToken() }
@@ -37,7 +36,7 @@ const createCar = (data) => {
         });
 }
 const createCarUsingFormData = (data) => {
-    return Axios.post(`${getBasename()}/cars`, JSON.stringify(data),
+    return Axios.post(`${getBasename()}/cars`, data,
         {
             headers: {
                 "Content-Type": 'multipart/form-data',
