@@ -37,7 +37,7 @@ export default class AddCar extends React.Component {
                 this.setState({ garages: res.data });
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err.response)
                 toast("An error occurred, please try later!");
                 if (err.response.status === 403) {
                     toast("Your session has expired. Please login!");

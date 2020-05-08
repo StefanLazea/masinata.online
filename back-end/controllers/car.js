@@ -82,7 +82,6 @@ const addGarageToCar = async (req, res) => {
 };
 
 const getCarsFromGarage = async (req, res) => {
-    console.log(req.params.id);
     await Car.findAll({
         include: [{
             model: Garage,
