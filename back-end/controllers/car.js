@@ -1,6 +1,5 @@
 const Car = require('../models').Car;
 const Garage = require('../models').Garage;
-const TokenService = require("../services/token");
 const path = require("path");
 
 const getCarsByUserId = async (req, res) => {

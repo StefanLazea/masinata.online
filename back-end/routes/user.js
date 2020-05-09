@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const User = require("../models").User;
 const UserController = require("../controllers/user");
 const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");
