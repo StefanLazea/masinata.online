@@ -18,6 +18,7 @@ import {
 import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import { toast } from 'react-toastify';
+import Cookies from "js-cookie";
 import './CarProfile.css';
 
 export default class CarProfile extends React.Component {
@@ -25,12 +26,18 @@ export default class CarProfile extends React.Component {
         super(props);
         this.state = {
             car: {},
-            hasTokenExpired: false
+            hasTokenExpired: false,
+            image: null,
+            cookie: Cookies.get("token")
+            // cookie: 
         }
     }
 
     componentDidMount = () => {
         this.getCarById();
+    }
+    componentWillMount = () => {
+        this.getCarImage();
     }
 
     handleChange = (e) => {
@@ -44,7 +51,6 @@ export default class CarProfile extends React.Component {
             .then((res) => {
                 this.setState({ car: res.data.message });
                 console.log(res.data.message)
-                console.log(this.state.car.avatar_photo)
             })
             .catch((err) => {
                 if (err.response.status === 403) {
@@ -53,6 +59,22 @@ export default class CarProfile extends React.Component {
                 }
             });
     }
+
+    getCarImage = () => {
+        CarsService.getCarImageById(this.props.match.params.id)
+            .then((res) => {
+                let buff = new Buffer(res.data).toString('base64');
+                this.setState({ image: buff });
+                console.log(buff)
+            })
+            .catch((err) => {
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
+    }
+
 
     updateCar = (e) => {
 
@@ -154,7 +176,7 @@ export default class CarProfile extends React.Component {
 
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
-                                        <img className="img-fluid rounded mx-auto d-block" src={this.state.avatar_photo} alt="Card cap" />
+                                        <img className="img-fluid rounded mx-auto d-block" src="" alt="Card cap" />
                                     </Col>
                                 </Row>
                                 {this.state.car.garageId
