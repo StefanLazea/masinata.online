@@ -5,8 +5,6 @@ const Role = require("../helpers/role");
 const dotenv = require('dotenv');
 dotenv.config();
 
-const TOKEN_SECRET = process.env.TOKEN_SECRET;
-
 const register = async (res, credentials) => {
     let userFound = await findUserByEmail(credentials.email);
 
@@ -34,33 +32,6 @@ const register = async (res, credentials) => {
     res.status(201).send({ message: `User created` });
 }
 
-const authenticate = async (req, res) => {
-
-    let userFound = await findUserByEmail(req.body.email);
-
-    if (!userFound) {
-        return res
-            .status(404)
-            .send({ message: "No email related to an account was found" });
-    }
-
-    const validPass = bcrypt.compareSync(req.body.password, userFound.password);
-    if (!validPass) {
-        return res.status(400).send({ message: "Wrong password" });
-    }
-
-    const token = jwt.sign({ id: userFound.id, role: userFound.role }, TOKEN_SECRET,
-        {
-            expiresIn: "30s"
-        });
-
-    res.cookie("refreshToken", token, { signed: true, httpOnly: true })
-        .send({
-            token: "Bearer " + token
-            // refreshToken: "Bearer " + refreshToken
-        });
-}
-
 const findUserByEmail = async (email) => {
     let userFound;
     await User.findOne({
@@ -74,6 +45,5 @@ const findUserByEmail = async (email) => {
 
 module.exports = {
     register,
-    authenticate,
     findUserByEmail
 }

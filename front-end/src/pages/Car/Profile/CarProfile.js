@@ -65,7 +65,6 @@ export default class CarProfile extends React.Component {
             .then((res) => {
                 let buff = new Buffer(res.data).toString('base64');
                 this.setState({ image: buff });
-                console.log(buff)
             })
             .catch((err) => {
                 if (err.response.status === 403) {
