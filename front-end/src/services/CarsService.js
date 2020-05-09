@@ -17,10 +17,17 @@ const getAllCarsByUserId = () => {
         {
             headers: { "Authorization": getToken() }
         });
-}
+};
 
 const getCarById = (id) => {
     return Axios.get(`${getBasename()}/cars/${id}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+};
+
+const getCarImageById = (id) => {
+    return Axios.get(`${getBasename()}/cars/image/${id}`,
         {
             headers: { "Authorization": getToken() }
         });
@@ -34,7 +41,8 @@ const createCar = (data) => {
                 "Authorization": getToken()
             }
         });
-}
+};
+
 const createCarUsingFormData = (data) => {
     return Axios.post(`${getBasename()}/cars`, data,
         {
@@ -73,4 +81,5 @@ module.exports = {
     getCarById,
     deleteCar,
     updateCar,
+    getCarImageById,
 };

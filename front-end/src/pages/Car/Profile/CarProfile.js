@@ -44,6 +44,7 @@ export default class CarProfile extends React.Component {
             .then((res) => {
                 this.setState({ car: res.data.message });
                 console.log(res.data.message)
+                console.log(this.state.car.avatar_photo)
             })
             .catch((err) => {
                 if (err.response.status === 403) {
@@ -153,7 +154,7 @@ export default class CarProfile extends React.Component {
 
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
-                                        <img className="img-fluid rounded mx-auto d-block" src="/home/stefan/Documents/projects/licenta/licenta/back-end/private/images/exrcytuvy.png" alt="Card cap" />
+                                        <img className="img-fluid rounded mx-auto d-block" src={this.state.avatar_photo} alt="Card cap" />
                                     </Col>
                                 </Row>
                                 {this.state.car.garageId

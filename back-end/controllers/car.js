@@ -18,6 +18,14 @@ const getCarsByUserId = async (req, res) => {
     return res.status(200).send(cars);
 };
 
+const getCarImage = async (req, res) => {
+    let carFound = await Car.findByPk(req.params.id);
+    if (!carFound) {
+        return res.status(404).send({ message: "Car not found" });
+    }
+    return res.sendFile(carFound.avatar_photo);
+}
+
 const getAllCars = async (req, res) => {
     let carsFound;
     try {
@@ -43,6 +51,7 @@ const createCar = async (req, res) => {
             }
         });
     }
+
     let car = {
         model: req.body.model,
         brand: req.body.brand,
@@ -140,10 +149,11 @@ const deleteCarById = async (req, res) => {
 module.exports = {
     getCarsByUserId,
     getAllCars,
+    getCarImage,
+    getCarById,
+    getCarsFromGarage,
     createCar,
     addGarageToCar,
-    getCarsFromGarage,
     updateCarById,
-    getCarById,
     deleteCarById,
 }
