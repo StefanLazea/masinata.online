@@ -33,6 +33,10 @@ const getCarImageById = (id) => {
         });
 };
 
+const getCarImageWithoutToken = (id) => {
+    return Axios.get(`${getBasename()}/car/image/${id}`);
+};
+
 const createCar = (data) => {
     return Axios.post(`${getBasename()}/cars`, JSON.stringify(data),
         {
@@ -82,4 +86,5 @@ module.exports = {
     deleteCar,
     updateCar,
     getCarImageById,
+    getCarImageWithoutToken,
 };

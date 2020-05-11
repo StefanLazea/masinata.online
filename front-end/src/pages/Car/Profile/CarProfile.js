@@ -36,9 +36,6 @@ export default class CarProfile extends React.Component {
     componentDidMount = () => {
         this.getCarById();
     }
-    componentWillMount = () => {
-        this.getCarImage();
-    }
 
     handleChange = (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
@@ -60,24 +57,10 @@ export default class CarProfile extends React.Component {
             });
     }
 
-    getCarImage = () => {
-        CarsService.getCarImageById(this.props.match.params.id)
-            .then((res) => {
-                let buff = new Buffer(res.data).toString('base64');
-                this.setState({ image: buff });
-            })
-            .catch((err) => {
-                if (err.response.status === 403) {
-                    toast("Your session has expired. Please login!");
-                    this.setState({ hasTokenExpired: true });
-                }
-            });
-    }
-
-
     updateCar = (e) => {
 
     }
+
     render() {
         if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
@@ -175,7 +158,7 @@ export default class CarProfile extends React.Component {
 
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
-                                        <img className="img-fluid rounded mx-auto d-block" src="" alt="Card cap" />
+                                        <img className="img-fluid rounded mx-auto d-block" src="http://localhost:3001/api/car/image/c8f93e20-9391-11ea-bcbf-2d2fe5670747" alt="Card cap" />
                                     </Col>
                                 </Row>
                                 {this.state.car.garageId
