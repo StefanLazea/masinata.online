@@ -18,6 +18,7 @@ const getCarsByUserId = async (req, res) => {
 };
 
 const getCarImage = async (req, res) => {
+    console.log(req.cookies)
     let carFound = await Car.findByPk(req.params.id);
     if (!carFound) {
         return res.status(404).send({ message: "Car not found" });

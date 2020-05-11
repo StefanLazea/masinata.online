@@ -9,13 +9,26 @@ const dotenv = require('dotenv');
 
 const app = express();
 dotenv.config();
+// const corsOptions = {
+//     origin: true,
+//     allowedHeaders: [
+//         "Content-Type",
+//         "Authorization",
+//         "Access-Control-Allow-Methods",
+//         "Access-Control-Request-Headers",
+//     ],
+//     credentials: true,
+//     preflightContinue: true
+// };
 
+// app.use(cors(corsOptions));
+
+app.use(cors({ credentials: true }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(uploader());
-app.use(cors());
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser());
 
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();

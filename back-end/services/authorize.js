@@ -14,10 +14,18 @@ function authorize(roles = []) {
     return [
         (req, res, next) => {
             const token = req.headers.authorization;
-            if (!token) {
+            const cookie = req.cookies.token;
+            if (!token && !cookie) {
                 return res.status(401).send({ message: 'Not authorized' });
             }
-            const trimmedToken = token.split(" ")[1];
+
+            let trimmedToken;
+            if (token) {
+                trimmedToken = token.split(" ")[1];
+            } else {
+                trimmedToken = cookie;
+            }
+
             const verified = jwt.verify(trimmedToken, secret,
                 function (err, decoded) {
                     if (err) {

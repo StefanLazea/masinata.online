@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
 import AuthService from '../services/AuthService.js';
-import { setTokenToLocalStorage, setTokenInCookies } from "../services/Token";
+import { setTokenToLocalStorage } from "../services/Token";
 
 class AuthForm extends React.Component {
   constructor(props) {
@@ -79,7 +79,8 @@ class AuthForm extends React.Component {
       AuthService.login(form)
         .then((res) => {
           setTokenToLocalStorage(res.data.token);
-          setTokenInCookies(res.data.token)
+          // setTokenInCookies(res.data.token)
+          console.log(res.headers)
           this.setState({ redirectToDashboard: true });
         })
         .catch(error => {

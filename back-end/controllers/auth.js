@@ -34,8 +34,8 @@ const login = async (req, res) => {
     }
 
     const token = TokenService.createToken(userFound);
-
-    res.cookie("token", token, { signed: true, httpOnly: true })
+    console.log(req.cookies)
+    res.cookie("token", token, { secure: false, httpOnly: true })
         .send({
             token: "Bearer " + token
         });

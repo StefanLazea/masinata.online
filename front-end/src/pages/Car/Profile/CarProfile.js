@@ -158,7 +158,7 @@ export default class CarProfile extends React.Component {
 
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
-                                        <img className="img-fluid rounded mx-auto d-block" src="http://localhost:3001/api/car/image/c8f93e20-9391-11ea-bcbf-2d2fe5670747" alt="Card cap" />
+                                        <img className="img-fluid rounded mx-auto d-block" src="http://localhost:3001/api/cars/image/c8f93e20-9391-11ea-bcbf-2d2fe5670747" alt="Card cap" />
                                     </Col>
                                 </Row>
                                 {this.state.car.garageId
