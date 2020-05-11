@@ -9,6 +9,7 @@ export default function (ComposedComponent) {
 
         constructor(props) {
             super(props);
+            this._isMounted = false;
             this.state = {
                 loginRedirect: false
             }

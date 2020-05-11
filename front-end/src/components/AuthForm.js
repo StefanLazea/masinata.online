@@ -5,7 +5,8 @@ import Axios from "axios";
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
-import { setTokenToLocalStorage } from "../services/Token";
+import AuthService from '../services/AuthService.js';
+import { setTokenToLocalStorage, setTokenInCookies } from "../services/Token";
 
 const getBasename = () => {
   return process.env.REACT_APP_BACK_END_URL;
@@ -63,10 +64,7 @@ class AuthForm extends React.Component {
         repeat_password: this.state.confirmPassword
       }
 
-      Axios.post(`${getBasename()}/auth/register`, JSON.stringify(form),
-        {
-          headers: { "Content-Type": "application/json" }
-        })
+      AuthService.register(form)
         .then((res) => {
           toast(res.data.message);
           this.setState({ redirectToLogin: true });
@@ -88,6 +86,7 @@ class AuthForm extends React.Component {
         })
         .then((res) => {
           setTokenToLocalStorage(res.data.token);
+          setTokenInCookies(res.data.token)
           this.setState({ redirectToDashboard: true });
         })
         .catch(error => {

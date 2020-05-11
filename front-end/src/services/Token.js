@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const Cookies = require('js-cookie');
+
 const secret = process.env.REACT_APP_TOKEN_SECRET;
 
 const getUserId = () => {
@@ -8,7 +10,6 @@ const getUserId = () => {
     return decode.id;
 }
 
-//todo decode token
 const getDecodedToken = () => {
     let token = localStorage.getItem('token');
     const trimmedToken = token.split(" ")[1];
@@ -19,6 +20,10 @@ const getDecodedToken = () => {
 
 const getToken = () => {
     return localStorage.getItem('token');
+}
+
+const setTokenInCookies = (token) => {
+    Cookies.set("token", token)
 }
 
 const setTokenToLocalStorage = (token) => {
@@ -33,6 +38,7 @@ module.exports = {
     getUserId,
     getToken,
     setTokenToLocalStorage,
+    setTokenInCookies,
     getDecodedToken,
     removeTokenFromLocalStorage,
 }
