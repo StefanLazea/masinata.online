@@ -28,15 +28,18 @@ const getBasename = () => {
 export default class CarProfile extends React.Component {
     constructor(props) {
         super(props);
+        this._isMounted = false;
+
         this.state = {
             car: {},
             hasTokenExpired: false,
             image: null,
             garage: {}
         }
-    }
 
-    componentDidMount() {
+    }
+    componentDidMount = () => {
+        this._isMounted = true;
         this.getCarById();
     }
 
@@ -49,6 +52,7 @@ export default class CarProfile extends React.Component {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
                 this.setState({ car: res.data.message });
+                // todo check if garageId is null
                 this.getGarageInfo(res.data.message.garageId);
             })
             .catch((err) => {
@@ -71,6 +75,9 @@ export default class CarProfile extends React.Component {
             });
     }
 
+    handleUndefiendValues = (value) => {
+        return value === "undefined" ? "" : value;
+    }
     updateCar = (e) => {
 
     }
@@ -109,7 +116,7 @@ export default class CarProfile extends React.Component {
                                                         type="text"
                                                         name="model"
                                                         id="model"
-                                                        defaultValue={this.state.car.model}
+                                                        defaultValue={this.handleUndefiendValues(this.state.car.model)}
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
@@ -119,21 +126,29 @@ export default class CarProfile extends React.Component {
                                                         type="text"
                                                         name="brand"
                                                         id="brand"
-                                                        defaultValue={this.state.car.brand}
+                                                        defaultValue={this.handleUndefiendValues(this.state.car.brand)}
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Label for="type" sm={2}>Tip</Label>
-                                                <Col>
+                                                <Label for="type" sm={3}>Caroserie</Label>
+                                                <Col sm={3}>
                                                     <Input
-                                                        type="text"
+                                                        type="select"
                                                         name="type"
                                                         id="type"
-                                                        defaultValue={this.state.car.type}
                                                         onChange={this.handleChange}
-                                                    />
+                                                        value={this.state.car.type}
+                                                    >
+                                                        <option>Tip caroserie</option>
+                                                        <option value="SUV">SUV</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Berlina">Berlina</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Pick-up">Pick-up</option>
+                                                        <option value="4x4">4x4</option>
+                                                    </Input>
                                                 </Col>
                                                 <Label for="year" sm={2}>An</Label>
                                                 <Col>

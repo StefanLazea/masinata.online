@@ -23,6 +23,9 @@ const getCarImage = async (req, res) => {
     if (!carFound) {
         return res.status(404).send({ message: "Car not found" });
     }
+    if (carFound.avatar_photo === "") {
+        return res.status(404).send({ message: "Image not found" });
+    }
 
     return res.sendFile(carFound.avatar_photo);
 }
