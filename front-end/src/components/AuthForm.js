@@ -1,16 +1,12 @@
 import logo200Image from '../assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Axios from "axios";
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
 import AuthService from '../services/AuthService.js';
 import { setTokenToLocalStorage, setTokenInCookies } from "../services/Token";
 
-const getBasename = () => {
-  return process.env.REACT_APP_BACK_END_URL;
-};
 class AuthForm extends React.Component {
   constructor(props) {
     super(props);
@@ -54,10 +50,10 @@ class AuthForm extends React.Component {
       }
     }
   }
+
   handleSubmit = event => {
     event.preventDefault();
     if (this.props.authState === STATE_SIGNUP) {
-
       const form = {
         email: this.state.email,
         password: this.state.password,
@@ -80,10 +76,7 @@ class AuthForm extends React.Component {
         password: this.state.password,
       }
 
-      Axios.post(`${getBasename()}/auth/login`, JSON.stringify(form),
-        {
-          headers: { "Content-Type": "application/json" }
-        })
+      AuthService.login(form)
         .then((res) => {
           setTokenToLocalStorage(res.data.token);
           setTokenInCookies(res.data.token)

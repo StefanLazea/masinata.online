@@ -10,12 +10,14 @@ export default function (ComposedComponent) {
         constructor(props) {
             super(props);
             this._isMounted = false;
+
             this.state = {
                 loginRedirect: false
             }
         }
 
         componentDidMount() {
+            this._isMounted = true;
             if (TokenService.getToken() === null) {
                 this.setState({ loginRedirect: true })
                 toast("Please be sure you are logged in!");
