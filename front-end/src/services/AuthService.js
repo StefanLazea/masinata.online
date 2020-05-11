@@ -18,7 +18,6 @@ const login = (form) => {
         })
 };
 
-
 module.exports = {
     register,
     login
