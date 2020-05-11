@@ -8,22 +8,8 @@ const routes = require('./routes');
 const dotenv = require('dotenv');
 
 const app = express();
-dotenv.config();
-// const corsOptions = {
-//     origin: true,
-//     allowedHeaders: [
-//         "Content-Type",
-//         "Authorization",
-//         "Access-Control-Allow-Methods",
-//         "Access-Control-Request-Headers",
-//     ],
-//     credentials: true,
-//     preflightContinue: true
-// };
 
-// app.use(cors(corsOptions));
-
-app.use(cors({ credentials: true }));
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());

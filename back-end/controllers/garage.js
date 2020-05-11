@@ -39,8 +39,17 @@ const getGaragesByUserId = async (req, res) => {
     }
 };
 
+const getGarageById = async (req, res) => {
+    let garageFound = await Garage.findByPk(req.params.id);
+    if (!garageFound) {
+        return res.status(404).send({ message: "Garage not found" });
+    }
+    return res.status(200).send({ message: garageFound });
+}
+
 module.exports = {
     getGarages,
     createGarage,
-    getGaragesByUserId
+    getGaragesByUserId,
+    getGarageById,
 }

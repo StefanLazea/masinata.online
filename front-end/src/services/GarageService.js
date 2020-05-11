@@ -12,6 +12,14 @@ const getGaragesByUserId = (userId) => {
         });
 };
 
+const getGaragesById = (id) => {
+    return Axios.get(`${getBasename()}/garages/${id}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+};
+
 module.exports = {
     getGaragesByUserId,
+    getGaragesById,
 };

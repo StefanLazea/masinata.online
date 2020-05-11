@@ -17,9 +17,13 @@ import {
 
 import React from 'react';
 import CarsService from '../../../services/CarsService.js';
+import GarageService from '../../../services/GarageService.js';
 import { toast } from 'react-toastify';
-import Cookies from "js-cookie";
 import './CarProfile.css';
+
+const getBasename = () => {
+    return process.env.REACT_APP_BACK_END_URL;
+};
 
 export default class CarProfile extends React.Component {
     constructor(props) {
@@ -28,26 +32,36 @@ export default class CarProfile extends React.Component {
             car: {},
             hasTokenExpired: false,
             image: null,
-            cookie: Cookies.get("token")
-            // cookie: 
+            garage: {}
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.getCarById();
     }
 
     handleChange = (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
         this.setState(() => ({ car }))
-        console.log(this.state.car)
     }
 
     getCarById = () => {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
                 this.setState({ car: res.data.message });
-                console.log(res.data.message)
+                this.getGarageInfo(res.data.message.garageId);
+            })
+            .catch((err) => {
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
+    }
+    getGarageInfo = (id) => {
+        GarageService.getGaragesById(id)
+            .then((res) => {
+                this.setState({ garage: res.data.message });
             })
             .catch((err) => {
                 if (err.response.status === 403) {
@@ -158,14 +172,14 @@ export default class CarProfile extends React.Component {
 
                                     </Col>
                                     <Col className="col-xs-6 col-sm-6 col-md-6">
-                                        <img className="img-fluid rounded mx-auto d-block" src="http://localhost:3001/api/cars/image/c8f93e20-9391-11ea-bcbf-2d2fe5670747" alt="Card cap" />
+                                        <img className="img-fluid rounded mx-auto d-block" src={`${getBasename()}/car/image/${this.props.match.params.id}`} alt="Card cap" />
                                     </Col>
                                 </Row>
                                 {this.state.car.garageId
                                     ?
                                     <Row>
                                         <Col md={6}>
-                                            <h5>face parte din garaj</h5>
+                                            <h5>Face parte din garaj <Badge color="secondary">{this.state.garage.name} <i className="fa fa-times"></i></Badge></h5>
                                         </Col>
                                     </Row>
                                     :
