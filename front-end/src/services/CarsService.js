@@ -58,7 +58,7 @@ const createCarUsingFormData = (data) => {
 }
 
 const updateCar = (id, data) => {
-    return Axios.post(`${getBasename()}/cars/${id}`, JSON.stringify(data),
+    return Axios.put(`${getBasename()}/cars/${id}`, JSON.stringify(data),
         {
             headers: {
                 "Content-Type": "application/json",

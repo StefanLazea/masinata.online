@@ -2,6 +2,11 @@ import React from "react";
 import PropTypes from '../../../utils/propTypes';
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody, Badge } from 'reactstrap';
 import './CarDetailsCard.css'
+
+const getBasename = () => {
+    return process.env.REACT_APP_BACK_END_URL;
+};
+
 export default function CarDetailsCard({
     car_id,
     brand,
@@ -34,7 +39,7 @@ export default function CarDetailsCard({
                         </div>
                         <CardSubtitle>VIN {vin}</CardSubtitle>
                     </CardHeader>
-                    <CardImg width="50%" height="50%" src="https://via.placeholder.com/75.png" alt="Card image cap" />
+                    <CardImg src={`${getBasename()}/car/image/${car_id}`} alt="Card image cap" />
 
                     <CardBody>
                         <div className="d-flex align-items-center">

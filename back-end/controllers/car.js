@@ -121,11 +121,15 @@ const updateCarById = async (req, res) => {
         brand: req.body.brand,
         type: req.body.type,
         licence_plate: req.body.licence_plate,
+        mileage: req.body.mileage,
         vin: req.body.vin,
         engine_type: req.body.engine_type,
-        pollution_grade: req.body.pollution_grade,
+        engine_capacity: req.body.engine_capacity,
         year: req.body.year,
+        pollution_grade: req.body.pollution_grade,
         eco: req.body.eco,
+        userId: req.body.user_id,
+        garageId: req.body.garage_id,
     }
     try {
         await Car.update(

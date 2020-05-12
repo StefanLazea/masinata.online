@@ -83,7 +83,17 @@ export default class CarProfile extends React.Component {
     }
 
     updateCar = (e) => {
-
+        e.preventDefault();
+        CarsService.updateCar(this.props.match.params.id, this.state.car)
+            .then((res) => { toast(res.data.message); })
+            .catch((err) => {
+                console.log(err.response)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
     }
 
     render() {
@@ -235,7 +245,7 @@ export default class CarProfile extends React.Component {
                                     ?
                                     <Row>
                                         <Col md={6}>
-                                            <h5>Face parte din garaj <Badge color="secondary">{this.state.garage.name} <i className="fa fa-times"></i></Badge></h5>
+                                            <h5>Face parte din garajul <Badge color="secondary">{this.state.garage.name} <i className="fa fa-times"></i></Badge></h5>
                                         </Col>
                                     </Row>
                                     :
