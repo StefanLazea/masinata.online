@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import PropTypes from '../../../utils/propTypes';
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody, Badge } from 'reactstrap';
 import './CarDetailsCard.css'

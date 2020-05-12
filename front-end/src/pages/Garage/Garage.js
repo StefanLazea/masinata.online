@@ -3,6 +3,7 @@ import { GarageDetailsCard } from '../../components/Card';
 import GarageService from '../../services/GarageService.js';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
+import CarsService from '../../services/CarsService.js';
 import React from 'react';
 import {
     Button,
@@ -23,13 +24,25 @@ export default class Garage extends React.Component {
             garages: [],
             hasTokenExpired: false,
             isDeleteButtonClicked: false,
+            carsNumberInGarage: 0
         }
+    }
+
+    getCarsNumberInGarage = (id) => {
+        let number = 0;
+        CarsService.getCarsByGarageId(id)
+            .then(res => {
+                console.log(res.data.length)
+                number = res.data.length;
+            }).catch((err) => {
+                number = 0;
+            });
+        return number;
     }
 
     getUserGarages = () => {
         GarageService.getGaragesByUserId()
             .then((res) => {
-                console.log(res.data)
                 this.setState({ garages: res.data });
             })
             .catch((err) => {
@@ -57,7 +70,7 @@ export default class Garage extends React.Component {
                 className="Garages"
                 title="Garage"
                 breadcrumbs={[{ name: 'Garage', active: true }]}
-                addCarButton={this.state.garages.length === 0 ? false : true}
+                addCarButton={true}
                 history={this.props.history}
             >
                 <Row>
@@ -67,6 +80,7 @@ export default class Garage extends React.Component {
                                 key={garage.id}
                                 car_id={garage.id}
                                 name={garage.name}
+                                cars_number={(this.getCarsNumberInGarage(garage.id))}
                                 history={this.props.history}
                                 onItemClickDeleteCar={this.onItemClickDeleteCar}
                             />)

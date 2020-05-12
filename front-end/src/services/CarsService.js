@@ -77,6 +77,13 @@ const deleteCar = (id) => {
         });
 }
 
+const getCarsByGarageId = (id) => {
+    return Axios.get(`${getBasename()}/cars/garage/${id}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+};
+
 module.exports = {
     createCar,
     createCarUsingFormData,
@@ -87,4 +94,5 @@ module.exports = {
     updateCar,
     getCarImageById,
     getCarImageWithoutToken,
+    getCarsByGarageId,
 };
