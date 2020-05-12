@@ -69,7 +69,7 @@ export default class AddCar extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const car = { ...this.state.car, "user_id": TokenService.getUserId() }
+        let car = { ...this.state.car, "user_id": TokenService.getUserId() }
 
         let formData = new FormData();    //formdata object
         formData.append('model', car.model);
@@ -84,7 +84,11 @@ export default class AddCar extends React.Component {
         formData.append('pollution_grade', car.pollution_grade);
         formData.append('avatar_photo', this.state.file);
         formData.append('user_id', car.user_id);
-        formData.append('garage_id', car.garage_id);
+
+        if (this.state.car.garage_id !== undefined) {
+            formData.append('garage_id', car.garage_id);
+        }
+
         console.log(this.state.file, formData)
         CarsService.createCarUsingFormData(formData)
             .then((res) => {

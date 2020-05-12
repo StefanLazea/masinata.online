@@ -5,7 +5,7 @@ const getBasename = () => {
     return process.env.REACT_APP_BACK_END_URL;
 };
 
-const getGaragesByUserId = (userId) => {
+const getGaragesByUserId = () => {
     return Axios.get(`${getBasename()}/garages/user/${getUserId()}`,
         {
             headers: { "Authorization": getToken() }
