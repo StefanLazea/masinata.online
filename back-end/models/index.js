@@ -9,7 +9,7 @@ User.hasMany(Car);
 Car.belongsTo(User);
 
 Garage.hasOne(Car);
-Car.belongsTo(Garage);
+Car.belongsTo(Garage, { foreignKey: { notNull: false } });
 
 User.hasMany(Garage);
 Garage.belongsTo(User);
