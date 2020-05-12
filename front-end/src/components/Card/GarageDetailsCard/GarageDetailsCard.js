@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from '../../../utils/propTypes';
 import { Button, Card, Col, CardHeader, CardTitle, CardBody, Badge } from 'reactstrap';
+import { toast } from 'react-toastify';
+import CarsService from '../../../services/CarsService.js';
 import './GarageDetailsCard.css'
 
 export default function GarageDetailsCard({
     garage_id,
     name,
-    cars_number,
     history,
     onItemClickDeleteCar,
     ...restProps
 }) {
-
+    const [carsNumber, setCarsNumber] = useState(0);
+    useEffect(() => {
+        CarsService.getCarsByGarageId(garage_id)
+            .then((res) =>
+                setCarsNumber(res.data.length))
+            .catch((err) => {
+                console.log(err.response)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
+    })
     return (
         <>
             <Col lg="4" md="12" sm="12" xs="12">
@@ -32,7 +46,7 @@ export default function GarageDetailsCard({
                             <CardTitle>
                                 Masini care apartin garajului
                             </CardTitle>
-                            <Badge color="success" pill className="ml-auto">{cars_number}</Badge>
+                            <Badge color="success" pill className="ml-auto">{carsNumber}</Badge>
                         </div>
 
                         <CardTitle>

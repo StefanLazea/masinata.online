@@ -95,16 +95,19 @@ const addGarageToCar = async (req, res) => {
 };
 
 const getCarsFromGarage = async (req, res) => {
-    await Car.findAll({
-        include: [{
-            model: Garage,
-            where: { id: req.params.id }
-        }]
-    }).then(cars => {
-        return res.status(200).send(cars);
-    });
-
-    return res.status(500).send({ message: "Something went wrong" });
+    let carsFound;
+    try {
+        await Car.findAll({
+            include: [{
+                model: Garage,
+                where: { id: req.params.id }
+            }]
+        }).then((cars) => carsFound = cars);
+    }
+    catch (err) {
+        return res.status(409).send({ message: "No elements found in the database", err });
+    }
+    return res.status(200).send(carsFound);
 };
 
 const getCarById = async (req, res) => {

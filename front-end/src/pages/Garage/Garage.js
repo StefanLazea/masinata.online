@@ -3,7 +3,6 @@ import { GarageDetailsCard } from '../../components/Card';
 import GarageService from '../../services/GarageService.js';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
-import CarsService from '../../services/CarsService.js';
 import React from 'react';
 import {
     Button,
@@ -24,20 +23,8 @@ export default class Garage extends React.Component {
             garages: [],
             hasTokenExpired: false,
             isDeleteButtonClicked: false,
-            carsNumberInGarage: 0
+            cars: []
         }
-    }
-
-    getCarsNumberInGarage = (id) => {
-        let number = 0;
-        CarsService.getCarsByGarageId(id)
-            .then(res => {
-                console.log(res.data.length)
-                number = res.data.length;
-            }).catch((err) => {
-                number = 0;
-            });
-        return number;
     }
 
     getUserGarages = () => {
@@ -54,7 +41,6 @@ export default class Garage extends React.Component {
                 }
             });
     }
-
 
     componentDidMount() {
         this._isMounted = true;
@@ -76,14 +62,14 @@ export default class Garage extends React.Component {
                 <Row>
                     {this.state.garages.length > 0 ?
                         this.state.garages.map(garage =>
-                            <GarageDetailsCard
+                            < GarageDetailsCard
                                 key={garage.id}
-                                car_id={garage.id}
+                                garage_id={garage.id}
                                 name={garage.name}
-                                cars_number={(this.getCarsNumberInGarage(garage.id))}
                                 history={this.props.history}
                                 onItemClickDeleteCar={this.onItemClickDeleteCar}
-                            />)
+                            />
+                        )
                         :
                         <Col lg="4" md="12" sm="12" xs="12">
                             <div>
