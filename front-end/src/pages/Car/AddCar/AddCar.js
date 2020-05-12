@@ -71,7 +71,6 @@ export default class AddCar extends React.Component {
         e.preventDefault();
         const car = { ...this.state.car, "user_id": TokenService.getUserId() }
 
-
         let formData = new FormData();    //formdata object
         formData.append('model', car.model);
         formData.append('brand', car.brand);
@@ -236,8 +235,8 @@ export default class AddCar extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Label for="engine_capacity" sm={3}>Capacitate cilindrica</Label>
-                                                <Col sm={3}>
+                                                <Label for="engine_capacity" sm={4}>Capacitate cilindrica</Label>
+                                                <Col sm={2}>
                                                     <Input
                                                         type="text"
                                                         name="engine_capacity"

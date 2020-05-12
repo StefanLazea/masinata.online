@@ -38,14 +38,16 @@ export default class CarProfile extends React.Component {
         }
 
     }
+
     componentDidMount = () => {
         this._isMounted = true;
         this.getCarById();
     }
 
-    handleChange = (e) => {
+    handleChange = async (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
-        this.setState(() => ({ car }))
+        await this.setState(() => ({ car }))
+        console.log(this.state.car)
     }
 
     getCarById = () => {
@@ -62,6 +64,7 @@ export default class CarProfile extends React.Component {
                 }
             });
     }
+
     getGarageInfo = (id) => {
         GarageService.getGaragesById(id)
             .then((res) => {
@@ -78,6 +81,7 @@ export default class CarProfile extends React.Component {
     handleUndefiendValues = (value) => {
         return value === "undefined" ? "" : value;
     }
+
     updateCar = (e) => {
 
     }
@@ -156,7 +160,7 @@ export default class CarProfile extends React.Component {
                                                         type="text"
                                                         name="year"
                                                         id="year"
-                                                        defaultValue={this.state.car.year}
+                                                        defaultValue={this.handleUndefiendValues(this.state.car.year)}
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
@@ -165,20 +169,57 @@ export default class CarProfile extends React.Component {
                                                 <Label for="engine_type" sm={3}>Combustibil</Label>
                                                 <Col sm={3}>
                                                     <Input
-                                                        type="text"
+                                                        type="select"
                                                         name="engine_type"
                                                         id="engine_type"
-                                                        defaultValue={this.state.car.engine_type}
                                                         onChange={this.handleChange}
-                                                    />
+                                                        value={this.state.car.engine_type}
+                                                    >
+                                                        <option>Tip combustibil</option>
+                                                        <option value="Motorina">Motorina</option>
+                                                        <option value="Benzina">Benzina</option>
+                                                        <option value="Hidrogen">Hidrogen</option>
+                                                    </Input>
                                                 </Col>
                                                 <Label for="eco" sm={2}>Norma</Label>
                                                 <Col>
                                                     <Input
+                                                        type="select"
+                                                        name="pollution_grade"
+                                                        id="pollution_grade"
+                                                        onChange={this.handleChange}
+                                                        value={this.state.car.pollution_grade}
+                                                    >
+                                                        <option>Norma poluare</option>
+                                                        <option value="non-euro">non-euro</option>
+                                                        <option value="eco">eco</option>
+                                                        <option value="Euro 1">Euro 1</option>
+                                                        <option value="Euro 2">Euro 2</option>
+                                                        <option value="Euro 3">Euro 3</option>
+                                                        <option value="Euro 4">Euro 4</option>
+                                                        <option value="Euro 5">Euro 5</option>
+                                                        <option value="Euro 6">Euro 6</option>
+                                                    </Input>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Label for="engine_capacity" sm={4}>Capacitate cilindrica</Label>
+                                                <Col sm={2}>
+                                                    <Input
                                                         type="text"
-                                                        name="eco"
-                                                        id="eco"
-                                                        defaultValue={this.state.car.pollution_grade}
+                                                        name="engine_capacity"
+                                                        id="engine_capacity"
+                                                        defaultValue={this.handleUndefiendValues(this.state.car.engine_capacity)}
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                                <Label for="mileage" sm={3}>Kilometraj</Label>
+                                                <Col sm={3}>
+                                                    <Input
+                                                        type="text"
+                                                        name="mileage"
+                                                        id="mileage"
+                                                        defaultValue={this.handleUndefiendValues(this.state.car.mileage)}
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
