@@ -59,6 +59,7 @@ export default class Garage extends React.Component {
             .then((res) => {
                 toast(res.data.message)
                 this.getUserGarages();
+                this.setState({ displayCreateGarageCard: false })
             })
             .catch((err) => {
                 console.log(err.response)
@@ -110,7 +111,18 @@ export default class Garage extends React.Component {
                             <div>
                                 <Card>
                                     <CardHeader>
-                                        Creare garaj
+                                        <div className="d-flex align-items-center">
+                                            <CardTitle>Creare garaj</CardTitle>
+
+                                            <Button
+                                                className="ml-auto btn-danger"
+                                                onClick={(e) => {
+                                                    this.setState({ displayCreateGarageCard: false })
+                                                }}>
+                                                <i className="fa fa-times"></i>
+                                            </Button>
+                                        </div>
+
                                     </CardHeader>
                                     <CardBody>
                                         <Col>
