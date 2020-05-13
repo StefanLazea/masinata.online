@@ -13,6 +13,8 @@ export default function Page({
   className,
   children,
   addCarButton,
+  addGarageButton,
+  onClickCreateGarage,
   history,
   ...restProps
 }) {
@@ -39,6 +41,10 @@ export default function Page({
         )}
         {addCarButton ?
           <Button className="btn-success ml-auto align-middle" onClick={(e) => history.push("/add/car")}>Adauga o noua masina</Button>
+          : null
+        }
+        {addGarageButton ?
+          <Button className="btn-success align-middle" onClick={(e) => { onClickCreateGarage(e) }}>Creeaza garaj</Button>
           : null
         }
       </div>

@@ -10,7 +10,8 @@ import {
     CardBody,
     CardTitle,
     Col,
-    Row
+    Row,
+    CardHeader,
 } from 'reactstrap';
 import './Garage.css';
 
@@ -23,8 +24,23 @@ export default class Garage extends React.Component {
             garages: [],
             hasTokenExpired: false,
             isDeleteButtonClicked: false,
+            displayCreateGarageCard: false,
             cars: []
         }
+    }
+
+    onClickCreateGarage = (e) => {
+        console.log("creare garaj")
+        this.setState({ displayCreateGarageCard: true });
+    }
+
+    onItemClickDeleteGarage = (e, garage_id) => {
+        console.log("sterge")
+    }
+
+    createGarage = (e) => {
+        e.preventDefault();
+
     }
 
     getUserGarages = () => {
@@ -56,10 +72,26 @@ export default class Garage extends React.Component {
                 className="Garages"
                 title="Garage"
                 breadcrumbs={[{ name: 'Garage', active: true }]}
+                addGarageButton={true}
                 addCarButton={true}
+                onClickCreateGarage={this.onClickCreateGarage}
                 history={this.props.history}
             >
                 <Row>
+                    {this.state.displayCreateGarageCard ?
+                        <Col lg="4" md="12" sm="12" xs="12">
+                            <div>
+                                <Card>
+                                    <CardHeader>
+                                        Creare garaj
+                                    </CardHeader>
+                                    <CardBody className="text-center">
+                                        <CardTitle>Nu exista nici un garaj!</CardTitle>
+                                        <Button className="btn-success" onClick={(e) => this.createGarage(e)} >Adauga un garaj</Button>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Col> : null}
                     {this.state.garages.length > 0 ?
                         this.state.garages.map(garage =>
                             < GarageDetailsCard
@@ -67,7 +99,7 @@ export default class Garage extends React.Component {
                                 garage_id={garage.id}
                                 name={garage.name}
                                 history={this.props.history}
-                                onItemClickDeleteCar={this.onItemClickDeleteCar}
+                                onItemClickDeleteGarage={this.onItemClickDeleteGarage}
                             />
                         )
                         :
@@ -83,6 +115,7 @@ export default class Garage extends React.Component {
                         </Col>
                     }
                 </Row>
+
             </Page>
         );
     }
