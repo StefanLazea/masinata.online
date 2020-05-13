@@ -1,6 +1,7 @@
 import Page from '../../components/Page';
 import { GarageDetailsCard } from '../../components/Card';
 import GarageService from '../../services/GarageService.js';
+import TokenService from '../../services/Token.js';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
 import React from 'react';
@@ -12,6 +13,8 @@ import {
     Col,
     Row,
     CardHeader,
+    Input,
+    Label
 } from 'reactstrap';
 import './Garage.css';
 
@@ -25,8 +28,16 @@ export default class Garage extends React.Component {
             hasTokenExpired: false,
             isDeleteButtonClicked: false,
             displayCreateGarageCard: false,
+            garageName: "",
             cars: []
         }
+    }
+
+    handleChange = async (e) => {
+        console.log(e.target.name)
+        await this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     onClickCreateGarage = (e) => {
@@ -40,7 +51,23 @@ export default class Garage extends React.Component {
 
     createGarage = (e) => {
         e.preventDefault();
-
+        let data = {
+            name: this.state.garageName,
+            user_id: TokenService.getUserId()
+        }
+        GarageService.createGarage(data)
+            .then((res) => {
+                toast(res.data.message)
+                this.getUserGarages();
+            })
+            .catch((err) => {
+                console.log(err.response)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
     }
 
     getUserGarages = () => {
@@ -85,9 +112,19 @@ export default class Garage extends React.Component {
                                     <CardHeader>
                                         Creare garaj
                                     </CardHeader>
-                                    <CardBody className="text-center">
-                                        <CardTitle>Nu exista nici un garaj!</CardTitle>
-                                        <Button className="btn-success" onClick={(e) => this.createGarage(e)} >Adauga un garaj</Button>
+                                    <CardBody>
+                                        <Col>
+                                            <Label for="name">Denumire</Label>
+                                            <Input
+                                                type="name"
+                                                name="garageName"
+                                                id="name"
+                                                onChange={e => this.handleChange(e)}
+                                            />
+                                            <Row>
+                                                <Button className="btn-success mx-auto" onClick={(e) => this.createGarage(e)} >Adauga un garaj</Button>
+                                            </Row>
+                                        </Col>
                                     </CardBody>
                                 </Card>
                             </div>

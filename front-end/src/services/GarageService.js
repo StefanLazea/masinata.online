@@ -12,6 +12,16 @@ const getGaragesByUserId = () => {
         });
 };
 
+const createGarage = (data) => {
+    return Axios.post(`${getBasename()}/garages`, JSON.stringify(data),
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
+
 const getGaragesById = (id) => {
     return Axios.get(`${getBasename()}/garages/${id}`,
         {
@@ -22,4 +32,5 @@ const getGaragesById = (id) => {
 module.exports = {
     getGaragesByUserId,
     getGaragesById,
+    createGarage,
 };
