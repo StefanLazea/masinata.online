@@ -13,6 +13,7 @@ export default function GarageDetailsCard({
     ...restProps
 }) {
     const [carsNumber, setCarsNumber] = useState(0);
+
     useEffect(() => {
         CarsService.getCarsByGarageId(garage_id)
             .then((res) =>
@@ -25,7 +26,8 @@ export default function GarageDetailsCard({
                     this.setState({ hasTokenExpired: true });
                 }
             });
-    })
+    });
+
     return (
         <>
             <Col lg="4" md="12" sm="12" xs="12">

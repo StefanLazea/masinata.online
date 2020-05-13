@@ -20,7 +20,7 @@ const createGarage = (data) => {
                 "Authorization": getToken()
             }
         });
-}
+};
 
 const getGaragesById = (id) => {
     return Axios.get(`${getBasename()}/garages/${id}`,
@@ -29,8 +29,19 @@ const getGaragesById = (id) => {
         });
 };
 
+const deleteGarage = (id) => {
+    return Axios.delete(`${getBasename()}/garages/${id}`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
+
 module.exports = {
     getGaragesByUserId,
     getGaragesById,
     createGarage,
+    deleteGarage,
 };

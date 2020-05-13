@@ -46,7 +46,18 @@ export default class Garage extends React.Component {
     }
 
     onItemClickDeleteGarage = (e, garage_id) => {
-        console.log("sterge")
+        GarageService.deleteGarage(garage_id)
+            .then((response) => {
+                toast(response.data.message);
+                this.getUserGarages();
+            }).catch((err) => {
+                console.log(err)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
     }
 
     createGarage = (e) => {
@@ -143,7 +154,7 @@ export default class Garage extends React.Component {
                         </Col> : null}
                     {this.state.garages.length > 0 ?
                         this.state.garages.map(garage =>
-                            < GarageDetailsCard
+                            <GarageDetailsCard
                                 key={garage.id}
                                 garage_id={garage.id}
                                 name={garage.name}

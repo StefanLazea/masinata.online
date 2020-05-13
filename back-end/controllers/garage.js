@@ -46,6 +46,14 @@ const getGarageById = async (req, res) => {
         return res.status(404).send({ message: "Garage not found" });
     }
     return res.status(200).send({ message: garageFound });
+};
+
+const deleteGarageById = async (req, res) => {
+    let garageFound = await Garage.findByPk(req.params.id);
+    if (!garageFound) {
+        return res.status(404).send({ message: "Garage not found" });
+    }
+    await garageFound.destroy().then(() => { return res.send({ message: "Garage deleted" }) });
 }
 
 module.exports = {
@@ -53,4 +61,5 @@ module.exports = {
     createGarage,
     getGaragesByUserId,
     getGarageById,
+    deleteGarageById,
 }
