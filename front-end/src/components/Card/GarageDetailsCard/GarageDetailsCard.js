@@ -10,6 +10,7 @@ export default function GarageDetailsCard({
     name,
     history,
     onItemClickDeleteGarage,
+    onItemClickEditGarage,
     ...restProps
 }) {
     const [carsNumber, setCarsNumber] = useState(0);
@@ -38,7 +39,7 @@ export default function GarageDetailsCard({
                             <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteGarage(e, garage_id) }}>
                                 <i className="fa fa-trash"></i>
                             </Button>
-                            <Button className="btn-warning">
+                            <Button className="btn-warning" onClick={(e) => { onItemClickEditGarage(e, garage_id) }}>
                                 <i className="fa fa-pencil"></i>
                             </Button>
                         </div>

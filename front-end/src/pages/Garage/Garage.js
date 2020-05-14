@@ -1,5 +1,5 @@
 import Page from '../../components/Page';
-import { GarageDetailsCard } from '../../components/Card';
+import { GarageDetailsCard, GarageAddEditCard } from '../../components/Card';
 import GarageService from '../../services/GarageService.js';
 import TokenService from '../../services/Token.js';
 import { toast } from 'react-toastify';
@@ -12,9 +12,6 @@ import {
     CardTitle,
     Col,
     Row,
-    CardHeader,
-    Input,
-    Label
 } from 'reactstrap';
 import './Garage.css';
 
@@ -29,6 +26,7 @@ export default class Garage extends React.Component {
             isDeleteButtonClicked: false,
             displayCreateGarageCard: false,
             garageName: "",
+            editGarageId: null,
             cars: []
         }
     }
@@ -38,6 +36,7 @@ export default class Garage extends React.Component {
         await this.setState({
             [e.target.name]: e.target.value
         })
+        console.log(this.state.garageName)
     }
 
     onClickCreateGarage = (e) => {
@@ -82,6 +81,11 @@ export default class Garage extends React.Component {
             });
     }
 
+    //todo update function plus refactoring
+    updateGarage = (e) => {
+        console.log(e.target);
+    }
+
     getUserGarages = () => {
         GarageService.getGaragesByUserId()
             .then((res) => {
@@ -95,6 +99,15 @@ export default class Garage extends React.Component {
                     this.setState({ hasTokenExpired: true });
                 }
             });
+    }
+
+    onCancelButtonClick = () => {
+        this.setState({ displayCreateGarageCard: false })
+    }
+
+    onItemClickEditGarage = (e, garage_id) => {
+        console.log(garage_id)
+        this.setState({ editGarageId: garage_id });
     }
 
     componentDidMount() {
@@ -117,41 +130,28 @@ export default class Garage extends React.Component {
                 history={this.props.history}
             >
                 <Row>
-                    {this.state.displayCreateGarageCard ?
-                        <Col lg="4" md="12" sm="12" xs="12">
-                            <div>
-                                <Card>
-                                    <CardHeader>
-                                        <div className="d-flex align-items-center">
-                                            <CardTitle>Creare garaj</CardTitle>
+                    {
+                        this.state.displayCreateGarageCard ?
+                            <GarageAddEditCard
+                                cardPurpose={"Adaugare"}
+                                handleChange={this.handleChange}
+                                onCancelButtonClick={this.onCancelButtonClick}
+                                submitMethod={this.createGarage}
+                            />
+                            : null
+                    }
 
-                                            <Button
-                                                className="ml-auto btn-danger"
-                                                onClick={(e) => {
-                                                    this.setState({ displayCreateGarageCard: false })
-                                                }}>
-                                                <i className="fa fa-times"></i>
-                                            </Button>
-                                        </div>
+                    {
+                        this.state.editGarageId ?
+                            <GarageAddEditCard
+                                cardPurpose={"Editare"}
+                                garage_id={this.state.editGarageId}
+                                handleChange={this.handleChange}
+                                onCancelButtonClick={this.onCancelButtonClick}
+                                submitMethod={this.updateGarage}
+                            /> : null
+                    }
 
-                                    </CardHeader>
-                                    <CardBody>
-                                        <Col>
-                                            <Label for="name">Denumire</Label>
-                                            <Input
-                                                type="name"
-                                                name="garageName"
-                                                id="name"
-                                                onChange={e => this.handleChange(e)}
-                                            />
-                                            <Row>
-                                                <Button className="btn-success mx-auto" onClick={(e) => this.createGarage(e)} >Adauga un garaj</Button>
-                                            </Row>
-                                        </Col>
-                                    </CardBody>
-                                </Card>
-                            </div>
-                        </Col> : null}
                     {this.state.garages.length > 0 ?
                         this.state.garages.map(garage =>
                             <GarageDetailsCard
@@ -159,6 +159,7 @@ export default class Garage extends React.Component {
                                 garage_id={garage.id}
                                 name={garage.name}
                                 history={this.props.history}
+                                onItemClickEditGarage={this.onItemClickEditGarage}
                                 onItemClickDeleteGarage={this.onItemClickDeleteGarage}
                             />
                         )

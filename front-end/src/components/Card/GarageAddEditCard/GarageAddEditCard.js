@@ -5,7 +5,7 @@ import './GarageAddEditCard.css'
 
 export default function GarageAddEditCard({
     cardPurpose,
-    name,
+    garage_id,
     history,
     onCancelButtonClick,
     handleChange,
@@ -13,6 +13,7 @@ export default function GarageAddEditCard({
     ...restProps
 }) {
     return (
+
         <>
             <Col lg="4" md="12" sm="12" xs="12">
                 <div>
