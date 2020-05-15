@@ -7,7 +7,7 @@ const getGarages = async (req, res) => {
     catch (err) {
         return res.status(409).send({ message: "No elements found in the database" });
     }
-}
+};
 
 const createGarage = async (req, res) => {
     let garage = {
@@ -26,7 +26,7 @@ const createGarage = async (req, res) => {
     }
 
     return res.status(200).send({ message: garage.name + " successfully created!" })
-}
+};
 
 const getGaragesByUserId = async (req, res) => {
     try {
@@ -54,7 +54,26 @@ const deleteGarageById = async (req, res) => {
         return res.status(404).send({ message: "Garage not found" });
     }
     await garageFound.destroy().then(() => { return res.send({ message: "Garage deleted" }) });
-}
+};
+
+const updateGarageById = async (req, res) => {
+    let garage = {
+        name: req.body.name,
+    }
+    try {
+        await Garage.update(
+            garage,
+            {
+                where:
+                    { id: req.params.id }
+            }
+        );
+
+        return res.status(200).send({ message: "Garage details updated successfully!" });
+    } catch (err) {
+        return res.status(500).send({ message: "Something went wrong" });
+    }
+};
 
 module.exports = {
     getGarages,
@@ -62,4 +81,5 @@ module.exports = {
     getGaragesByUserId,
     getGarageById,
     deleteGarageById,
+    updateGarageById,
 }

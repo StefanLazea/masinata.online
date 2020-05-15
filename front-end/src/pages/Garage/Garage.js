@@ -22,25 +22,21 @@ export default class Garage extends React.Component {
 
         this.state = {
             garages: [],
-            hasTokenExpired: false,
             isDeleteButtonClicked: false,
             displayCreateGarageCard: false,
             garageName: "",
             editGarageId: null,
-            cars: []
+            hasTokenExpired: false,
         }
     }
 
     handleChange = async (e) => {
-        console.log(e.target.name)
         await this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.state.garageName)
     }
 
     onClickCreateGarage = (e) => {
-        console.log("creare garaj")
         this.setState({ displayCreateGarageCard: true });
     }
 
@@ -50,7 +46,7 @@ export default class Garage extends React.Component {
                 toast(response.data.message);
                 this.getUserGarages();
             }).catch((err) => {
-                console.log(err)
+                console.log(err.response)
                 toast("An error occurred, please try later!");
                 if (err.response.status === 403) {
                     toast("Your session has expired. Please login!");
@@ -61,10 +57,12 @@ export default class Garage extends React.Component {
 
     createGarage = (e) => {
         e.preventDefault();
+
         let data = {
             name: this.state.garageName,
             user_id: TokenService.getUserId()
         }
+
         GarageService.createGarage(data)
             .then((res) => {
                 toast(res.data.message)
@@ -81,9 +79,25 @@ export default class Garage extends React.Component {
             });
     }
 
-    //todo update function plus refactoring
     updateGarage = (e) => {
-        console.log(e.target);
+        const form = {
+            "name": this.state.garageName,
+        }
+
+        GarageService.updateGarage(this.state.editGarageId, form)
+            .then((res) => {
+                toast(res.data.message);
+                this.setState({ editGarageId: null });
+                this.getUserGarages();
+            })
+            .catch((err) => {
+                console.log(err.response)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
     }
 
     getUserGarages = () => {
@@ -105,8 +119,8 @@ export default class Garage extends React.Component {
         this.setState({ displayCreateGarageCard: false })
     }
 
-    onItemClickEditGarage = (e, garage_id) => {
-        console.log(garage_id)
+    onItemClickEditGarage = (e, garage_id, garage_name) => {
+        this.setState({ garageName: garage_name })
         this.setState({ editGarageId: garage_id });
     }
 
@@ -116,7 +130,7 @@ export default class Garage extends React.Component {
     }
 
     render() {
-        if (this.state.hasTokenExpired === true) {
+        if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
         }
         return (
@@ -146,6 +160,7 @@ export default class Garage extends React.Component {
                             <GarageAddEditCard
                                 cardPurpose={"Editare"}
                                 garage_id={this.state.editGarageId}
+                                garage_name={this.state.garageName}
                                 handleChange={this.handleChange}
                                 onCancelButtonClick={this.onCancelButtonClick}
                                 submitMethod={this.updateGarage}

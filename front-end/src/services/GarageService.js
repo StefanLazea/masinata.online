@@ -39,9 +39,21 @@ const deleteGarage = (id) => {
         });
 }
 
+const updateGarage = (id, data) => {
+    console.log("data json", data)
+    return Axios.put(`${getBasename()}/garages/${id}`, JSON.stringify(data),
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
+
 module.exports = {
     getGaragesByUserId,
     getGaragesById,
     createGarage,
     deleteGarage,
+    updateGarage,
 };

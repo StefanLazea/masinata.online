@@ -39,7 +39,7 @@ export default function GarageDetailsCard({
                             <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteGarage(e, garage_id) }}>
                                 <i className="fa fa-trash"></i>
                             </Button>
-                            <Button className="btn-warning" onClick={(e) => { onItemClickEditGarage(e, garage_id) }}>
+                            <Button className="btn-warning" onClick={(e) => { onItemClickEditGarage(e, garage_id, name) }}>
                                 <i className="fa fa-pencil"></i>
                             </Button>
                         </div>

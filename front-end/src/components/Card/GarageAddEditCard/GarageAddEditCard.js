@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from '../../../utils/propTypes';
 import { Button, Card, Col, CardHeader, CardTitle, CardBody, Label, Input, Row } from 'reactstrap';
 import './GarageAddEditCard.css'
@@ -6,12 +6,18 @@ import './GarageAddEditCard.css'
 export default function GarageAddEditCard({
     cardPurpose,
     garage_id,
+    garage_name,
     history,
     onCancelButtonClick,
     handleChange,
     submitMethod,
     ...restProps
 }) {
+    useEffect(() => {
+        console.log(garage_name, garage_id)
+    })
+
+
     return (
 
         <>
@@ -20,7 +26,9 @@ export default function GarageAddEditCard({
                     <Card>
                         <CardHeader>
                             <div className="d-flex align-items-center">
-                                <CardTitle>{cardPurpose} garaj</CardTitle>
+                                <CardTitle>{cardPurpose} garaj {garage_name !== undefined ?
+                                    <strong>{garage_name}</strong> : null}
+                                </CardTitle>
 
                                 <Button
                                     className="ml-auto btn-danger"
@@ -65,5 +73,6 @@ GarageAddEditCard.propTypes = {
 
 GarageAddEditCard.defaultProps = {
     avatarSize: 80,
+    garage_id: null
 };
 
