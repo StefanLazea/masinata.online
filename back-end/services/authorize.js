@@ -32,7 +32,6 @@ function authorize(roles = []) {
                         return res.status(403).send({ message: err });
                     } else {
                         req.user = decoded;
-                        // console.log(req.user, roles, roles.length, req.user.role)
                         if (roles.length && !roles.includes(req.user.role)) {
                             return res.status(401).json({ message: 'You are not authorized in this area!' });
                         }

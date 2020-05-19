@@ -5,7 +5,6 @@ import { Card, Col, Row } from 'reactstrap';
 class AuthPage extends React.Component {
   handleAuthState = authState => {
     if (authState === STATE_LOGIN) {
-      console.log("login")
       this.props.history.push('/login');
     } else {
       this.props.history.push('/signup');

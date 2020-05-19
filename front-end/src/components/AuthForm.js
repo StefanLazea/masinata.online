@@ -79,8 +79,6 @@ class AuthForm extends React.Component {
       AuthService.login(form)
         .then((res) => {
           setTokenToLocalStorage(res.data.token);
-          // setTokenInCookies(res.data.token)
-          console.log(res.headers)
           this.setState({ redirectToDashboard: true });
         })
         .catch(error => {
