@@ -14,6 +14,7 @@ class AuthForm extends React.Component {
       password: ' ',
       email: ' ',
       confirmPassword: '',
+      companyName: '',
       redirectToDashboard: false,
       redirectToLogin: false
     }
@@ -54,12 +55,14 @@ class AuthForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.props.authState === STATE_SIGNUP) {
+
       const form = {
         email: this.state.email,
         password: this.state.password,
-        repeat_password: this.state.confirmPassword
+        repeat_password: this.state.confirmPassword,
+        companyName: this.state.companyName,
       }
-
+      console.log(form)
       AuthService.register(form)
         .then((res) => {
           toast(res.data.message);
@@ -110,6 +113,8 @@ class AuthForm extends React.Component {
       passwordInputProps,
       confirmPasswordLabel,
       confirmPasswordInputProps,
+      companyNameLabel,
+      companyNameInputProps,
       children,
     } = this.props;
 
@@ -142,12 +147,18 @@ class AuthForm extends React.Component {
           <Label for={passwordLabel}>{passwordLabel}</Label>
           <Input name="password" {...passwordInputProps} onChange={e => this.handleChange(e)} />
         </FormGroup>
-        {this.isSignup && (
-          <FormGroup>
-            <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
-            <Input name="confirmPassword" {...confirmPasswordInputProps} onChange={e => this.handleChange(e)} />
-          </FormGroup>
-        )}
+        {this.isSignup ?
+          <div>
+            <FormGroup>
+              <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
+              <Input name="confirmPassword" {...confirmPasswordInputProps} onChange={e => this.handleChange(e)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for={companyNameLabel}>{companyNameLabel}</Label>
+              <Input name="companyName" {...companyNameInputProps} onChange={e => this.handleChange(e)} />
+            </FormGroup>
+          </div>
+          : null}
         <FormGroup check>
           <Label check>
             <Input type="checkbox" />{' '}
@@ -196,6 +207,8 @@ AuthForm.propTypes = {
   passwordInputProps: PropTypes.object,
   confirmPasswordLabel: PropTypes.string,
   confirmPasswordInputProps: PropTypes.object,
+  companyNameLabel: PropTypes.string,
+  companyNameInputProps: PropTypes.object,
   onLogoClick: PropTypes.func,
 };
 
@@ -216,6 +229,11 @@ AuthForm.defaultProps = {
   confirmPasswordInputProps: {
     type: 'password',
     placeholder: 'confirm your password',
+  },
+  companyNameLabel: 'Company name',
+  companyNameInputProps: {
+    type: 'text',
+    placeholder: 'company name',
   },
 };
 

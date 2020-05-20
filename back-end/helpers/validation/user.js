@@ -7,7 +7,8 @@ let schema = Joi.object({
     }),
     repeat_password: Joi.any().valid(Joi.ref('password')).required().messages({
         "any.only": `"repeat_password" should match password field`
-    })
+    }),
+    companyName: Joi.string()
 });
 
 let options = { abortEarly: false };

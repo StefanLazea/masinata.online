@@ -18,7 +18,8 @@ const register = async (res, credentials) => {
     let user = {
         email: credentials.email,
         password: ePassword,
-        role: Role.User
+        role: Role.User,
+        company_name: credentials.companyName
     }
 
     try {

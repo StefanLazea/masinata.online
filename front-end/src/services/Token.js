@@ -10,6 +10,13 @@ const getUserId = () => {
     return decode.id;
 }
 
+const getUserRole = () => {
+    let token = localStorage.getItem('token');
+    const trimmedToken = token.split(" ")[1];
+    const decode = jwt.decode(trimmedToken, secret);
+    return decode.role;
+}
+
 const getDecodedToken = () => {
     let token = localStorage.getItem('token');
     const trimmedToken = token.split(" ")[1];
@@ -36,6 +43,7 @@ const removeTokenFromLocalStorage = () => {
 
 module.exports = {
     getUserId,
+    getUserRole,
     getToken,
     setTokenToLocalStorage,
     setTokenInCookies,

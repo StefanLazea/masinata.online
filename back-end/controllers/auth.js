@@ -5,10 +5,12 @@ const { validateUser } = require("../helpers/validation/user");
 const { findUserByEmail } = require("../services/users");
 
 const register = async (req, res) => {
+    console.log(req.body)
     let credentials = {
         email: req.body.email,
         password: req.body.password,
-        repeat_password: req.body.repeat_password
+        repeat_password: req.body.repeat_password,
+        companyName: req.body.companyMame,
     };
 
     let errors = validateUser(credentials);

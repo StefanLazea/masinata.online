@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
             'address': DataTypes.STRING,
             'secondAddress': DataTypes.STRING,
             'phone': DataTypes.STRING,
-            'createdAt': { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
+            'company_name': DataTypes.STRING,
+            'createdAt': {
+                type: DataTypes.DATE,
+                defaultValue: DataTypes.NOW
+            }
         },
         {
             underscored: true
