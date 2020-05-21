@@ -1,4 +1,4 @@
-import Page from '../../components/Page';
+import Page from '../../components/Page/Page';
 import { GarageDetailsCard, GarageAddEditCard } from '../../components/Card';
 import GarageService from '../../services/GarageService.js';
 import TokenService from '../../services/Token.js';

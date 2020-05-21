@@ -1,4 +1,4 @@
-import Page from '../../components/Page';
+import Page from '../../components/Page/Page';
 import { CarDetailsCard } from '../../components/Card';
 import CarsService from '../../services/CarsService.js';
 import { toast } from 'react-toastify';

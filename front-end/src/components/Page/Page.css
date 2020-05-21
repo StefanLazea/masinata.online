@@ -1,0 +1,6 @@
+@media screen and (max-width: 720px) {
+    #addCar, #addGarage{
+        margin: auto;
+        margin-bottom: 1%;
+    }
+}

@@ -1,4 +1,4 @@
-import Page from '../../../components/Page';
+import Page from '../../../components/Page/Page';
 import { Redirect } from "react-router-dom";
 import {
     Row,

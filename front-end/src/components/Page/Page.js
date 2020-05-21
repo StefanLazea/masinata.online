@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from '../utils/propTypes';
-import bn from '../utils/bemnames';
+import PropTypes from '../../utils/propTypes';
+import bn from '../../utils/bemnames';
 import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
-import Typography from './Typography';
+import Typography from '../Typography';
+import './Page.css';
 
 const bem = bn.create('page');
 
@@ -40,11 +41,11 @@ export default function Page({
           </Breadcrumb>
         )}
         {addCarButton ?
-          <Button className="btn-success ml-auto align-middle" onClick={(e) => history.push("/add/car")}>Adauga o noua masina</Button>
+          <Button className="btn-success ml-auto align-middle" id="addCar" onClick={(e) => history.push("/add/car")}>Adauga o noua masina</Button>
           : null
         }
         {addGarageButton ?
-          <Button className="btn-success align-middle" onClick={(e) => { onClickCreateGarage(e) }}>Creeaza garaj</Button>
+          <Button className="btn-success align-middle" id="addGarage" onClick={(e) => { onClickCreateGarage(e) }}>Creeaza garaj</Button>
           : null
         }
       </div>
