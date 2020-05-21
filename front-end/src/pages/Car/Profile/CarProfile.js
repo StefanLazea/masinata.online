@@ -115,7 +115,10 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">{this.state.car.licence_plate}
                                             </span>
                                         </Badge>
-                                        <Badge color="success" className="ml-auto badge-text-size">{this.state.car.vin}</Badge>
+                                        <Button id="shareCar" className="btn-success ml-auto">
+                                            <i className="fa fa-share"></i>
+                                        </Button>
+                                        <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
