@@ -5,15 +5,14 @@ const { validateUser } = require("../helpers/validation/user");
 const { findUserByEmail } = require("../services/users");
 
 const register = async (req, res) => {
-    console.log(req.body)
     let credentials = {
         email: req.body.email,
         password: req.body.password,
         repeat_password: req.body.repeat_password,
-        companyName: req.body.companyMame,
+        companyName: req.body.companyName,
     };
 
-    let errors = validateUser(credentials);
+    let errors = validateUser(credentials, req.body.isPaperAdmin);
     if (errors) {
         return res.status(400).send({ message: errors })
     }

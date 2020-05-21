@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi');
 
+let isAdmin;
 let schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required().messages({
@@ -8,13 +9,13 @@ let schema = Joi.object({
     repeat_password: Joi.any().valid(Joi.ref('password')).required().messages({
         "any.only": `"repeat_password" should match password field`
     }),
-    companyName: Joi.string()
+    companyName: isAdmin === true ? Joi.string().min(3) : Joi.string().allow('')
 });
 
 let options = { abortEarly: false };
 
-
-const validateUser = (credentials) => {
+const validateUser = (credentials, isPaperAdmin) => {
+    isAdmin = isPaperAdmin;
     const { error, value } = schema.validate(credentials, options);
     let errors = {};
     if (error) {

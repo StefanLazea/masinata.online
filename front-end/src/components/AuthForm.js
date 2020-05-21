@@ -16,7 +16,8 @@ class AuthForm extends React.Component {
       confirmPassword: '',
       companyName: '',
       redirectToDashboard: false,
-      redirectToLogin: false
+      redirectToLogin: false,
+      isPaperAdmin: false,
     }
   }
 
@@ -37,6 +38,12 @@ class AuthForm extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  handleCheckboxChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
   }
 
   handleError = (e) => {
@@ -60,9 +67,10 @@ class AuthForm extends React.Component {
         email: this.state.email,
         password: this.state.password,
         repeat_password: this.state.confirmPassword,
+        isPaperAdmin: this.state.isPaperAdmin,
         companyName: this.state.companyName,
       }
-      console.log(form)
+
       AuthService.register(form)
         .then((res) => {
           toast(res.data.message);
@@ -147,22 +155,38 @@ class AuthForm extends React.Component {
           <Label for={passwordLabel}>{passwordLabel}</Label>
           <Input name="password" {...passwordInputProps} onChange={e => this.handleChange(e)} />
         </FormGroup>
-        {this.isSignup ?
-          <div>
+        {
+          this.isSignup ?
             <FormGroup>
               <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
               <Input name="confirmPassword" {...confirmPasswordInputProps} onChange={e => this.handleChange(e)} />
             </FormGroup>
+            : null
+        }
+        {
+          this.isSignup ?
+            <FormGroup check>
+              <Label check>
+                <Input name="isPaperAdmin" type="checkbox" onClick={e => this.handleCheckboxChange(e)} />
+            Administrator acte
+               </Label>
+            </FormGroup>
+            : null
+        }
+        {this.state.isPaperAdmin ?
+          <div>
+
             <FormGroup>
               <Label for={companyNameLabel}>{companyNameLabel}</Label>
               <Input name="companyName" {...companyNameInputProps} onChange={e => this.handleChange(e)} />
             </FormGroup>
           </div>
-          : null}
+          : null
+        }
         <FormGroup check>
           <Label check>
             <Input type="checkbox" />{' '}
-            {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
+            {this.isSignup ? 'Accept termenii si conditiile' : 'Remember me'}
           </Label>
         </FormGroup>
         <hr />
@@ -220,20 +244,20 @@ AuthForm.defaultProps = {
     type: 'email',
     placeholder: 'your@email.com',
   },
-  passwordLabel: 'Password',
+  passwordLabel: 'Parola',
   passwordInputProps: {
     type: 'password',
-    placeholder: 'your password',
+    placeholder: 'parola',
   },
-  confirmPasswordLabel: 'Confirm Password',
+  confirmPasswordLabel: 'Confirma parola',
   confirmPasswordInputProps: {
     type: 'password',
-    placeholder: 'confirm your password',
+    placeholder: 'confirma parola',
   },
-  companyNameLabel: 'Company name',
+  companyNameLabel: 'Numele companiei',
   companyNameInputProps: {
     type: 'text',
-    placeholder: 'company name',
+    placeholder: 'Asirom SRL',
   },
 };
 
