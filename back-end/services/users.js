@@ -4,7 +4,7 @@ const Role = require("../helpers/role");
 const dotenv = require('dotenv');
 dotenv.config();
 
-const register = async (res, credentials) => {
+const register = async (res, credentials, isPaperAdmin) => {
     let userFound = await findUserByEmail(credentials.email);
 
     if (userFound) {
@@ -18,7 +18,7 @@ const register = async (res, credentials) => {
     let user = {
         email: credentials.email,
         password: ePassword,
-        role: Role.User,
+        role: isPaperAdmin ? Role.Admin : Role.User,
         company_name: credentials.companyName
     }
 
