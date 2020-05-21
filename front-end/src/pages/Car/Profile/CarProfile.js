@@ -282,11 +282,15 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">Acte
                                             </span>
                                         </Badge>
-                                        <Badge color="success" className="ml-auto badge-text-size">{this.state.car.vin}</Badge>
+                                        <Button id="addPaper" className="btn-primary ml-auto">
+                                            <i className="fa fa-plus"></i>
+                                        </Button>
+                                        <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
+                                Nu sunt acte adaugate momentan
                             </CardBody>
                         </Card>
                         <Card>
