@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from '../utils/propTypes';
-import { Col, Label, Input } from 'reactstrap';
+import PropTypes from '../../utils/propTypes';
+import { Col, Label, Input, Row } from 'reactstrap';
 import { toast } from 'react-toastify';
-import GarageService from '../services/GarageService.js';
+import GarageService from '../../services/GarageService.js';
+import './GarageSelect.css';
 
 export default function GarageSelect({
     name,
@@ -34,28 +35,31 @@ export default function GarageSelect({
 
     return (
         <>
-            <Label for="type" sm={5}>Adaugati un garaj</Label>
-            <Col sm={7}>
-                <Input
-                    type="select"
-                    name="garageId"
-                    id="garage_id"
-                    onChange={(e) => { handleChange(e) }}
-                    value={garage_id}
-                >
-                    <option>Selectecteaza garaj</option>
-                    {
-                        garages.map(g => {
-                            return <option key={g.id} value={g.id}>{g.name}</option>
-                        })
-                    }
-                </Input>
-            </Col>
+            <Row>
+                <Label for="type" sm={3}>{name}</Label>
+                <Col sm={4}>
+                    <Input
+                        type="select"
+                        name="garageId"
+                        id="garage_id"
+                        onChange={(e) => { handleChange(e) }}
+                        value={garage_id === null ? '' : garage_id}
+                    >
+                        <option>Selectecteaza garaj</option>
+                        {
+                            garages.map(g => {
+                                return <option key={g.id} value={g.id}>{g.name}</option>
+                            })
+                        }
+                    </Input>
+                </Col>
+            </Row>
         </>
     );
 };
 
 GarageSelect.propTypes = {
+    description: PropTypes.string,
     history: PropTypes.object,
     garage_id: PropTypes.string,
 };

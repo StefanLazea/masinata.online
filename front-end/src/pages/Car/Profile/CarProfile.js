@@ -18,7 +18,7 @@ import {
 import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
-import GarageSelect from '../../../components/GarageSelect';
+import GarageSelect from '../../../components/GarageSelect/GarageSelect';
 import { toast } from 'react-toastify';
 import './CarProfile.css';
 
@@ -246,24 +246,14 @@ export default class CarProfile extends React.Component {
                                         <img className="img-fluid rounded mx-auto d-block" src={`${getBasename()}/car/image/${this.props.match.params.id}`} alt="Card cap" />
                                     </Col>
                                 </Row>
-                                {this.state.car.garageId
-                                    ?
-                                    <Row>
-                                        <Col md={6}>
-                                            <h5>Face parte din garajul <Badge color="secondary">{this.state.garage.name} <i className="fa fa-times"></i></Badge></h5>
-                                        </Col>
-                                        <GarageSelect
-                                            handleChange={this.handleChange}
-                                            garage_id={this.state.car.garageId}
-                                            count={0} />
-                                    </Row>
-                                    :
-                                    <Row>
-                                        <Col md={12} className="d-flex align-items-center">
-                                            <h5 className="mx-auto">Adauga masina la un garaj</h5>
-                                        </Col>
-                                    </Row>
-                                }
+
+
+                                <GarageSelect
+                                    name={"Face parte din garajul"}
+                                    handleChange={this.handleChange}
+                                    garage_id={this.state.car.garageId}
+                                    count={0} />
+
 
                             </CardBody>
                         </Card>
