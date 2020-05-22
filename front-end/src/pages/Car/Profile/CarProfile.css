@@ -8,6 +8,7 @@
 
 #addPaper, #shareCar {
     margin-right: 1%;
+    margin-bottom: 0 !important;
 }
 
 .badge {

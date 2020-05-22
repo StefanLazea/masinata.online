@@ -18,6 +18,7 @@ import {
 import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
+import GarageSelect from '../../../components/GarageSelect';
 import { toast } from 'react-toastify';
 import './CarProfile.css';
 
@@ -54,8 +55,9 @@ export default class CarProfile extends React.Component {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
                 this.setState({ car: res.data.message });
-                // todo check if garageId is null
-                this.getGarageInfo(res.data.message.garageId);
+                if (res.data.message.garageId !== null) {
+                    this.getGarageInfo(res.data.message.garageId);
+                }
             })
             .catch((err) => {
                 if (err.response.status === 403) {
@@ -250,6 +252,10 @@ export default class CarProfile extends React.Component {
                                         <Col md={6}>
                                             <h5>Face parte din garajul <Badge color="secondary">{this.state.garage.name} <i className="fa fa-times"></i></Badge></h5>
                                         </Col>
+                                        <GarageSelect
+                                            handleChange={this.handleChange}
+                                            garage_id={this.state.car.garageId}
+                                            count={0} />
                                     </Row>
                                     :
                                     <Row>

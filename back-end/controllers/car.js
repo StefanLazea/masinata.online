@@ -118,6 +118,7 @@ const getCarById = async (req, res) => {
 }
 
 const updateCarById = async (req, res) => {
+    console.log(req.body)
     let car = {
         model: req.body.model,
         brand: req.body.brand,
@@ -130,9 +131,10 @@ const updateCarById = async (req, res) => {
         year: req.body.year,
         pollution_grade: req.body.pollution_grade,
         eco: req.body.eco,
-        userId: req.body.user_id,
-        garageId: req.body.garage_id,
+        userId: req.body.userId,
+        garageId: req.body.garageId,
     }
+    console.log(car)
     try {
         await Car.update(
             car,
