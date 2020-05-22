@@ -13,14 +13,14 @@ import {
 import { Redirect } from "react-router-dom";
 import React from 'react';
 import { toast } from 'react-toastify';
+import './AddEditPaper.css';
 
 export default class AddEditPaper extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            car: {},
+            paper: {},
             hasTokenExpired: false,
-            redirectToDashboard: false,
             dropdownOpen: false,
             file: null,
             preview: "https://via.placeholder.com/370.png"
@@ -28,9 +28,9 @@ export default class AddEditPaper extends React.Component {
     }
 
     handleChange = async (e) => {
-        const car = { ...this.state.car, [e.target.name]: e.target.value }
-        await this.setState(() => ({ car }))
-        console.log(this.state.car)
+        const paper = { ...this.state.paper, [e.target.name]: e.target.value }
+        await this.setState(() => ({ paper }))
+        console.log(this.state.paper)
     }
 
     handleChangeFile = async (e) => {
@@ -53,10 +53,6 @@ export default class AddEditPaper extends React.Component {
         if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
         }
-        if (this.state.redirectToDashboard) {
-            return <Redirect to="/" />
-        }
-
 
         return (
             <Page
@@ -72,37 +68,18 @@ export default class AddEditPaper extends React.Component {
                                         <FormGroup>
 
                                             <Row>
-                                                <Label for="engine_type" sm={3}>Combustibil</Label>
-                                                <Col sm={3}>
+                                                <Label for="type" sm={3}>Tip act</Label>
+                                                <Col sm={5}>
                                                     <Input
                                                         type="select"
-                                                        name="engine_type"
-                                                        id="engine_type"
+                                                        name="type"
+                                                        id="type"
                                                         onChange={this.handleChange}
                                                     >
                                                         <option>Tip act</option>
                                                         <option value="ITP">ITP</option>
                                                         <option value="RCA">RCA</option>
                                                         <option value="Rovigneta">Rovigneta</option>
-                                                    </Input>
-                                                </Col>
-                                                <Label for="pollution_grade" sm={2}>Norma</Label>
-                                                <Col>
-                                                    <Input
-                                                        type="select"
-                                                        name="pollution_grade"
-                                                        id="pollution_grade"
-                                                        onChange={this.handleChange}
-                                                    >
-                                                        <option>Norma poluare</option>
-                                                        <option value="non-euro">non-euro</option>
-                                                        <option value="eco">eco</option>
-                                                        <option value="Euro 1">Euro 1</option>
-                                                        <option value="Euro 2">Euro 2</option>
-                                                        <option value="Euro 3">Euro 3</option>
-                                                        <option value="Euro 4">Euro 4</option>
-                                                        <option value="Euro 5">Euro 5</option>
-                                                        <option value="Euro 6">Euro 6</option>
                                                     </Input>
                                                 </Col>
                                             </Row>

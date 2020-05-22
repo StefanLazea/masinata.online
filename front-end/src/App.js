@@ -55,7 +55,7 @@ class App extends React.Component {
               <Route exact path="/add/car" component={RequireAuth(AddCar)} />
               <Route exact path="/car-profile/:id" component={RequireAuth(CarProfilePage)} />
               <Route exact path="/garages" component={RequireAuth(Garage)} />
-              <Route exact path="/add/papers" component={RequireAuth(AddEditPaper)} />
+              <Route exact path="/add/paper" component={RequireAuth(AddEditPaper)} />
             </React.Suspense>
           </MainLayout>
           <Redirect to="/" />

@@ -35,9 +35,8 @@ export default class CarProfile extends React.Component {
             car: {},
             hasTokenExpired: false,
             image: null,
-            garage: {}
+            garage: {},
         }
-
     }
 
     componentDidMount = () => {
@@ -45,10 +44,13 @@ export default class CarProfile extends React.Component {
         this.getCarById();
     }
 
+    redirectToAddPaper = () => {
+        this.props.history.push(`/add/paper`)
+    }
+
     handleChange = async (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
         await this.setState(() => ({ car }))
-        console.log(this.state.car)
     }
 
     getCarById = () => {
@@ -102,6 +104,7 @@ export default class CarProfile extends React.Component {
         if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
         }
+
         return (
             <Page
                 className="CarProfile"
@@ -281,7 +284,7 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">Acte
                                             </span>
                                         </Badge>
-                                        <Button id="addPaper" className="btn-primary ml-auto">
+                                        <Button id="addPaper" className="btn-primary ml-auto" onClick={this.redirectToAddPaper}>
                                             <i className="fa fa-plus"></i>
                                         </Button>
                                         <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
