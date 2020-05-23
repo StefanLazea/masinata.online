@@ -13,18 +13,27 @@ import {
 import { Redirect } from "react-router-dom";
 import React from 'react';
 import { toast } from 'react-toastify';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 import './AddEditPaper.css';
 
 export default class AddEditPaper extends React.Component {
     constructor(props) {
         super(props);
+        this.handleDayChange = this.handleDayChange.bind(this);
         this.state = {
             paper: {},
             hasTokenExpired: false,
             dropdownOpen: false,
             file: null,
-            preview: "https://via.placeholder.com/370.png"
+            preview: "https://via.placeholder.com/370.png",
+            selectedDay: undefined,
         }
+    }
+
+    handleDayChange(day) {
+        console.log(day.toLocaleDateString());
+        this.setState({ selectedDay: day });
     }
 
     handleChange = async (e) => {
@@ -59,6 +68,7 @@ export default class AddEditPaper extends React.Component {
                 className="AddPaper"
                 title="Adaugare document"
                 breadcrumbs={[{ name: 'Adaugare document', active: true }]}>
+
                 <Row>
                     <Col className="col-xs-12 col-sm-12 col-md-12">
                         <Card>
@@ -97,7 +107,19 @@ export default class AddEditPaper extends React.Component {
                                                     </FormText>
                                                 </Col>
                                             </Row>
-
+                                            <Row>
+                                                <Col sm={3}>
+                                                    <DayPickerInput
+                                                        onDayChange={this.handleDayChange}
+                                                        dayPickerProps={{
+                                                            month: new Date(2018, 10),
+                                                            showWeekNumbers: true,
+                                                            todayButton: 'Today',
+                                                        }}
+                                                    // inputProps={{ style: { width: 250 } }}
+                                                    />
+                                                </Col>
+                                            </Row>
                                         </FormGroup>
 
                                     </Col>

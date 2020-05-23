@@ -1,3 +1,7 @@
 #type {
     text-align-last: center;
 }
+
+.DayPickerInput {
+    font-size: 80% !important;
+}

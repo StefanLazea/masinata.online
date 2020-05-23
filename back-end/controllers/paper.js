@@ -1,8 +1,19 @@
 const Paper = require('../models').Paper;
 const path = require("path");
 
-const getPapersForCar = (req, res) => {
+const getPapersForCar = async (req, res) => {
+    let papers;
+    try {
+        await Paper.findAll({
+            where: { carId: req.params.id }
+        }).then(
+            (papersFound) => { papers = papersFound });
+    }
+    catch (err) {
+        return res.status(404).send({ message: "Not found" });
+    }
 
+    return res.status(200).send(papers);
 }
 
 const createPaperForCar = async (req, res) => {
