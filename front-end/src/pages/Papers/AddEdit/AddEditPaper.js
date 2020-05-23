@@ -139,6 +139,17 @@ export default class AddEditPaper extends React.Component {
                                                     />
                                                 </Col>
                                             </Row>
+                                            <Row>
+                                                <Label for="cost" sm={2}>Cost</Label>
+                                                <Col sm={4}>
+                                                    <Input
+                                                        type="number"
+                                                        name="cost"
+                                                        id="cost"
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                            </Row>
 
                                         </FormGroup>
 
