@@ -64,6 +64,10 @@ export default class AddEditPaper extends React.Component {
         console.log(this.state.file)
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
     render() {
         if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
@@ -146,6 +150,15 @@ export default class AddEditPaper extends React.Component {
                                                         type="number"
                                                         name="cost"
                                                         id="cost"
+                                                        onChange={this.handleChange}
+                                                    />
+                                                </Col>
+                                                <Label for="period" sm={3}>Perioada</Label>
+                                                <Col sm={3}>
+                                                    <Input
+                                                        type="number"
+                                                        name="period"
+                                                        id="period"
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
