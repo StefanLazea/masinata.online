@@ -20,20 +20,26 @@ import './AddEditPaper.css';
 export default class AddEditPaper extends React.Component {
     constructor(props) {
         super(props);
-        this.handleDayChange = this.handleDayChange.bind(this);
+        this.handleBeginDateChange = this.handleBeginDateChange.bind(this);
+        this.handleEndDateChange = this.handleEndDateChange.bind(this);
         this.state = {
             paper: {},
             hasTokenExpired: false,
             dropdownOpen: false,
             file: null,
             preview: "https://via.placeholder.com/370.png",
-            selectedDay: undefined,
+            beginDate: undefined,
+            endDate: undefined
         }
     }
 
-    handleDayChange(day) {
+    handleBeginDateChange(day) {
         console.log(day.toLocaleDateString());
-        this.setState({ selectedDay: day });
+        this.setState({ beginDate: day });
+    }
+    handleEndDateChange(day) {
+        console.log(day.toLocaleDateString());
+        this.setState({ beginDate: day });
     }
 
     handleChange = async (e) => {
@@ -108,18 +114,32 @@ export default class AddEditPaper extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col sm={3}>
+                                                <Label sm={4}>Data inceput</Label>
+                                                <Col sm={2}>
                                                     <DayPickerInput
-                                                        onDayChange={this.handleDayChange}
+                                                        onDayChange={this.handleBeginDateChange}
                                                         dayPickerProps={{
                                                             month: new Date(2018, 10),
                                                             showWeekNumbers: true,
                                                             todayButton: 'Today',
                                                         }}
-                                                    // inputProps={{ style: { width: 250 } }}
                                                     />
                                                 </Col>
                                             </Row>
+                                            <Row>
+                                                <Label sm={4}>Data final</Label>
+                                                <Col sm={2}>
+                                                    <DayPickerInput
+                                                        onDayChange={this.handleEndDateChange}
+                                                        dayPickerProps={{
+                                                            month: new Date(2018, 10),
+                                                            showWeekNumbers: true,
+                                                            todayButton: 'Today',
+                                                        }}
+                                                    />
+                                                </Col>
+                                            </Row>
+
                                         </FormGroup>
 
                                     </Col>

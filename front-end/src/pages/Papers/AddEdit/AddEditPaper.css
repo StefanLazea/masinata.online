@@ -4,4 +4,13 @@
 
 .DayPickerInput {
     font-size: 80% !important;
+    /* margin-top: 10%; */
+    text-align-last: center;
+}
+
+@media screen and (min-width: 578px) {
+    .DayPickerInput {
+            margin-top: 10%;
+
+    }
 }
