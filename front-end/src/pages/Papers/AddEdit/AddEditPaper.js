@@ -13,6 +13,7 @@ import {
 import { Redirect } from "react-router-dom";
 import React from 'react';
 import { toast } from 'react-toastify';
+import PaperService from '../../../services/PaperService.js';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import './AddEditPaper.css';
@@ -20,6 +21,7 @@ import './AddEditPaper.css';
 export default class AddEditPaper extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props.match.params.id);
         this.handleBeginDateChange = this.handleBeginDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
         this.state = {
@@ -33,13 +35,16 @@ export default class AddEditPaper extends React.Component {
         }
     }
 
-    handleBeginDateChange(day) {
-        console.log(day.toLocaleDateString());
-        this.setState({ beginDate: day });
+    handleBeginDateChange = async (day) => {
+        const paper = { ...this.state.paper, begin_date: day }
+        await this.setState(() => ({ paper }))
+        console.log(this.state.paper)
     }
-    handleEndDateChange(day) {
-        console.log(day.toLocaleDateString());
-        this.setState({ beginDate: day });
+
+    handleEndDateChange = async (day) => {
+        const paper = { ...this.state.paper, expiration_date: day }
+        await this.setState(() => ({ paper }))
+        console.log(this.state.paper)
     }
 
     handleChange = async (e) => {
@@ -66,6 +71,21 @@ export default class AddEditPaper extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        let paper = { ...this.state.paper, "car_id": this.props.match.params.id }
+
+
+        PaperService.addPaper(paper)
+            .then((res) => {
+                toast(res.data.message);
+            })
+            .catch((err) => {
+                console.log(err)
+                toast("An error occurred, please try later!");
+                if (err.response.status === 403) {
+                    toast("Your session has expired. Please login!");
+                    this.setState({ hasTokenExpired: true });
+                }
+            });
     }
 
     render() {
@@ -145,7 +165,7 @@ export default class AddEditPaper extends React.Component {
                                             </Row>
                                             <Row>
                                                 <Label for="cost" sm={2}>Cost</Label>
-                                                <Col sm={4}>
+                                                <Col sm={3}>
                                                     <Input
                                                         type="number"
                                                         name="cost"
@@ -154,16 +174,46 @@ export default class AddEditPaper extends React.Component {
                                                     />
                                                 </Col>
                                                 <Label for="period" sm={3}>Perioada</Label>
-                                                <Col sm={3}>
+                                                <Col sm={4}>
                                                     <Input
-                                                        type="number"
+                                                        type="select"
                                                         name="period"
                                                         id="period"
+                                                        onChange={this.handleChange}
+                                                    >
+                                                        <option>Perioada</option>
+                                                        <option value="1 luna">1 luna</option>
+                                                        <option value="3 luni">3 luni</option>
+                                                        <option value="6 luni">6 luni</option>
+                                                        <option value="1 an">1 an</option>
+
+                                                    </Input>
+                                                </Col>
+                                            </Row>
+                                            {this.state.paper.type === "RCA" ?
+                                                <Row>
+                                                    <Label for="companyName" sm={6}>Companie asigurare</Label>
+                                                    <Col sm={6}>
+                                                        <Input
+                                                            type="text"
+                                                            name="companyName"
+                                                            id="companyName"
+                                                            onChange={this.handleChange}
+                                                        />
+                                                    </Col>
+                                                </Row> : null
+                                            }
+                                            <Row>
+                                                <Label for="details" sm={3}>Detalii</Label>
+                                                <Col sm={9}>
+                                                    <Input
+                                                        type="textarea"
+                                                        name="details"
+                                                        id="details"
                                                         onChange={this.handleChange}
                                                     />
                                                 </Col>
                                             </Row>
-
                                         </FormGroup>
 
                                     </Col>

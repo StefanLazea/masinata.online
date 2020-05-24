@@ -45,7 +45,7 @@ export default class CarProfile extends React.Component {
     }
 
     redirectToAddPaper = () => {
-        this.props.history.push(`/add/paper`)
+        this.props.history.push(`/add/car/${this.state.car.id}/paper`)
     }
 
     handleChange = async (e) => {
