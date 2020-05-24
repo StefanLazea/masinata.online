@@ -14,7 +14,6 @@ export default function GarageSelect({
     ...restProps
 }) {
     const [garages, setGarages] = useState([]);
-    // const [tokenExpired, setTokenExpired] = useState(false);
     useEffect(() => {
         const getGarages = () => {
             GarageService.getGaragesByUserId()
@@ -25,7 +24,6 @@ export default function GarageSelect({
                     toast("An error occurred, please try later!");
                     if (err.response.status === 403) {
                         toast("Your session has expired. Please login!");
-                        // setTokenExpired(true);
                     }
                 });
         }

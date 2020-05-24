@@ -64,7 +64,6 @@ class Header extends React.Component {
   handleProfileEvent = () => {
     toast("Goodbye! You have been signed out!");
     this.setState({ isProfileSelected: true });
-    console.log(this.state.isProfileSelected)
   };
 
   render() {

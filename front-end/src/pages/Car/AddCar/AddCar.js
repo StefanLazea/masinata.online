@@ -60,7 +60,7 @@ export default class AddCar extends React.Component {
     }
 
     handleChangeFile = async (e) => {
-        console.log(URL.createObjectURL(e.target.files[0]))
+        console.log(URL.createbjectURL(e.target.files[0]))
 
         await this.setState({
             preview: URL.createObjectURL(e.target.files[0]),
@@ -71,7 +71,7 @@ export default class AddCar extends React.Component {
         e.preventDefault();
         let car = { ...this.state.car, "user_id": TokenService.getUserId() }
 
-        let formData = new FormData();    //formdata object
+        let formData = new FormData();
         formData.append('model', car.model);
         formData.append('brand', car.brand);
         formData.append('type', car.type);
@@ -89,7 +89,6 @@ export default class AddCar extends React.Component {
             formData.append('garage_id', car.garage_id);
         }
 
-        console.log(this.state.file, formData)
         CarsService.createCarUsingFormData(formData)
             .then((res) => {
                 toast(res.data.message);
