@@ -60,7 +60,7 @@ export default class AddCar extends React.Component {
     }
 
     handleChangeFile = async (e) => {
-        console.log(URL.createbjectURL(e.target.files[0]))
+        console.log(URL.createObjectURL(e.target.files[0]))
 
         await this.setState({
             preview: URL.createObjectURL(e.target.files[0]),

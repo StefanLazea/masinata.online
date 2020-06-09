@@ -31,7 +31,8 @@ export default class AddEditPaper extends React.Component {
             file: null,
             preview: "https://via.placeholder.com/370.png",
             beginDate: undefined,
-            endDate: undefined
+            endDate: undefined,
+            renew: false,
         }
     }
 
@@ -69,12 +70,28 @@ export default class AddEditPaper extends React.Component {
         console.log(this.state.file)
     }
 
+    handleCheckboxChange = async (e) => {
+        const paper = { ...this.state.paper, [e.target.name]: e.target.checked }
+        await this.setState(() => ({ paper }))
+        console.log(this.state.paper)
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
-        let paper = { ...this.state.paper, "car_id": this.props.match.params.id }
+        // let paper = { ...this.state.paper, "car_id": this.props.match.params.id }
+        let formData = new FormData();
+        formData.append('details', this.state.paper.details);
+        formData.append('type', this.state.paper.type);
+        formData.append('expirationDate', this.state.paper.expirationDate);
+        formData.append('beginDate', this.state.paper.beginDate);
+        formData.append('period', this.state.paper.period);
+        formData.append('cost', this.state.paper.cost);
+        formData.append('companyName', this.state.paper.companyName);
+        formData.append('document', this.state.file);
+        formData.append('renew', this.state.renew);
+        formData.append('car_id', this.props.match.params.id);
 
-
-        PaperService.addPaper(paper)
+        PaperService.addFormDataPaper(formData)
             .then((res) => {
                 toast(res.data.message);
             })
@@ -122,6 +139,11 @@ export default class AddEditPaper extends React.Component {
                                                         <option value="Rovigneta">Rovigneta</option>
                                                     </Input>
                                                 </Col>
+
+                                                <Label sm={4}>
+                                                    <Input type="checkbox" name="renew" onClick={e => this.handleCheckboxChange(e)} />{'Reinoire'}
+                                                </Label>
+
                                             </Row>
 
                                             <Row>

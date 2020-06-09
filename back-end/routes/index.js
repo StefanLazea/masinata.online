@@ -6,6 +6,7 @@ const garageRouter = require('./garage');
 const notesRouter = require("./note");
 const papersRouter = require("./paper");
 const CarController = require("../controllers/car");
+const PaperController = require("../controllers/paper.js");
 const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");
 
@@ -16,6 +17,7 @@ router.use("/garages", authorize(Role.User, Role.Admin, Role.AppAdmin), garageRo
 router.use("/notes", authorize(Role.User, Role.Admin, Role.AppAdmin), notesRouter);
 router.use("/papers", authorize(Role.User, Role.Admin, Role.AppAdmin), papersRouter);
 router.get("/car/image/:id", CarController.getCarImage);
+router.get("/car/paper/:id", PaperController.getCarPaper)
 
 
 module.exports = router;

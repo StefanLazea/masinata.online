@@ -15,6 +15,17 @@ const addPaper = (data) => {
         });
 };
 
+const addFormDataPaper = (data) => {
+    return Axios.post(`${getBasename()}/papers`, data,
+        {
+            headers: {
+                "Content-Type": 'multipart/form-data',
+                "Authorization": getToken()
+            }
+        });
+};
+
 module.exports = {
     addPaper,
+    addFormDataPaper,
 };
