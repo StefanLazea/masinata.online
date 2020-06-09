@@ -78,7 +78,6 @@ export default class AddEditPaper extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // let paper = { ...this.state.paper, "car_id": this.props.match.params.id }
         let formData = new FormData();
         formData.append('details', this.state.paper.details);
         formData.append('type', this.state.paper.type);
@@ -251,6 +250,7 @@ export default class AddEditPaper extends React.Component {
 
                     </Col>
                 </Row>
+
             </Page>
         );
     }
