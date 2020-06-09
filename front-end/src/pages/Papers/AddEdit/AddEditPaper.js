@@ -96,7 +96,9 @@ export default class AddEditPaper extends React.Component {
             })
             .catch((err) => {
                 console.log(err)
-                toast("An error occurred, please try later!");
+                if (err.response.status === 409) {
+                    toast("Documentul deja exista. Selectati optiunea de reinoire!")
+                }
                 if (err.response.status === 403) {
                     toast("Your session has expired. Please login!");
                     this.setState({ hasTokenExpired: true });

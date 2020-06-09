@@ -29,20 +29,6 @@ const getBasename = () => {
     return process.env.REACT_APP_BACK_END_URL;
 };
 
-const images = [
-    {
-        original: 'https://picsum.photos/id/1018/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-        original: 'https://picsum.photos/id/1015/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-        original: 'https://picsum.photos/id/1019/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-];
 
 export default class CarProfile extends React.Component {
     constructor(props) {
@@ -54,6 +40,25 @@ export default class CarProfile extends React.Component {
             hasTokenExpired: false,
             image: null,
             garage: {},
+            docsImages: [],
+            images: [
+                {
+                    thumbnailLabel: 'Rca',
+                    original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
+                    thumbnail: 'https://picsum.photos/id/1018/250/150/',
+                },
+                {
+                    original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
+                    thumbnail: 'https://picsum.photos/id/1015/250/150/',
+                    thumbnailLabel: 'ITP'
+                },
+                {
+                    original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
+                    thumbnail: 'https://picsum.photos/id/1019/250/150/',
+                    thumbnailLabel: 'ITP'
+
+                },
+            ]
         }
     }
 
@@ -69,6 +74,11 @@ export default class CarProfile extends React.Component {
     handleChange = async (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
         await this.setState(() => ({ car }))
+    }
+    //`${getBasename()}/car/image/${this.props.match.params.id}`
+
+    getImagesForCarId = () => {
+
     }
 
     getCarById = () => {
@@ -312,7 +322,7 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <ImageGallery items={images} onSlide={(index) => console.log(index)} />
+                                <ImageGallery items={this.state.images} onSlide={(index) => console.log(index)} />
                             </CardBody>
                         </Card>
                         <Card>

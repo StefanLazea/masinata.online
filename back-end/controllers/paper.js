@@ -17,6 +17,10 @@ const getPapersForCar = async (req, res) => {
 }
 
 const createPaperForCar = async (req, res) => {
+    // todo check if dates are the same
+    // if (checkIfCarHasDocumentOfType(req.body.type, req.body.car_id) === null) {
+    //     return res.status(409).send({ message: "Documentul exista, bifati optiunea de reinoire" })
+    // }
     let location = "";
     if (req.files) {
         let image = req.files.document;
@@ -53,7 +57,6 @@ const createPaperForCar = async (req, res) => {
 
 }
 
-
 const getPaperByTypeForCar = async (req, res) => {
     let paperFound;
     try {
@@ -67,8 +70,23 @@ const getPaperByTypeForCar = async (req, res) => {
     res.sendFile(paperFound.document);
 }
 
+//todo test method
+const checkIfCarHasDocumentOfType = async (documentType, id) => {
+    let found;
+    try {
+        await Paper.findOne({
+            where: { type: documentType, carId: id }
+        }).then((paper) => found = paper);
+        console.log(found.type)
+        return found;
+    } catch (err) {
+        return null;
+    }
+}
+
 module.exports = {
     getPapersForCar,
     createPaperForCar,
-    getPaperByTypeForCar
+    getPaperByTypeForCar,
+    // checkIfCarHasDocusmentOfType
 }
