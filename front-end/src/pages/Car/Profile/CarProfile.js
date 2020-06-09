@@ -20,11 +20,29 @@ import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
 import GarageSelect from '../../../components/GarageSelect/GarageSelect';
 import { toast } from 'react-toastify';
+import ImageGallery from 'react-image-gallery';
 import './CarProfile.css';
+import 'react-image-gallery/styles/scss/image-gallery.scss';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 const getBasename = () => {
     return process.env.REACT_APP_BACK_END_URL;
 };
+
+const images = [
+    {
+        original: 'https://picsum.photos/id/1018/1000/600/',
+        thumbnail: 'https://picsum.photos/id/1018/250/150/',
+    },
+    {
+        original: 'https://picsum.photos/id/1015/1000/600/',
+        thumbnail: 'https://picsum.photos/id/1015/250/150/',
+    },
+    {
+        original: 'https://picsum.photos/id/1019/1000/600/',
+        thumbnail: 'https://picsum.photos/id/1019/250/150/',
+    },
+];
 
 export default class CarProfile extends React.Component {
     constructor(props) {
@@ -111,7 +129,9 @@ export default class CarProfile extends React.Component {
                 title="Car Profile"
                 breadcrumbs={[{ name: 'Car Profile', active: true }]}>
                 <Row>
+
                     <Col className="col-xs-12 col-sm-12 col-md-12">
+
                         <Card>
                             <CardHeader>
                                 <CardTitle>
@@ -292,7 +312,7 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                Nu sunt acte adaugate momentan
+                                <ImageGallery items={images} onSlide={(index) => console.log(index)} />
                             </CardBody>
                         </Card>
                         <Card>

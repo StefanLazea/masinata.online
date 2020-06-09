@@ -24,6 +24,7 @@
     "react-ga": "^2.5.7",
     "react-helmet": "^6.0.0",
     "react-icons": "^3.5.0",
+    "react-image-gallery": "^1.0.7",
     "react-infinite-calendar": "^2.3.1",
     "react-notification-system": "^0.2.17",
     "react-router": "^4.3.1",
@@ -31,7 +32,6 @@
     "react-simple-maps": "^0.12.1",
     "react-sizeme": "^2.5.2",
     "react-toastify": "^5.5.0",
-    "reactjs-pdf-reader": "^1.0.12",
     "reactstrap": "^7.1.0",
     "victory": "^32.0.0"
   },
