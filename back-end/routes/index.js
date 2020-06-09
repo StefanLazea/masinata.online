@@ -17,7 +17,7 @@ router.use("/garages", authorize(Role.User, Role.Admin, Role.AppAdmin), garageRo
 router.use("/notes", authorize(Role.User, Role.Admin, Role.AppAdmin), notesRouter);
 router.use("/papers", authorize(Role.User, Role.Admin, Role.AppAdmin), papersRouter);
 router.get("/car/image/:id", CarController.getCarImage);
-router.get("/car/paper/:id", PaperController.getCarPaper)
+router.get("/paper/:type/car/:id", PaperController.getPaperByTypeForCar)
 
 
 module.exports = router;

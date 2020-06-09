@@ -53,13 +53,22 @@ const createPaperForCar = async (req, res) => {
 
 }
 
-const getCarPaper = async (req, res) => {
-    return res.send({});
-}
 
+const getPaperByTypeForCar = async (req, res) => {
+    let paperFound;
+    try {
+        await Paper.findOne({
+            where: { type: req.params.type, car_id: req.params.id }
+        }).then((paper) => paperFound = paper);
+    }
+    catch (err) {
+        return res.status(409).send({ message: "No elements found in the database" });
+    }
+    res.sendFile(paperFound.document);
+}
 
 module.exports = {
     getPapersForCar,
     createPaperForCar,
-    getCarPaper
+    getPaperByTypeForCar
 }
