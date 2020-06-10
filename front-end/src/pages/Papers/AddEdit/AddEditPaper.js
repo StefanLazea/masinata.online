@@ -21,7 +21,6 @@ import './AddEditPaper.css';
 export default class AddEditPaper extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props.match.params.id);
         this.handleBeginDateChange = this.handleBeginDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
         this.state = {
@@ -33,7 +32,15 @@ export default class AddEditPaper extends React.Component {
             beginDate: undefined,
             endDate: undefined,
             renew: false,
+            carId: '',
+            carType: ''
         }
+    }
+
+    componentDidMount = async () => {
+        await this.setState({ carId: this.props.match.params.id })
+        await this.setState({ carType: this.props.match.params.type })
+        console.log(this.state.carId, this.state.carType)
     }
 
     handleBeginDateChange = async (day) => {
