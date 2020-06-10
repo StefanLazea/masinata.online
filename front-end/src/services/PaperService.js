@@ -25,7 +25,13 @@ const addFormDataPaper = (data) => {
         });
 };
 
+const checkIfDocumentImageExists = (type, id) => {
+    let imageFound = Axios.get(`${getBasename()}/paper/${type}/car/${id}`);
+    console.log(imageFound);
+}
+
 module.exports = {
     addPaper,
     addFormDataPaper,
+    checkIfDocumentImageExists,
 };

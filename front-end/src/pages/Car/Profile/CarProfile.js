@@ -41,6 +41,8 @@ export default class CarProfile extends React.Component {
             image: null,
             garage: {},
             docsImages: [],
+            renewDocumentButton: false,
+            indexImageSelected: null,
             images: [
                 {
                     thumbnailLabel: 'Rca',
@@ -48,14 +50,14 @@ export default class CarProfile extends React.Component {
                     thumbnail: 'https://picsum.photos/id/1018/250/150/',
                 },
                 {
-                    original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
+                    original: `${getBasename()}/paper/ITP/car/${this.props.match.params.id}`,
                     thumbnail: 'https://picsum.photos/id/1015/250/150/',
                     thumbnailLabel: 'ITP'
                 },
                 {
                     original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
                     thumbnail: 'https://picsum.photos/id/1019/250/150/',
-                    thumbnailLabel: 'ITP'
+                    thumbnailLabel: 'Rovigneta'
 
                 },
             ]
@@ -74,11 +76,6 @@ export default class CarProfile extends React.Component {
     handleChange = async (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
         await this.setState(() => ({ car }))
-    }
-    //`${getBasename()}/car/image/${this.props.match.params.id}`
-
-    getImagesForCarId = () => {
-
     }
 
     getCarById = () => {
@@ -126,6 +123,12 @@ export default class CarProfile extends React.Component {
                     this.setState({ hasTokenExpired: true });
                 }
             });
+    }
+
+    selectDocumentForRenew = (index) => {
+        this.setState({ renewDocumentButton: true });
+        this.setState({ indexImageSelected: index });
+        console.log(this.state.indexImageSelected, this.state.renewDocumentButton)
     }
 
     render() {
@@ -280,15 +283,23 @@ export default class CarProfile extends React.Component {
                                     </Col>
                                 </Row>
 
-
-                                <GarageSelect
-                                    name={"Face parte din garajul"}
-                                    handleChange={this.handleChange}
-                                    garage_id={this.state.car.garageId}
-                                    count={0} />
-
-
+                                {this.state.car.garageId ?
+                                    <GarageSelect
+                                        name={"Face parte din garajul"}
+                                        handleChange={this.handleChange}
+                                        garage_id={this.state.car.garageId}
+                                        count={0}
+                                    />
+                                    : null
+                                }
                             </CardBody>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    <Button className="d-flex mx-auto" onClick={(e) => this.updateCar(e)}>Salveaza modificarile</Button>
+                                </CardTitle>
+                            </CardHeader>
                         </Card>
                         <Card>
                             <CardHeader>
@@ -314,24 +325,25 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">Acte
                                             </span>
                                         </Badge>
-                                        <Button id="addPaper" className="btn-primary ml-auto" onClick={this.redirectToAddPaper}>
+                                        <Button id="addPaper" className="btn-success ml-auto" onClick={this.redirectToAddPaper}>
                                             <i className="fa fa-plus"></i>
                                         </Button>
+                                        {this.state.renewDocumentButton ?
+                                            <Button id="renewPaper" className="btn-warning" onClick={(e) => { console.log("ura") }}>
+                                                <i className="fa fa-pencil"></i>
+                                            </Button>
+
+                                            : null
+                                        }
                                         <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <ImageGallery items={this.state.images} onSlide={(index) => console.log(index)} />
+                                <ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
                             </CardBody>
                         </Card>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>
-                                    <Button className="d-flex mx-auto" onClick={(e) => this.updateCar(e)}>Salveaza modificarile</Button>
-                                </CardTitle>
-                            </CardHeader>
-                        </Card>
+
                     </Col>
                 </Row>
             </Page>

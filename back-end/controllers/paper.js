@@ -84,9 +84,33 @@ const checkIfCarHasDocumentOfType = async (documentType, id) => {
     }
 }
 
+const getPaperDetailsForCar = async (req, res) => {
+    let userDetails = await User.findOne({
+        attributes: [
+            "role",
+            "email",
+            "lastname",
+            "firstname",
+            "address",
+            "phone"
+        ], where: {
+            id: req.params.id
+        }
+    });
+
+    if (userDetails != null) {
+        return res.status(200).send(userDetails);
+    }
+    return res.status(400).send({ "message": "Something went wrong with the data recieved." })
+}
+const updatePaper = (req, res) => {
+
+}
 module.exports = {
     getPapersForCar,
     createPaperForCar,
     getPaperByTypeForCar,
+    getPaperDetailsForCar,
+    updatePaper
     // checkIfCarHasDocusmentOfType
 }
