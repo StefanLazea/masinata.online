@@ -59,6 +59,11 @@ export default class CarProfile extends React.Component {
         this.getListData()
     }
 
+    redirectToRenewPage = () => {
+        let selectedDocumentType = this.state.images[this.state.indexImageSelected].thumbnailLabel;
+        this.props.history.push(`/renew/car/${this.props.match.params.id}/paper/${selectedDocumentType}`)
+    }
+
     redirectToAddPaper = () => {
         this.props.history.push(`/add/car/${this.state.car.id}/paper`)
     }
@@ -301,7 +306,7 @@ export default class CarProfile extends React.Component {
                                             <i className="fa fa-plus"></i>
                                         </Button>
                                         {this.state.renewDocumentButton ?
-                                            <Button id="renewPaper" className="btn-warning" onClick={(e) => { console.log("ura") }}>
+                                            <Button id="renewPaper" className="btn-warning" onClick={this.redirectToRenewPage}>
                                                 <i className="fa fa-pencil"></i>
                                             </Button>
 
