@@ -10,7 +10,8 @@ const getDocumentsList = (id) => {
     let documents = [];
     for (let index in types) {
         checkIfDocumentImageExists(types[index], id).then(res => {
-            if (res) {
+            console.log(res)
+            if (res === true) {
                 console.log('ok')
                 documents.push(
                     {

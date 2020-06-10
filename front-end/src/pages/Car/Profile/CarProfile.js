@@ -48,11 +48,15 @@ export default class CarProfile extends React.Component {
             images: []
         };
     }
+    getListData = async () => {
+        let data = PapersService.getDocumentsList(this.props.match.params.id);
+        await this.setState({ images: data });
+    }
 
     componentDidMount = () => {
         this._isMounted = true;
         this.getCarById();
-        this.setState({ images: PapersService.getDocumentsList(this.props.match.params.id) });
+        this.getListData()
     }
 
     redirectToAddPaper = () => {
@@ -308,7 +312,7 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                {this.state.images === [] ?
+                                {this.state.images.length !== 0 ?
                                     <ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
                                     : <h5>Nu sunt acte adaugate</h5>
                                 }
