@@ -134,7 +134,6 @@ const updateCarById = async (req, res) => {
         userId: req.body.userId,
         garageId: req.body.garageId,
     }
-    console.log(car)
     try {
         await Car.update(
             car,

@@ -18,6 +18,8 @@ import {
 import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
+import PapersService from '../../../services/PaperService.js';
+
 import GarageSelect from '../../../components/GarageSelect/GarageSelect';
 import { toast } from 'react-toastify';
 import ImageGallery from 'react-image-gallery';
@@ -43,30 +45,14 @@ export default class CarProfile extends React.Component {
             docsImages: [],
             renewDocumentButton: false,
             indexImageSelected: null,
-            images: [
-                {
-                    thumbnailLabel: 'Rca',
-                    original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
-                    thumbnail: 'https://picsum.photos/id/1018/250/150/',
-                },
-                {
-                    original: `${getBasename()}/paper/ITP/car/${this.props.match.params.id}`,
-                    thumbnail: 'https://picsum.photos/id/1015/250/150/',
-                    thumbnailLabel: 'ITP'
-                },
-                {
-                    original: `${getBasename()}/paper/RCA/car/${this.props.match.params.id}`,
-                    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-                    thumbnailLabel: 'Rovigneta'
-
-                },
-            ]
-        }
+            images: []
+        };
     }
 
     componentDidMount = () => {
         this._isMounted = true;
         this.getCarById();
+        this.setState({ images: PapersService.getDocumentsList() });
     }
 
     redirectToAddPaper = () => {
@@ -142,9 +128,7 @@ export default class CarProfile extends React.Component {
                 title="Car Profile"
                 breadcrumbs={[{ name: 'Car Profile', active: true }]}>
                 <Row>
-
                     <Col className="col-xs-12 col-sm-12 col-md-12">
-
                         <Card>
                             <CardHeader>
                                 <CardTitle>
@@ -306,22 +290,6 @@ export default class CarProfile extends React.Component {
                                 <CardTitle>
                                     <div className="d-flex align-items-center">
                                         <Badge color="primary">
-                                            <span className="pb-2 align-middle badge-text-size">Imagini
-                                            </span>
-                                        </Badge>
-                                        <Badge color="success" className="ml-auto badge-text-size">{this.state.car.vin}</Badge>
-                                    </div>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardBody>
-
-                            </CardBody>
-                        </Card>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>
-                                    <div className="d-flex align-items-center">
-                                        <Badge color="primary">
                                             <span className="pb-2 align-middle badge-text-size">Acte
                                             </span>
                                         </Badge>
@@ -340,7 +308,9 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
+                                {this.state.images ?
+                                    <ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
+                                    : null}
                             </CardBody>
                         </Card>
 

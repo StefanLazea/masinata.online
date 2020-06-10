@@ -58,32 +58,26 @@ const createPaperForCar = async (req, res) => {
 }
 
 const getPaperByTypeForCar = async (req, res) => {
-    let paperFound;
-    try {
-        await Paper.findOne({
-            where: { type: req.params.type, car_id: req.params.id }
-        }).then((paper) => paperFound = paper);
+    let paperFound = await checkIfCarHasDocumentOfType(req.params.type, req.params.id)
+    if (paperFound) {
+        return res.sendFile(paperFound.document);
     }
-    catch (err) {
-        return res.status(409).send({ message: "No elements found in the database" });
-    }
-    res.sendFile(paperFound.document);
+    return res.status(404).send({ message: "No elements found in the database" });
 }
 
-//todo test method
 const checkIfCarHasDocumentOfType = async (documentType, id) => {
     let found;
     try {
         await Paper.findOne({
             where: { type: documentType, carId: id }
         }).then((paper) => found = paper);
-        console.log(found.type)
         return found;
     } catch (err) {
         return null;
     }
 }
 
+//TODO
 const getPaperDetailsForCar = async (req, res) => {
     let userDetails = await User.findOne({
         attributes: [
@@ -103,14 +97,15 @@ const getPaperDetailsForCar = async (req, res) => {
     }
     return res.status(400).send({ "message": "Something went wrong with the data recieved." })
 }
+
 const updatePaper = (req, res) => {
 
 }
+
 module.exports = {
     getPapersForCar,
     createPaperForCar,
     getPaperByTypeForCar,
     getPaperDetailsForCar,
-    updatePaper
-    // checkIfCarHasDocusmentOfType
+    updatePaper,
 }
