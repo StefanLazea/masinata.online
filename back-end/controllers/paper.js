@@ -79,23 +79,18 @@ const checkIfCarHasDocumentOfType = async (documentType, id) => {
 
 //TODO
 const getPaperDetailsForCar = async (req, res) => {
-    let userDetails = await User.findOne({
-        attributes: [
-            "role",
-            "email",
-            "lastname",
-            "firstname",
-            "address",
-            "phone"
-        ], where: {
-            id: req.params.id
-        }
-    });
-
-    if (userDetails != null) {
-        return res.status(200).send(userDetails);
+    let paper;
+    try {
+        await Paper.findOne({
+            where: { type: req.params.type, carId: req.params.id }
+        }).then(
+            (paperFound) => { paper = paperFound });
     }
-    return res.status(400).send({ "message": "Something went wrong with the data recieved." })
+    catch (err) {
+        return res.status(404).send({ message: "Not found" });
+    }
+
+    return res.status(200).send(papers);
 }
 
 const updatePaper = (req, res) => {
