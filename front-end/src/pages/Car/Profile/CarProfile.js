@@ -31,7 +31,6 @@ const getBasename = () => {
     return process.env.REACT_APP_BACK_END_URL;
 };
 
-
 export default class CarProfile extends React.Component {
     constructor(props) {
         super(props);

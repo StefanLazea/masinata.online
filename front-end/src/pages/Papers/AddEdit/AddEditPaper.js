@@ -40,7 +40,6 @@ export default class AddEditPaper extends React.Component {
     componentDidMount = async () => {
         await this.setState({ carId: this.props.match.params.id })
         await this.setState({ carType: this.props.match.params.type })
-        console.log(this.state.carId, this.state.carType)
     }
 
     handleBeginDateChange = async (day) => {
