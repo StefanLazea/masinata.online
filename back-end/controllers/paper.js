@@ -54,15 +54,22 @@ const createPaperForCar = async (req, res) => {
         return res.status(500).send({ message: err });
     }
     return res.status(200).send({ message: "Document added successfully" })
-
 }
 
 const getPaperByTypeForCar = async (req, res) => {
     let paperFound = await checkIfCarHasDocumentOfType(req.params.type, req.params.id)
     if (paperFound) {
-        return res.sendFile(paperFound.document);
+        return res.status(200).sendFile(paperFound.document);
     }
     return res.status(404).send({ message: "No elements found in the database" });
+}
+
+const checkForPaper = async (req, res) => {
+    let found = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
+    if (!found) {
+        return res.send({ message: "Image not found", error: true });
+    }
+    return res.status(200).send({ error: false })
 }
 
 const checkIfCarHasDocumentOfType = async (documentType, id) => {
@@ -104,4 +111,5 @@ module.exports = {
     getPaperByTypeForCar,
     getPaperDetailsForCar,
     updatePaper,
+    checkForPaper
 }

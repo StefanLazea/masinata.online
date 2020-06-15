@@ -9,19 +9,19 @@ const getDocumentsList = (id) => {
     let types = ['RCA', 'ITP', 'Rovigneta'];
     let documents = [];
     for (let index in types) {
-        checkIfDocumentImageExists(types[index], id).then(res => {
-            console.log(res)
-            if (res === true) {
-                console.log('ok')
-                documents.push(
-                    {
-                        thumbnailLabel: types[index],
-                        original: `${getBasename()}/paper/${types[index]}/car/${id}`,
-                        thumbnail: 'https://picsum.photos/id/1018/250/150/',
-                    }
-                )
+        // checkIfDocumentImageExists(types[index], id).then(res => {
+        // console.log(res)
+        // if (res === true) {
+        console.log('ok')
+        documents.push(
+            {
+                thumbnailLabel: types[index],
+                original: `${getBasename()}/paper/${types[index]}/car/${id}`,
+                thumbnail: 'https://picsum.photos/id/1018/250/150/',
             }
-        })
+        )
+        // }
+        // })
     }
     console.log(documents)
     return documents;
@@ -49,7 +49,7 @@ const addFormDataPaper = (data) => {
 
 const checkIfDocumentImageExists = async (type, id) => {
     try {
-        await Axios.get(`${getBasename()}/paper/${type}/car/${id}`);
+        await Axios.get(`${getBasename()}/check/paper/${type}/car/${id}`);
         return true;
     } catch (err) {
         return false;
