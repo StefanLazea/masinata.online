@@ -9,19 +9,19 @@ const getDocumentsList = (id) => {
     let types = ['RCA', 'ITP', 'Rovigneta'];
     let documents = [];
     for (let index in types) {
-        // checkIfDocumentImageExists(types[index], id).then(res => {
-        // console.log(res)
-        // if (res === true) {
-        console.log('ok')
-        documents.push(
-            {
-                thumbnailLabel: types[index],
-                original: `${getBasename()}/paper/${types[index]}/car/${id}`,
-                thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        checkIfDocumentImageExists(types[index], id).then(res => {
+            console.log(res)
+            if (res === true) {
+                console.log('ok')
+                documents.push(
+                    {
+                        thumbnailLabel: types[index],
+                        original: `${getBasename()}/paper/${types[index]}/car/${id}`,
+                        thumbnail: 'https://picsum.photos/id/1018/250/150/',
+                    }
+                )
             }
-        )
-        // }
-        // })
+        })
     }
     console.log(documents)
     return documents;

@@ -47,9 +47,10 @@ export default class CarProfile extends React.Component {
             images: []
         };
     }
-    getListData = async () => {
+    getListData = () => {
         let data = PapersService.getDocumentsList(this.props.match.params.id);
-        await this.setState({ images: data });
+        console.log("aici", data)
+        this.setState({ images: data });
     }
 
     componentDidMount = () => {

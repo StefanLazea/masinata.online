@@ -11,6 +11,10 @@ DB_PASS=
 TOKEN_SECRET=ze5s78df7680g9y08xezrwexctudafasfdas
 COOKIE_SECRET=sdasdsfjewuifdvewyfdewipc
 EXPIRATION_TIME=3h
+MAILGUN_API_KEY=
+MAILGUN_DOMAIN=
+
 ```
 
+- MAILGUN_API_KEY and MAILGUN_DOMAIN are found in the Mailgun account.
 ## For saving images please add "private" directory in root of the back-end

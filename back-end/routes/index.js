@@ -7,6 +7,7 @@ const notesRouter = require("./note");
 const papersRouter = require("./paper");
 const CarController = require("../controllers/car");
 const PaperController = require("../controllers/paper.js");
+const MailController = require("../controllers/mail.js");
 const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");
 
@@ -16,6 +17,7 @@ router.use("/user", authorize(Role.User, Role.Admin, Role.AppAdmin), userRouter)
 router.use("/garages", authorize(Role.User, Role.Admin, Role.AppAdmin), garageRouter);
 router.use("/notes", authorize(Role.User, Role.Admin, Role.AppAdmin), notesRouter);
 router.use("/papers", authorize(Role.User, Role.Admin, Role.AppAdmin), papersRouter);
+router.post("/email/send", MailController.sendRegisterEmail)
 router.get("/car/image/:id", CarController.getCarImage);
 router.get("/paper/:type/car/:id", PaperController.getPaperByTypeForCar);
 router.get("/check/paper/:type/car/:id", PaperController.checkForPaper);
