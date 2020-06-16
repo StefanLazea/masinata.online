@@ -12,6 +12,11 @@ const createToken = (userFound) => {
         });
 }
 
+const getUserId = (token) => {
+    const decode = jwt.decode(token, secret);
+    return decode.id;
+}
 module.exports = {
     createToken,
+    getUserId
 }
