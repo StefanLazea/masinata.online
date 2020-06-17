@@ -65,14 +65,28 @@ const getPaperByTypeForCar = async (req, res) => {
     return res.status(404).send({ message: "No elements found in the database" });
 }
 
-const checkForPaper = async (req, res) => {
-    let found = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
-    res.set('Cache-Control', 'public, max-age=31557600');
+// const checkForPaper = async (req, res) => {
+//     let found = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
+//     res.set('Cache-Control', 'public, max-age=31557600');
 
-    if (!found) {
-        return res.status(404).send({ message: "Image not found", error: true });
+//     if (!found) {
+//         return res.status(404).send({ message: "Image not found", error: true });
+//     }
+//     return res.status(200).send({ error: false })
+// }
+const checkForPaper = async (req, res) => {
+    let types = ['ITP', 'RCA', 'Rovigneta'];
+    let response = {};
+    for (let index in types) {
+        let found = await checkIfCarHasDocumentOfType(types[index], req.params.id);
+        if (found) {
+            response[types[index]] = 1;
+        } else {
+            response[types[index]] = 0;
+        }
     }
-    return res.status(200).send({ error: false })
+
+    res.status(200).send(response);
 }
 
 const checkIfCarHasDocumentOfType = async (documentType, id) => {

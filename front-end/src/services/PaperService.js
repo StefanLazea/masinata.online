@@ -29,13 +29,13 @@ const getDocumentsList = (id) => {
 const getData = (id) => {
     return [
         {
-            thumbnailLabel: 'RCA',
-            original: `${getBasename()}/paper/RCA/car/${id}`,
+            thumbnailLabel: 'ITP',
+            original: `${getBasename()}/paper/ITP/car/${id}`,
             thumbnail: 'https://picsum.photos/id/1018/250/150/',
         },
         {
-            thumbnailLabel: 'ITP',
-            original: `${getBasename()}/paper/ITP/car/${id}`,
+            thumbnailLabel: 'RCA',
+            original: `${getBasename()}/paper/RCA/car/${id}`,
             thumbnail: 'https://picsum.photos/id/1018/250/150/',
         },
         {

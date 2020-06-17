@@ -52,10 +52,25 @@ export default class CarProfile extends React.Component {
     checkTypes = () => {
         PapersService.checkTypes(this.props.match.params.id)
             .then(res => {
-                if (res.data['ITP'] > 0 && res.data['RCA'] > 0 && res.data['Rovigneta'] > 0) {
-                    console.log(PapersService.getData(this.props.match.params.id))
-                    this.setState({ imageTest: PapersService.getData(this.props.match.params.id) })
+                console.log(res)
+                let i = 0;
+                for (let itemType in res.data) {
+                    console.log(itemType)
+                    if (res.data[itemType] === 1) {
+                        this.setState({ imageTest: [...this.state.imageTest, PapersService.getData(this.props.match.params.id)[i]] })
+                    }
+                    i++;
                 }
+                console.log(this.state.imageTest)
+                // if (res.data['ITP'] > 0 && res.data['RCA'] > 0 && res.data['Rovigneta'] > 0) {
+                //     this.setState({ imageTest: PapersService.getData(this.props.match.params.id) })
+                // }
+                // if (res.data['ITP'] > 0 && res.data['RCA'] > 0) {
+                //     this.setState({ imageTest: PapersService.getData(this.props.match.params.id).slice(0, 2) })
+                // }
+                // if (res.data['ITP'] > 0 && res.data['Rovigneta'] > 0) {
+                //     this.setState({ imageTest: PapersService.getData(this.props.match.params.id).slice(1, 2) })
+                // }
             })
     }
 
@@ -330,7 +345,10 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                < ImageGallery items={this.state.imageTest} onSlide={(index) => this.selectDocumentForRenew(index)} />
+                                {this.state.imageTest.length > 0 ?
+                                    < ImageGallery items={this.state.imageTest} onSlide={(index) => this.selectDocumentForRenew(index)} />
+                                    : <h5>Nu sunt imagini</h5>
+                                }
                             </CardBody>
                         </Card>
 
