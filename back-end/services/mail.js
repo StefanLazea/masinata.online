@@ -42,6 +42,7 @@ const sendRegistrationEmail = (email) => {
 }
 
 const sendRenewPassword = (email) => {
+    //todo get user lastname and generate token including name
     let data = { lastname: 'stefan', url: 'https://masinamea.online' }
     let emailData = generateResetPasswordContent(data);
 
@@ -52,6 +53,7 @@ const sendRenewPassword = (email) => {
         test: JSON.stringify(data),
         html: emailData
     }
+
     mailgun.messages().send(resetData, function (error, body) {
         console.log(body);
     });

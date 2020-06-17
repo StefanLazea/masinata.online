@@ -32,19 +32,10 @@ const generateResetPasswordContent = function (mailProps) {
 }
 
 const sendForgotPasswordEmail = async (req, res) => {
-    let data = { lastname: 'stefan', url: 'https://masinamea.online' }
-    let emailData = generateResetPasswordContent(data);
-
-    const resetData = {
-        from: "lazeastefan97@gmail.com",
-        to: "lazeastefan@gmail.com",
-        subject: "Reset password",
-        test: JSON.stringify(data),
-        html: emailData
+    const email = req.body.email;
+    if (email.length) {
+        MailService.sendRenewPassword(req.body.email)
     }
-    mailgun.messages().send(resetData, function (error, body) {
-        console.log(body);
-    });
 }
 
 module.exports = {
