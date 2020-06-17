@@ -89,19 +89,23 @@ export default class AddCar extends React.Component {
             formData.append('garage_id', car.garage_id);
         }
 
-        CarsService.createCarUsingFormData(formData)
-            .then((res) => {
-                toast(res.data.message);
-                this.setState({ redirectToDashboard: true });
-            })
-            .catch((err) => {
-                console.log(err)
-                toast("An error occurred, please try later!");
-                if (err.response.status === 403) {
-                    toast("Your session has expired. Please login!");
-                    this.setState({ hasTokenExpired: true });
-                }
-            });
+        if (this.state.file) {
+            CarsService.createCarUsingFormData(formData)
+                .then((res) => {
+                    toast(res.data.message);
+                    this.setState({ redirectToDashboard: true });
+                })
+                .catch((err) => {
+                    console.log(err)
+                    toast("An error occurred, please try later!");
+                    if (err.response.status === 403) {
+                        toast("Your session has expired. Please login!");
+                        this.setState({ hasTokenExpired: true });
+                    }
+                });
+        } else {
+            toast("Pentru o masina trebuie adaugata imaginea!");
+        }
     }
     componentDidMount() {
         this.getGarages();

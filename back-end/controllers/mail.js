@@ -57,7 +57,21 @@ const sendForgotPasswordEmail = async (req, res) => {
     });
 }
 
+const sendRegistrationEmail = (email) => {
+    var dataRegistration = {
+        from: 'lazeastefan97@gmail.com',
+        to: email,
+        subject: 'Registration',
+        template: "registration",
+    }
+
+    mailgun.messages().send(dataRegistration, function (error, body) {
+        console.log(body);
+    });
+}
+
 module.exports = {
     sendRegisterEmail,
-    sendForgotPasswordEmail
+    sendForgotPasswordEmail,
+    sendRegistrationEmail,
 }

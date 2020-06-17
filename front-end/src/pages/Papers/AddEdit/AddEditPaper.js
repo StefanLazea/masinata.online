@@ -40,6 +40,7 @@ export default class AddEditPaper extends React.Component {
     componentDidMount = async () => {
         await this.setState({ carId: this.props.match.params.id })
         await this.setState({ carType: this.props.match.params.type })
+        console.log(this.state.carId, this.state.carType)
     }
 
     handleBeginDateChange = async (day) => {
@@ -96,20 +97,24 @@ export default class AddEditPaper extends React.Component {
         formData.append('renew', this.state.renew);
         formData.append('car_id', this.props.match.params.id);
 
-        PaperService.addFormDataPaper(formData)
-            .then((res) => {
-                toast(res.data.message);
-            })
-            .catch((err) => {
-                console.log(err)
-                if (err.response.status === 409) {
-                    toast("Documentul deja exista. Selectati optiunea de reinoire!")
-                }
-                if (err.response.status === 403) {
-                    toast("Your session has expired. Please login!");
-                    this.setState({ hasTokenExpired: true });
-                }
-            });
+        if (this.state.file) {
+            PaperService.addFormDataPaper(formData)
+                .then((res) => {
+                    toast(res.data.message);
+                })
+                .catch((err) => {
+                    console.log(err)
+                    if (err.response.status === 409) {
+                        toast("Documentul deja exista. Selectati optiunea de reinoire!")
+                    }
+                    if (err.response.status === 403) {
+                        toast("Your session has expired. Please login!");
+                        this.setState({ hasTokenExpired: true });
+                    }
+                });
+        } else {
+            toast("Trebuie adaugata o imagine");
+        }
     }
 
     render() {

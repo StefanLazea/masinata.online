@@ -1,7 +1,9 @@
 const User = require("../models").User;
 const bcrypt = require("bcryptjs");
+const mailController = require("../controllers/mail");
 const Role = require("../helpers/role");
 const dotenv = require('dotenv');
+const mail = require("../controllers/mail");
 dotenv.config();
 
 const register = async (res, credentials, isPaperAdmin) => {
@@ -24,6 +26,7 @@ const register = async (res, credentials, isPaperAdmin) => {
 
     try {
         User.create(user);
+        mail.sendRegistrationEmail(user.email);
     } catch (err) {
         res.send(err);
         return;
