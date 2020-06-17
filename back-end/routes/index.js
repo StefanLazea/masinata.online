@@ -22,7 +22,6 @@ router.post("/email/password", MailController.sendForgotPasswordEmail)
 
 router.get("/car/image/:id", CarController.getCarImage);
 router.get("/paper/:type/car/:id", PaperController.getPaperByTypeForCar);
-// router.get("/check/paper/:type/car/:id", PaperController.checkForPaper);
 router.get("/check/paper/car/:id", PaperController.checkForPaper);
 
 module.exports = router;

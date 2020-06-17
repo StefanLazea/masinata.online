@@ -40,12 +40,9 @@ export default class CarProfile extends React.Component {
             hasTokenExpired: false,
             image: null,
             garage: {},
-            docsImages: [],
             renewDocumentButton: false,
             indexImageSelected: null,
-            images: [],
             imageTest: [],
-            showImages: false,
         };
     }
 
@@ -62,30 +59,14 @@ export default class CarProfile extends React.Component {
                     i++;
                 }
                 console.log(this.state.imageTest)
-                // if (res.data['ITP'] > 0 && res.data['RCA'] > 0 && res.data['Rovigneta'] > 0) {
-                //     this.setState({ imageTest: PapersService.getData(this.props.match.params.id) })
-                // }
-                // if (res.data['ITP'] > 0 && res.data['RCA'] > 0) {
-                //     this.setState({ imageTest: PapersService.getData(this.props.match.params.id).slice(0, 2) })
-                // }
-                // if (res.data['ITP'] > 0 && res.data['Rovigneta'] > 0) {
-                //     this.setState({ imageTest: PapersService.getData(this.props.match.params.id).slice(1, 2) })
-                // }
             })
-    }
-
-    getListData = () => {
-        let data = PapersService.getDocumentsList(this.props.match.params.id);
-        this.setState({ images: data });
     }
 
     componentDidMount = () => {
         this._isMounted = true;
         this.getCarById();
-        this.getListData()
         this.checkTypes();
     }
-
 
     redirectToRenewPage = () => {
         let selectedDocumentType = this.state.images[this.state.indexImageSelected].thumbnailLabel;
