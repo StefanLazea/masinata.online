@@ -17,7 +17,7 @@ router.use("/user", authorize(Role.User, Role.Admin, Role.AppAdmin), userRouter)
 router.use("/garages", authorize(Role.User, Role.Admin, Role.AppAdmin), garageRouter);
 router.use("/notes", authorize(Role.User, Role.Admin, Role.AppAdmin), notesRouter);
 router.use("/papers", authorize(Role.User, Role.Admin, Role.AppAdmin), papersRouter);
-router.post("/email/confirmation", MailController.sendRegisterEmail)
+
 router.post("/email/password", MailController.sendForgotPasswordEmail)
 
 router.get("/car/image/:id", CarController.getCarImage);

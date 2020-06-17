@@ -1,15 +1,11 @@
 const dotenv = require('dotenv');
-const { getUserId } = require("../services/token.js");
+dotenv.config();
 const API_KEY = process.env.MAILGUN_API_KEY;
 const DOMAIN = process.env.MAILGUN_DOMAIN;
+const MailService = require('../services/mail');
 var mailgun = require('mailgun-js')({ apiKey: API_KEY, domain: DOMAIN });
 
-var dataRegistration = {
-    from: 'lazeastefan97@gmail.com',
-    to: 'lazeastefan@gmail.com',
-    subject: 'Registration',
-    template: "registration",
-}
+
 
 const generateResetPasswordContent = function (mailProps) {
 
@@ -35,12 +31,6 @@ const generateResetPasswordContent = function (mailProps) {
     return mail;
 }
 
-const sendRegisterEmail = async (req, res) => {
-    mailgun.messages().send(dataRegistration, function (error, body) {
-        console.log(body);
-    });
-}
-
 const sendForgotPasswordEmail = async (req, res) => {
     let data = { lastname: 'stefan', url: 'https://masinamea.online' }
     let emailData = generateResetPasswordContent(data);
@@ -57,21 +47,6 @@ const sendForgotPasswordEmail = async (req, res) => {
     });
 }
 
-const sendRegistrationEmail = (email) => {
-    var dataRegistration = {
-        from: 'lazeastefan97@gmail.com',
-        to: email,
-        subject: 'Registration',
-        template: "registration",
-    }
-
-    mailgun.messages().send(dataRegistration, function (error, body) {
-        console.log(body);
-    });
-}
-
 module.exports = {
-    sendRegisterEmail,
     sendForgotPasswordEmail,
-    sendRegistrationEmail,
 }
