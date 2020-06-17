@@ -44,12 +44,24 @@ export default class CarProfile extends React.Component {
             docsImages: [],
             renewDocumentButton: false,
             indexImageSelected: null,
-            images: []
+            images: [],
+            bou: false
         };
+        this.checkImage();
     }
+
+    checkImage = () => {
+        PapersService.checkCar().then((res) => { console.log(res) }).catch(err => {
+            console.log(err);
+            if (err.response.status === 404) {
+                console.log("esti bou")
+                this.setState({ bou: true });
+            }
+        })
+    }
+
     getListData = () => {
         let data = PapersService.getDocumentsList(this.props.match.params.id);
-        console.log("aici", data)
         this.setState({ images: data });
     }
 
@@ -317,10 +329,9 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                {this.state.images.length !== 0 ?
-                                    <ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
-                                    : <h5>Nu sunt acte adaugate</h5>
-                                }
+                                {this.state.bou === false ?
+                                    < ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
+                                    : <h2> nu sunt imagini</h2>}
                             </CardBody>
                         </Card>
 

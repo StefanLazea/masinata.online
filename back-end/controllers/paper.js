@@ -56,6 +56,7 @@ const createPaperForCar = async (req, res) => {
     return res.status(200).send({ message: "Document added successfully" })
 }
 
+
 const getPaperByTypeForCar = async (req, res) => {
     let paperFound = await checkIfCarHasDocumentOfType(req.params.type, req.params.id)
     if (paperFound) {
@@ -66,8 +67,10 @@ const getPaperByTypeForCar = async (req, res) => {
 
 const checkForPaper = async (req, res) => {
     let found = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
+    res.set('Cache-Control', 'public, max-age=31557600');
+
     if (!found) {
-        return res.send({ message: "Image not found", error: true });
+        return res.status(404).send({ message: "Image not found", error: true });
     }
     return res.status(200).send({ error: false })
 }

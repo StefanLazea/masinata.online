@@ -55,8 +55,13 @@ const addFormDataPaper = (data) => {
 //     }
 // }
 
+const checkCar = () => {
+    return Axios.get(`${getBasename()}/check/paper/RCA/car/64031b00-b0d1-11ea-869a-6df2f0cb1ba5`);
+};
+
 export default {
     addPaper,
     addFormDataPaper,
     getDocumentsList,
+    checkCar,
 };
