@@ -35,7 +35,6 @@ export default class CarProfile extends React.Component {
     constructor(props) {
         super(props);
         this._isMounted = false;
-
         this.state = {
             car: {},
             hasTokenExpired: false,
@@ -45,19 +44,19 @@ export default class CarProfile extends React.Component {
             renewDocumentButton: false,
             indexImageSelected: null,
             images: [],
-            bou: false
+            imageTest: [],
+            showImages: false,
         };
-        this.checkImage();
     }
 
-    checkImage = () => {
-        PapersService.checkCar().then((res) => { console.log(res) }).catch(err => {
-            console.log(err);
-            if (err.response.status === 404) {
-                console.log("esti bou")
-                this.setState({ bou: true });
-            }
-        })
+    checkTypes = () => {
+        PapersService.checkTypes(this.props.match.params.id)
+            .then(res => {
+                if (res.data['ITP'] > 0 && res.data['RCA'] > 0 && res.data['Rovigneta'] > 0) {
+                    console.log(PapersService.getData(this.props.match.params.id))
+                    this.setState({ imageTest: PapersService.getData(this.props.match.params.id) })
+                }
+            })
     }
 
     getListData = () => {
@@ -69,7 +68,9 @@ export default class CarProfile extends React.Component {
         this._isMounted = true;
         this.getCarById();
         this.getListData()
+        this.checkTypes();
     }
+
 
     redirectToRenewPage = () => {
         let selectedDocumentType = this.state.images[this.state.indexImageSelected].thumbnailLabel;
@@ -329,9 +330,7 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                {this.state.bou === false ?
-                                    < ImageGallery items={this.state.images} onSlide={(index) => this.selectDocumentForRenew(index)} />
-                                    : <h2> nu sunt imagini</h2>}
+                                < ImageGallery items={this.state.imageTest} onSlide={(index) => this.selectDocumentForRenew(index)} />
                             </CardBody>
                         </Card>
 

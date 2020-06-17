@@ -33,7 +33,8 @@ export default class AddEditPaper extends React.Component {
             endDate: undefined,
             renew: false,
             carId: '',
-            carType: ''
+            carType: '',
+            redirectToCarProfile: false,
         }
     }
 
@@ -101,6 +102,7 @@ export default class AddEditPaper extends React.Component {
             PaperService.addFormDataPaper(formData)
                 .then((res) => {
                     toast(res.data.message);
+                    this.setState({ redirectToCarProfile: true })
                 })
                 .catch((err) => {
                     console.log(err)
@@ -121,7 +123,13 @@ export default class AddEditPaper extends React.Component {
         if (this.state.hasTokenExpired) {
             return <Redirect to="/login" />
         }
-
+        if (this.state.redirectToCarProfile) {
+            return <Redirect to={{
+                pathname: `/car-profile/${this.state.carId}`,
+                state: { macarena: '123' }
+            }}
+            />
+        }
         return (
             <Page
                 className="AddPaper"

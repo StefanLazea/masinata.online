@@ -26,6 +26,26 @@ const getDocumentsList = (id) => {
     return documents;
 }
 
+const getData = (id) => {
+    return [
+        {
+            thumbnailLabel: 'RCA',
+            original: `${getBasename()}/paper/RCA/car/${id}`,
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            thumbnailLabel: 'ITP',
+            original: `${getBasename()}/paper/ITP/car/${id}`,
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            thumbnailLabel: 'Rovigneta',
+            original: `${getBasename()}/paper/Rovigneta/car/${id}`,
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        }
+    ]
+}
+
 const addPaper = (data) => {
     return Axios.post(`${getBasename()}/papers`, JSON.stringify(data),
         {
@@ -59,9 +79,15 @@ const checkCar = () => {
     return Axios.get(`${getBasename()}/check/paper/RCA/car/64031b00-b0d1-11ea-869a-6df2f0cb1ba5`);
 };
 
+const checkTypes = (id) => {
+    return Axios.get(`${getBasename()}/check/paper/car/${id}`);
+}
+
 export default {
     addPaper,
     addFormDataPaper,
     getDocumentsList,
     checkCar,
+    checkTypes,
+    getData
 };
