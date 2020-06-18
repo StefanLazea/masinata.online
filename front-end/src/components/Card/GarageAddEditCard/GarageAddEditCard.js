@@ -17,9 +17,7 @@ export default function GarageAddEditCard({
         console.log(garage_name, garage_id)
     })
 
-
     return (
-
         <>
             <Col lg="4" md="12" sm="12" xs="12">
                 <div>

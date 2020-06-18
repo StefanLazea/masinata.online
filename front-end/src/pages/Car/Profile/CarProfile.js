@@ -332,7 +332,64 @@ export default class CarProfile extends React.Component {
                                 }
                             </CardBody>
                         </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    <div className="d-flex align-items-center">
+                                        <Badge color="primary">
+                                            <span className="pb-2 align-middle badge-text-size">Notite
+                                            </span>
+                                        </Badge>
+                                    </div>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardBody>
+                                <h1>aici</h1>
+                                <row>
+                                    <Col lg="3" md="12" sm="12" xs="12">
 
+                                        <Card>
+                                            <CardHeader>
+                                                <CardTitle>
+                                                    <div className="d-flex align-items-center">
+                                                        <Badge color="primary">
+                                                            <span className="pb-2 align-middle badge-text-size">Note 1
+                                                            </span>
+                                                        </Badge>
+                                                    </div>
+                                                </CardTitle>
+                                            </CardHeader>
+                                            <CardBody>
+                                                <Col>
+                                                    <Label for="distance">Kilometrii parcursi</Label>
+                                                    <Input
+                                                        type="number"
+                                                        name="distance"
+                                                        id="distance"
+                                                    />
+                                                    <Label for="title">Titlu</Label>
+                                                    <Input
+                                                        type="number"
+                                                        name="title"
+                                                        id="title"
+                                                    />
+                                                    <Label for="description">Descriere problema</Label>
+                                                    <Input
+                                                        type="text"
+                                                        name="description"
+                                                        id="description"
+                                                    />
+                                                    <Row>
+                                                        <Button className="btn-success mx-auto">Notita</Button>
+                                                    </Row>
+                                                </Col>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+
+                                </row>
+                            </CardBody>
+                        </Card>
                     </Col>
                 </Row>
             </Page>
