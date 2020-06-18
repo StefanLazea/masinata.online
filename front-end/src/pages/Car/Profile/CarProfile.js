@@ -19,6 +19,7 @@ import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
 import PapersService from '../../../services/PaperService.js';
+import NoteService from '../../../services/NoteService.js';
 import NotesCard from '../../../components/Card/NotesCard/NotesCard.js';
 
 import GarageSelect from '../../../components/GarageSelect/GarageSelect';
@@ -44,13 +45,14 @@ export default class CarProfile extends React.Component {
             renewDocumentButton: false,
             indexImageSelected: null,
             imageTest: [],
+            carId: '',
+            notes: []
         };
     }
 
     checkTypes = () => {
         PapersService.checkTypes(this.props.match.params.id)
             .then(res => {
-                console.log(res)
                 let i = 0;
                 for (let itemType in res.data) {
                     console.log(itemType)
@@ -59,7 +61,6 @@ export default class CarProfile extends React.Component {
                     }
                     i++;
                 }
-                console.log(this.state.imageTest)
             })
     }
 
@@ -67,6 +68,12 @@ export default class CarProfile extends React.Component {
         this._isMounted = true;
         this.getCarById();
         this.checkTypes();
+        this.getNotes();
+    }
+
+    refreshList = () => {
+        toast("Lista a fost updatata!")
+        this.getNotes();
     }
 
     redirectToRenewPage = () => {
@@ -112,6 +119,17 @@ export default class CarProfile extends React.Component {
             });
     }
 
+    getNotes = () => {
+        NoteService.getAllNotes(this.props.match.params.id).then((res) => {
+            this.setState({ notes: res.data })
+        }).catch((err) => {
+            if (err.response.status === 403) {
+                toast("Your session has expired. Please login!");
+                this.setState({ hasTokenExpired: true });
+            }
+        });
+    }
+
     handleUndefiendValues = (value) => {
         return value === "undefined" ? "" : value;
     }
@@ -121,7 +139,6 @@ export default class CarProfile extends React.Component {
         CarsService.updateCar(this.props.match.params.id, this.state.car)
             .then((res) => { toast(res.data.message); })
             .catch((err) => {
-                console.log(err.response)
                 toast("An error occurred, please try later!");
                 if (err.response.status === 403) {
                     toast("Your session has expired. Please login!");
@@ -346,9 +363,15 @@ export default class CarProfile extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                    <NotesCard></NotesCard>
-                                    <NotesCard></NotesCard>
-                                    <NotesCard></NotesCard>
+                                    {this.state.notes.length > 0 ?
+                                        this.state.notes.map(note =>
+                                            <NotesCard
+                                                key={note.id}
+                                                history={this.props.history}
+                                                note={note}
+                                                refreshList={this.refreshList}
+                                            />)
+                                        : null}
                                 </Row>
                             </CardBody>
                         </Card>

@@ -34,7 +34,16 @@ const createNote = async (req, res) => {
     return res.status(200).send({ message: note.title + " successfully created!" })
 }
 
+const deleteNote = async (req, res) => {
+    let noteFound = await Note.findByPk(req.params.id);
+    if (!noteFound) {
+        return res.status(404).send({ message: "Note not found" });
+    }
+    await noteFound.destroy().then(() => { return res.send({ message: "Note deleted" }) });
+}
+
 module.exports = {
     getNotesForCar,
     createNote,
+    deleteNote,
 }

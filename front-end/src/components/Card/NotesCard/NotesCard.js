@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
+import NoteService from '../../../services/NoteService';
 import PropTypes from '../../../utils/propTypes';
 import { Badge, Button, Card, Col, CardHeader, CardTitle, CardBody, Label, Input, Row } from 'reactstrap';
 import './NotesCard.css'
 
 export default function NotesCard({
     history,
+    note,
+    refreshList,
     ...restProps
 }) {
     const [disableFields, setDisabled] = useState(true);
     useEffect(() => {
-    })
+        console.log(note)
+    }, [note])
+
+    const deleteNote = id => {
+        NoteService.deleteNote(id).then(() => {
+            refreshList();
+        });
+    }
 
     return (
         <>
@@ -21,7 +31,7 @@ export default function NotesCard({
                                 <Badge color="primary">
                                     <span className="pb-2 align-middle badge-text-size">Note 1</span>
                                 </Badge>
-                                <Button id="deleteNote" className="btn-danger ml-auto">
+                                <Button id="deleteNote" className="btn-danger ml-auto" onClick={(e) => deleteNote(note.id)}>
                                     <i className="fa fa-trash"></i>
                                 </Button>
                                 <Button id="prioritize" className="btn-warning">
@@ -69,6 +79,7 @@ export default function NotesCard({
 
 NotesCard.propTypes = {
     history: PropTypes.object,
+    note: PropTypes.object
 };
 
 NotesCard.defaultProps = {
