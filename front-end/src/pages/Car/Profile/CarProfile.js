@@ -19,6 +19,7 @@ import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
 import PapersService from '../../../services/PaperService.js';
+import NotesCard from '../../../components/Card/NotesCard/NotesCard.js';
 
 import GarageSelect from '../../../components/GarageSelect/GarageSelect';
 import { toast } from 'react-toastify';
@@ -344,50 +345,11 @@ export default class CarProfile extends React.Component {
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <h1>aici</h1>
-                                <row>
-                                    <Col lg="3" md="12" sm="12" xs="12">
-
-                                        <Card>
-                                            <CardHeader>
-                                                <CardTitle>
-                                                    <div className="d-flex align-items-center">
-                                                        <Badge color="primary">
-                                                            <span className="pb-2 align-middle badge-text-size">Note 1
-                                                            </span>
-                                                        </Badge>
-                                                    </div>
-                                                </CardTitle>
-                                            </CardHeader>
-                                            <CardBody>
-                                                <Col>
-                                                    <Label for="distance">Kilometrii parcursi</Label>
-                                                    <Input
-                                                        type="number"
-                                                        name="distance"
-                                                        id="distance"
-                                                    />
-                                                    <Label for="title">Titlu</Label>
-                                                    <Input
-                                                        type="number"
-                                                        name="title"
-                                                        id="title"
-                                                    />
-                                                    <Label for="description">Descriere problema</Label>
-                                                    <Input
-                                                        type="text"
-                                                        name="description"
-                                                        id="description"
-                                                    />
-                                                    <Row>
-                                                        <Button className="btn-success mx-auto">Notita</Button>
-                                                    </Row>
-                                                </Col>
-                                            </CardBody>
-                                        </Card>
-                                    </Col>
-
-                                </row>
+                                <Row>
+                                    <NotesCard></NotesCard>
+                                    <NotesCard></NotesCard>
+                                    <NotesCard></NotesCard>
+                                </Row>
                             </CardBody>
                         </Card>
                     </Col>

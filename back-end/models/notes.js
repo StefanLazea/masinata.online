@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
             'title': Sequelize.STRING,
             'distance': Sequelize.DOUBLE,
             'description': Sequelize.STRING,
+            'urgent': Sequelize.BOOLEAN,
+            'type': Sequelize.STRING,
             'createdAt': { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
         },
         {
