@@ -46,7 +46,8 @@ export default class CarProfile extends React.Component {
             indexImageSelected: null,
             imageTest: [],
             carId: '',
-            notes: []
+            notes: [],
+            addNote: false,
         };
     }
 
@@ -358,11 +359,20 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">Notite
                                             </span>
                                         </Badge>
+                                        <Button id="addPaper" className="btn-success ml-auto" onClick={() => { this.setState({ addNote: !this.state.addNote }) }}>
+                                            <i className="fa fa-plus"></i>
+                                        </Button>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
                                 <Row>
+                                    {this.state.addNote ?
+                                        <NotesCard
+                                            noteType={"Adding"}
+                                        />
+                                        : null
+                                    }
                                     {this.state.notes.length > 0 ?
                                         this.state.notes.map(note =>
                                             <NotesCard
@@ -372,6 +382,7 @@ export default class CarProfile extends React.Component {
                                                 refreshList={this.refreshList}
                                             />)
                                         : null}
+
                                 </Row>
                             </CardBody>
                         </Card>

@@ -6,14 +6,18 @@ import './NotesCard.css'
 
 export default function NotesCard({
     history,
+    noteType,
     note,
     refreshList,
     ...restProps
 }) {
     const [disableFields, setDisabled] = useState(true);
+    const [addForm] = useState(note === undefined);
     useEffect(() => {
-        console.log(note)
-    }, [note])
+        if (addForm) {
+            setDisabled(false);
+        }
+    }, [addForm])
 
     const deleteNote = id => {
         NoteService.deleteNote(id).then(() => {
@@ -29,17 +33,22 @@ export default function NotesCard({
                         <CardTitle>
                             <div className="d-flex align-items-center">
                                 <Badge color="primary">
-                                    <span className="pb-2 align-middle badge-text-size">Note 1</span>
+                                    <span className="pb-2 align-middle badge-text-size">{addForm ? noteType : "Nota"}</span>
                                 </Badge>
                                 <Button id="deleteNote" className="btn-danger ml-auto" onClick={(e) => deleteNote(note.id)}>
                                     <i className="fa fa-trash"></i>
                                 </Button>
-                                <Button id="prioritize" className="btn-warning">
-                                    <i className="fa fa-level-up"></i>
-                                </Button>
-                                <Button id="edit" className="btn-primary" onClick={(e) => setDisabled(!disableFields)}>
-                                    <i className="fa fa-pencil"></i>
-                                </Button>
+                                {!addForm ?
+                                    <>
+                                        <Button id="prioritize" className="btn-warning">
+                                            <i className="fa fa-level-up"></i>
+                                        </Button>
+                                        <Button id="edit" className="btn-primary" onClick={(e) => setDisabled(!disableFields)}>
+                                            <i className="fa fa-pencil"></i>
+                                        </Button>
+                                    </>
+                                    : null
+                                }
                             </div>
                         </CardTitle>
                     </CardHeader>
@@ -54,7 +63,7 @@ export default function NotesCard({
                             />
                             <Label for="title">Titlu</Label>
                             <Input
-                                type="number"
+                                type="text"
                                 name="title"
                                 id="title"
                                 disabled={disableFields ? 'disabled' : ''}
@@ -79,7 +88,8 @@ export default function NotesCard({
 
 NotesCard.propTypes = {
     history: PropTypes.object,
-    note: PropTypes.object
+    note: PropTypes.object,
+    noteType: PropTypes.string
 };
 
 NotesCard.defaultProps = {
