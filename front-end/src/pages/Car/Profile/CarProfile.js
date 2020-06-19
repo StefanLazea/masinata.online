@@ -369,7 +369,8 @@ export default class CarProfile extends React.Component {
                                 <Row>
                                     {this.state.addNote ?
                                         <NotesCard
-                                            noteType={"Adding"}
+                                            noteType={"Adaugare"}
+                                            car={this.props.match.params.id}
                                         />
                                         : null
                                     }

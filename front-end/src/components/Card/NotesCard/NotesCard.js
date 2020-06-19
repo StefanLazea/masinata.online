@@ -7,22 +7,41 @@ import './NotesCard.css'
 export default function NotesCard({
     history,
     noteType,
+    car,
     note,
     refreshList,
     ...restProps
 }) {
     const [disableFields, setDisabled] = useState(true);
     const [addForm] = useState(note === undefined);
+    const [formData, setFormData] = useState({ title: "", description: "", distance: 0, urgent: false, type: "", carId: car });
+
     useEffect(() => {
         if (addForm) {
             setDisabled(false);
         }
     }, [addForm])
 
+    const handleChange = async e => {
+        const { name, value } = e.target;
+        await setFormData(prevState => ({ ...prevState, [name]: value }));
+    }
+
     const deleteNote = id => {
         NoteService.deleteNote(id).then(() => {
             refreshList();
         });
+    }
+
+    const createNote = (event) => {
+        event.preventDefault();
+        console.log("adaugare nota")
+        if (addForm) {
+            NoteService.createNote(formData).then(res => {
+                console.log("note created", res)
+            });
+        }
+
     }
 
     return (
@@ -60,6 +79,7 @@ export default function NotesCard({
                                 name="distance"
                                 id="distance"
                                 disabled={disableFields ? 'disabled' : ''}
+                                onChange={handleChange}
                             />
                             <Label for="title">Titlu</Label>
                             <Input
@@ -67,6 +87,7 @@ export default function NotesCard({
                                 name="title"
                                 id="title"
                                 disabled={disableFields ? 'disabled' : ''}
+                                onChange={handleChange}
                             />
                             <Label for="description">Descriere problema</Label>
                             <Input
@@ -74,9 +95,10 @@ export default function NotesCard({
                                 name="description"
                                 id="description"
                                 disabled={disableFields ? 'disabled' : ''}
+                                onChange={handleChange}
                             />
                             <Row>
-                                <Button id="submit" className="btn-success mx-auto">Salveaza</Button>
+                                <Button id="submit" className="btn-success mx-auto" onClick={(e) => { createNote(e) }}>Salveaza</Button>
                             </Row>
                         </Col>
                     </CardBody>
