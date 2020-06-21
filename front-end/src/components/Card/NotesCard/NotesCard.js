@@ -23,7 +23,13 @@ export default function NotesCard({
         if (addForm) {
             setDisabled(false);
         }
-    }, [addForm])
+    }, [addForm]);
+
+    useEffect(() => {
+        if (note) {
+            setDisableUrgentButton(c => note.urgent);
+        }
+    }, [note]);
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -116,7 +122,12 @@ export default function NotesCard({
                         <Col>
                             <FormGroup check>
                                 <Label check>
-                                    <Input name="urgent" type="checkbox" onClick={handleCheckboxChange} /> Urgent
+                                    <Input
+                                        name="urgent"
+                                        type="checkbox"
+                                        defaultChecked={addForm ? false : note.urgent}
+                                        onClick={handleCheckboxChange}
+                                    /> Urgent
                                 </Label>
                             </FormGroup>
 
