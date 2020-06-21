@@ -22,6 +22,15 @@ const createNote = (data) => {
         });
 }
 
+const updateNote = (id, data) => {
+    return Axios.put(`${getBasename()}/notes/${id}`, JSON.stringify(data),
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
 
 const deleteNote = (id) => {
     return Axios.delete(`${getBasename()}/notes/${id}`,
@@ -33,4 +42,5 @@ module.exports = {
     getAllNotes,
     deleteNote,
     createNote,
+    updateNote,
 };

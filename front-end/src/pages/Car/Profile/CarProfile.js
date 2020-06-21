@@ -377,6 +377,7 @@ export default class CarProfile extends React.Component {
                                         <NotesCard
                                             noteType={"Adaugare"}
                                             car={this.props.match.params.id}
+                                            refreshList={this.refreshList}
                                             onCancelButtonClick={this.onCancelButtonClick}
                                         />
                                         : null

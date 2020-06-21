@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NoteService from '../../../services/NoteService';
 import PropTypes from '../../../utils/propTypes';
-import { Badge, Button, Card, Col, CardHeader, CardTitle, CardBody, Label, Input, Row } from 'reactstrap';
+import { Badge, Button, Card, Col, CardHeader, CardTitle, CardBody, Label, Input, Row, FormGroup } from 'reactstrap';
 import './NotesCard.css'
 
 export default function NotesCard({
@@ -14,6 +14,8 @@ export default function NotesCard({
     ...restProps
 }) {
     const [disableFields, setDisabled] = useState(true);
+    const [disableUrgentButton, setDisableUrgentButton] = useState(false);
+    const [editForm, setEditForm] = useState(false);
     const [addForm] = useState(note === undefined);
     const [formData, setFormData] = useState({ title: "", description: "", distance: 0, urgent: false, type: "", carId: car });
 
@@ -23,33 +25,67 @@ export default function NotesCard({
         }
     }, [addForm])
 
-    const handleChange = async e => {
+    const handleChange = e => {
         const { name, value } = e.target;
-        await setFormData(prevState => ({ ...prevState, [name]: value }));
+        setFormData(prevState => ({ ...prevState, [name]: value }));
+    }
+
+    const handleCheckboxChange = e => {
+        setDisableUrgentButton(!disableUrgentButton);
+        const { name, checked } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: checked }));
     }
 
     const deleteNote = id => {
-
         NoteService.deleteNote(id).then(() => {
             refreshList("Nota a fost stearsa");
         });
-
     }
 
     const createNote = (event) => {
         event.preventDefault();
-        console.log("adaugare nota")
+        console.log("adaugare nota", formData)
         if (addForm) {
             NoteService.createNote(formData).then(res => {
-                console.log("note created", res)
+                refreshList("Nota creata");
+                onCancelButtonClick();
             });
         }
-
     }
 
+    const updateNote = (event) => {
+        event.preventDefault();
+        console.log("editare nota", formData)
+
+        NoteService.updateNote(note.id, formData).then(res => {
+            refreshList(res.data.message);
+            setEditForm(!editForm);
+            setDisableUrgentButton(true);
+        });
+    }
+
+    const getButton = () => {
+        if (addForm) {
+            return <Row>
+                <Button id="submit" className="btn-success mx-auto" onClick={(e) => { createNote(e) }}>Salveaza</Button>
+            </Row>
+        } else if (editForm) {
+            return <Row>
+                <Button id="submit" className="btn-success mx-auto" onClick={(e) => { updateNote(e) }}>Edit</Button>
+            </Row>
+        }
+        return null;
+    }
+
+    const editButtonPressed = (e) => {
+        setDisabled(!disableFields);
+        setEditForm(!editForm);
+        console.log(note)
+        setFormData(note)
+    }
     return (
         <>
-            <Col lg="3" md="12" sm="12" xs="12">
+            <Col lg="4" md="12" sm="12" xs="12">
                 <Card>
                     <CardHeader>
                         <CardTitle>
@@ -60,27 +96,36 @@ export default function NotesCard({
                                 <Button id="deleteNote" className="btn-danger ml-auto" onClick={(e) => addForm ? onCancelButtonClick() : deleteNote(note.id)}>
                                     <i className={addForm ? "fa fa-times" : "fa fa-trash"}></i>
                                 </Button>
-                                {!addForm ?
-                                    <>
-                                        <Button id="prioritize" className="btn-warning">
-                                            <i className="fa fa-level-up"></i>
-                                        </Button>
-                                        <Button id="edit" className="btn-primary" onClick={(e) => setDisabled(!disableFields)}>
-                                            <i className="fa fa-pencil"></i>
-                                        </Button>
-                                    </>
+                                {disableUrgentButton ?
+                                    <Button id="prioritize" className="btn-warning">
+                                        <i className="fa fa-fire"></i>
+                                    </Button>
                                     : null
                                 }
+                                {!addForm ?
+                                    <Button id="edit" className="btn-primary" onClick={(e) => editButtonPressed(e)}>
+                                        <i className="fa fa-pencil"></i>
+                                    </Button>
+                                    : null
+                                }
+
                             </div>
                         </CardTitle>
                     </CardHeader>
                     <CardBody>
                         <Col>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input name="urgent" type="checkbox" onClick={handleCheckboxChange} /> Urgent
+                                </Label>
+                            </FormGroup>
+
                             <Label for="distance">Kilometrii parcursi</Label>
                             <Input
                                 type="number"
                                 name="distance"
                                 id="distance"
+                                defaultValue={addForm ? '' : note.distance}
                                 disabled={disableFields ? 'disabled' : ''}
                                 onChange={handleChange}
                             />
@@ -89,6 +134,7 @@ export default function NotesCard({
                                 type="text"
                                 name="title"
                                 id="title"
+                                defaultValue={addForm ? '' : note.title}
                                 disabled={disableFields ? 'disabled' : ''}
                                 onChange={handleChange}
                             />
@@ -97,12 +143,11 @@ export default function NotesCard({
                                 type="text"
                                 name="description"
                                 id="description"
+                                defaultValue={addForm ? '' : note.description}
                                 disabled={disableFields ? 'disabled' : ''}
                                 onChange={handleChange}
                             />
-                            <Row>
-                                <Button id="submit" className="btn-success mx-auto" onClick={(e) => { createNote(e) }}>Salveaza</Button>
-                            </Row>
+                            {getButton()}
                         </Col>
                     </CardBody>
                 </Card>

@@ -1,18 +1,15 @@
 const Note = require('../models').Note;
 
 const getNotesForCar = async (req, res) => {
-    let notes;
     try {
-        await Note.findAll({
+        const notesFound = await Note.findAll({
             where: { carId: req.params.id }
-        }).then(
-            (notesFound) => { notes = notesFound });
+        });
+        return res.status(200).send(notesFound);
     }
     catch (err) {
         return res.status(404).send({ message: "Not found" });
     }
-
-    return res.status(200).send(notes);
 }
 
 const createNote = async (req, res) => {
@@ -42,8 +39,32 @@ const deleteNote = async (req, res) => {
     await noteFound.destroy().then(() => { return res.send({ message: "Note deleted" }) });
 }
 
+const updateNote = async (req, res) => {
+    let note = {
+        title: req.body.title,
+        distance: req.body.distance,
+        description: req.body.description,
+        urgent: req.body.urgent
+    }
+
+    try {
+        await Note.update(
+            note,
+            {
+                where:
+                    { id: req.params.id }
+            }
+        );
+
+        return res.status(200).send({ message: "Note details updated successfully!" });
+    } catch (err) {
+        return res.status(500).send({ message: "Something went wrong", err });
+    }
+}
+
 module.exports = {
     getNotesForCar,
     createNote,
     deleteNote,
+    updateNote,
 }

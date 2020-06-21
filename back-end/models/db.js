@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
         collate: 'utf8_general_ci',
         define: {
             timestamps: false
-        }
+        },
     }
 );
 
