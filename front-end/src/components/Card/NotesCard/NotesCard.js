@@ -7,6 +7,7 @@ import './NotesCard.css'
 export default function NotesCard({
     history,
     noteType,
+    onCancelButtonClick,
     car,
     note,
     refreshList,
@@ -28,9 +29,11 @@ export default function NotesCard({
     }
 
     const deleteNote = id => {
+
         NoteService.deleteNote(id).then(() => {
-            refreshList();
+            refreshList("Nota a fost stearsa");
         });
+
     }
 
     const createNote = (event) => {
@@ -54,8 +57,8 @@ export default function NotesCard({
                                 <Badge color="primary">
                                     <span className="pb-2 align-middle badge-text-size">{addForm ? noteType : "Nota"}</span>
                                 </Badge>
-                                <Button id="deleteNote" className="btn-danger ml-auto" onClick={(e) => deleteNote(note.id)}>
-                                    <i className="fa fa-trash"></i>
+                                <Button id="deleteNote" className="btn-danger ml-auto" onClick={(e) => addForm ? onCancelButtonClick() : deleteNote(note.id)}>
+                                    <i className={addForm ? "fa fa-times" : "fa fa-trash"}></i>
                                 </Button>
                                 {!addForm ?
                                     <>

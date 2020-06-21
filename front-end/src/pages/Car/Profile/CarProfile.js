@@ -72,9 +72,15 @@ export default class CarProfile extends React.Component {
         this.getNotes();
     }
 
-    refreshList = () => {
-        toast("Lista a fost updatata!")
+    refreshList = (message = '') => {
+        if (message.length !== 0) {
+            toast(message)
+        }
         this.getNotes();
+    }
+
+    onCancelButtonClick = () => {
+        this.setState({ addNote: false })
     }
 
     redirectToRenewPage = () => {
@@ -371,6 +377,7 @@ export default class CarProfile extends React.Component {
                                         <NotesCard
                                             noteType={"Adaugare"}
                                             car={this.props.match.params.id}
+                                            onCancelButtonClick={this.onCancelButtonClick}
                                         />
                                         : null
                                     }
