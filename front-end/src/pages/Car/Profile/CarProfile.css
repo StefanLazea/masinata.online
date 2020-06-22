@@ -11,6 +11,11 @@
     margin-bottom: 0 !important;
 }
 
+#filter {
+    width: 25%;
+    margin-right: 1%;
+}
+
 .badge {
     line-height: initial;
 }

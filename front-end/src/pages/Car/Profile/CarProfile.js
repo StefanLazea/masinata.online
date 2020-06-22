@@ -1,3 +1,4 @@
+import React from 'react';
 import Page from '../../../components/Page/Page';
 import { Redirect } from "react-router-dom";
 import {
@@ -14,13 +15,12 @@ import {
     Button,
 } from 'reactstrap';
 
-
-import React from 'react';
 import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
 import PapersService from '../../../services/PaperService.js';
 import NoteService from '../../../services/NoteService.js';
 import NotesCard from '../../../components/Card/NotesCard/NotesCard.js';
+import * as _ from "lodash";
 
 import GarageSelect from '../../../components/GarageSelect/GarageSelect';
 import { toast } from 'react-toastify';
@@ -48,6 +48,7 @@ export default class CarProfile extends React.Component {
             carId: '',
             notes: [],
             addNote: false,
+            filterNotes: ''
         };
     }
 
@@ -97,6 +98,11 @@ export default class CarProfile extends React.Component {
         await this.setState(() => ({ car }))
     }
 
+    handleFilterChange = (e) => {
+        console.log(e.target.name, e.target.value);
+        this.setState({ notes: _.orderBy(this.state.notes, [e.target.value], ['desc']) })
+    }
+
     getCarById = () => {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
@@ -128,7 +134,8 @@ export default class CarProfile extends React.Component {
 
     getNotes = () => {
         NoteService.getAllNotes(this.props.match.params.id).then((res) => {
-            this.setState({ notes: res.data })
+            this.setState({ notes: res.data });
+            // this.setState({ notes: _.orderBy(res.data, ['distance'], ['desc']) })
         }).catch((err) => {
             if (err.response.status === 403) {
                 toast("Your session has expired. Please login!");
@@ -365,7 +372,20 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">Notite
                                             </span>
                                         </Badge>
-                                        <Button id="addPaper" className="btn-success ml-auto" onClick={() => { this.setState({ addNote: !this.state.addNote }) }}>
+                                        <Input
+                                            type="select"
+                                            name="filter_results"
+                                            id="filter"
+                                            className="ml-auto"
+                                            onChange={this.handleFilterChange}
+                                        >
+                                            <option>Sorteaza notitele</option>
+                                            <option value="distance">dupa distanta</option>
+                                            <option value="createdAt">dupa data adaugarii</option>
+                                            <option value="urgent">dupa urgenta</option>
+                                        </Input>
+
+                                        <Button id="addPaper" className="btn-success" onClick={() => { this.setState({ addNote: !this.state.addNote }) }}>
                                             <i className="fa fa-plus"></i>
                                         </Button>
                                     </div>
