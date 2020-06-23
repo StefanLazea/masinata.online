@@ -57,16 +57,13 @@ const getAllUsersData = async (req, res) => {
 
 const getAllAdmins = async (req, res) => {
     try {
-        let users = await Car.findAll({
-            where: { role: Role.Admin }
+        const users = await User.findAll({
+            where: { role: Role.AppAdmin }
         });
         return res.status(200).send(users);
-    }
-    catch (err) {
+    } catch (err) {
         return res.status(404).send({ message: "Not found" });
     }
-
-    return res.status(200).send(cars);
 }
 
 module.exports = {

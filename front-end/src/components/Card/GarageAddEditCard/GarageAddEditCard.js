@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from '../../../utils/propTypes';
+import AdminSelect from '../../../components/AdminSelect/AdminSelect.js';
 import { Button, Card, Col, CardHeader, CardTitle, CardBody, Label, Input, Row } from 'reactstrap';
 import './GarageAddEditCard.css'
 
@@ -47,6 +48,12 @@ export default function GarageAddEditCard({
                                     id="name"
                                     onChange={e => handleChange(e)}
                                 />
+                            </Col>
+                            <AdminSelect
+                                name="Selecteaza adminstrator"
+                                handleChange={e => handleChange(e)}
+                            />
+                            <Col>
                                 <Row>
                                     <Button className="btn-success mx-auto" onClick={(e) => submitMethod(e)} >{cardPurpose} garaj</Button>
                                 </Row>

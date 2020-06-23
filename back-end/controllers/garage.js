@@ -13,7 +13,7 @@ const createGarage = async (req, res) => {
     let garage = {
         name: req.body.name,
         userId: req.body.user_id,
-        adminId: null
+        adminId: req.body.adminId
     };
 
     if (req.body.name === "" || req.body.name === null) {

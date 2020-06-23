@@ -31,6 +31,7 @@ export default class Garage extends React.Component {
     }
 
     handleChange = async (e) => {
+        console.log(e.target.name, e.target.value)
         await this.setState({
             [e.target.name]: e.target.value
         })
@@ -60,7 +61,8 @@ export default class Garage extends React.Component {
 
         let data = {
             name: this.state.garageName,
-            user_id: TokenService.getUserId()
+            user_id: TokenService.getUserId(),
+            adminId: this.state.adminId
         }
 
         GarageService.createGarage(data)

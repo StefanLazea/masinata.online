@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import PropTypes from '../../utils/propTypes';
 import { Col, Label, Input, Row } from 'reactstrap';
 import { toast } from 'react-toastify';
-import GarageService from '../../services/GarageService.js';
-import './GarageSelect.css';
+import UserService from '../../services/UserProfileService.js';
+import './AdminSelect.css';
 
 export default function AdminSelect({
     name,
     history,
     handleChange,
-    count,
     ...restProps
 }) {
-    const [garages, setGarages] = useState([]);
+    const [admins, setAdmins] = useState([]);
     useEffect(() => {
         const getGarages = () => {
-            GarageService.getGaragesByUserId()
+            UserService.getAllPaperAdmins()
                 .then((res) => {
-                    setGarages(res.data);
+                    setAdmins(res.data);
+                    console.log(res.data)
                 })
                 .catch((err) => {
                     toast("An error occurred, please try later!");
@@ -33,19 +33,18 @@ export default function AdminSelect({
     return (
         <>
             <Row>
-                <Label for="type" sm={3}>{name}</Label>
-                <Col sm={4}>
+                <Label for="type" sm={12}>{name}</Label>
+                <Col sm={12}>
                     <Input
                         type="select"
-                        name="garageId"
-                        id="garage_id"
+                        name="adminId"
+                        id="admin_id"
                         onChange={(e) => { handleChange(e) }}
-                        value={garage_id === null ? '' : garage_id}
                     >
-                        <option>Selectecteaza garaj</option>
+                        <option>Selectecteaza admin</option>
                         {
-                            garages.map(g => {
-                                return <option key={g.id} value={g.id}>{g.name}</option>
+                            admins.map(admin => {
+                                return <option key={admin.id} value={admin.id}>{admin.email}</option>
                             })
                         }
                     </Input>
@@ -56,11 +55,8 @@ export default function AdminSelect({
 };
 
 AdminSelect.propTypes = {
-    description: PropTypes.string,
     history: PropTypes.object,
-    garage_id: PropTypes.string,
 };
 
 AdminSelect.defaultProps = {
-    garage_id: null,
 }
