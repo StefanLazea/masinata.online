@@ -2,7 +2,7 @@ import logo200Image from '../../assets/img/logo/logo_200_white.png';
 import sidebarBgImage from '../../assets/img/sidebar/sidebar-4.jpg';
 import React from 'react';
 import {
-  MdAccountCircle,
+  MdExitToApp,
   MdBorderAll,
   MdDashboard,
   MdPerson,
@@ -26,7 +26,7 @@ const navItems = [
   { to: '/user-profile', name: 'User profile', exact: false, Icon: MdPerson },
   { to: '/garages', name: 'Garages', exact: false, Icon: MdPerson },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
-  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle }
+  { to: '/login', name: 'Logout', exact: false, Icon: MdExitToApp }
 ];
 
 const bem = bn.create('sidebar');

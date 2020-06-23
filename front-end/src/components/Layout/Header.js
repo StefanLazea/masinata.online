@@ -1,6 +1,5 @@
 import Avatar from '../Avatar';
 import { UserCard } from '../Card';
-import SearchInput from '../SearchInput';
 import React from 'react';
 import TokenService from '../../services/Token.js';
 import { Redirect } from 'react-router-dom';
@@ -81,9 +80,6 @@ class Header extends React.Component {
           <Button outline onClick={this.handleSidebarControlButton}>
             <MdClearAll size={25} />
           </Button>
-        </Nav>
-        <Nav navbar>
-          <SearchInput />
         </Nav>
 
         <Nav navbar className={bem.e('nav-right')}>

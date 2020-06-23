@@ -86,7 +86,7 @@ export default class UserProfilePage extends React.Component {
     return (
       <Page title="User profile" breadcrumbs={[{ name: 'user profile', active: true }]} >
         <Row>
-          <Col xl={6} lg={12} md={12} className="mx-auto">
+          <Col xl={6} lg={12} md={12}>
             <Card>
               <CardHeader>
                 <Badge color="warning" pill className="float-right">
