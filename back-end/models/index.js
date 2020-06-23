@@ -13,6 +13,7 @@ Car.belongsTo(Garage, { foreignKey: { notNull: false } });
 
 User.hasMany(Garage);
 Garage.belongsTo(User);
+Garage.belongsTo(User, { as: 'admin' });
 
 Car.hasMany(Note);
 Note.belongsTo(Car);

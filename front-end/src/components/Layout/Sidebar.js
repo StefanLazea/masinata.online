@@ -1,11 +1,13 @@
 import logo200Image from '../../assets/img/logo/logo_200_white.png';
 import sidebarBgImage from '../../assets/img/sidebar/sidebar-4.jpg';
+import TokenService from '../../services/Token.js';
 import React from 'react';
 import {
   MdExitToApp,
   MdBorderAll,
   MdDashboard,
   MdPerson,
+  MdAddCircle
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -27,6 +29,10 @@ const navItems = [
   { to: '/garages', name: 'Garages', exact: false, Icon: MdPerson },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
   { to: '/login', name: 'Logout', exact: false, Icon: MdExitToApp }
+];
+
+const navItemsAdmin = [
+  { to: '/pending', name: 'Pending', exact: false, Icon: MdAddCircle },
 ];
 
 const bem = bn.create('sidebar');
@@ -84,6 +90,25 @@ class Sidebar extends React.Component {
               </NavItem>
             ))}
 
+            {
+              TokenService.getUserRole() === 'app-admin' ?
+                navItemsAdmin.map(({ to, name, exact, Icon }, index) => (
+                  <NavItem key={index} className={bem.e('nav-item')}>
+                    <BSNavLink
+                      id={`navItem-${name}-${index}`}
+                      className="text-uppercase"
+                      tag={NavLink}
+                      to={to}
+                      activeClassName="active"
+                      exact={exact}
+                    >
+                      <Icon className={bem.e('nav-item-icon')} />
+                      <span className="">{name}</span>
+                    </BSNavLink>
+                  </NavItem>
+                ))
+                : null
+            }
           </Nav>
         </div>
       </aside>
