@@ -18,7 +18,8 @@ export default function (ComposedComponent, allowedRoles) {
 
         componentDidMount() {
             this._isMounted = true;
-            if (TokenService.getToken() === null) {
+            console.log(allowedRoles, TokenService.getUserRole(), allowedRoles.includes(TokenService.getUserRole()))
+            if (TokenService.getToken() === null || allowedRoles.includes(TokenService.getUserRole()) === false) {
                 this.setState({ loginRedirect: true })
                 toast("Please be sure you are logged in!");
             }

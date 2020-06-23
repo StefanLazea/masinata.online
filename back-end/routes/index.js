@@ -12,11 +12,11 @@ const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");
 
 router.use("/auth", authRouter);
-router.use("/cars", authorize(Role.User, Role.Admin, Role.AppAdmin), carRouter);
-router.use("/user", authorize(Role.User, Role.Admin, Role.AppAdmin), userRouter);
-router.use("/garages", authorize(Role.User, Role.Admin, Role.AppAdmin), garageRouter);
-router.use("/notes", authorize(Role.User, Role.Admin, Role.AppAdmin), notesRouter);
-router.use("/papers", authorize(Role.User, Role.Admin, Role.AppAdmin), papersRouter);
+router.use("/cars", authorize([Role.User, Role.Admin, Role.AppAdmin]), carRouter);
+router.use("/user", authorize([Role.User, Role.Admin, Role.AppAdmin]), userRouter);
+router.use("/garages", authorize([Role.User, Role.Admin, Role.AppAdmin]), garageRouter);
+router.use("/notes", authorize([Role.User, Role.Admin, Role.AppAdmin]), notesRouter);
+router.use("/papers", authorize([Role.User, Role.Admin, Role.AppAdmin]), papersRouter);
 
 router.post("/email/password", MailController.sendForgotPasswordEmail)
 

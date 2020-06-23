@@ -253,13 +253,13 @@ export default class UserProfilePage extends React.Component {
                   <img id="avatar" src="https://api.adorable.io/avatars/173/abott@adorable.png" className="rounded-circle mx-auto" alt="avatar"></img>
                 </div>
                 <div id="statistics" className="d-flex align-items-center">
-                  <Badge color="primary" className="mx-auto">
+                  <Badge color="warning" className="mx-auto">
                     <i className="fa fa-car"> {this.state.numberOfCars}</i>
                   </Badge>
-                  <Badge color="primary" className="mx-auto">
+                  <Badge color="warning" className="mx-auto">
                     <i className="fa fa-home"> {this.state.numberOfCars}</i>
                   </Badge>
-                  <Badge color="primary" className="mx-auto">
+                  <Badge color="warning" className="mx-auto">
                     <i className="fa fa-paperclip"> {this.state.numberOfCars}</i>
                   </Badge>
                 </div>

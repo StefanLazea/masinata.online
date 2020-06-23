@@ -12,9 +12,12 @@ const getUserId = () => {
 
 const getUserRole = () => {
     let token = localStorage.getItem('token');
-    const trimmedToken = token.split(" ")[1];
-    const decode = jwt.decode(trimmedToken, secret);
-    return decode.role;
+    if (token) {
+        const trimmedToken = token.split(" ")[1];
+        const decode = jwt.decode(trimmedToken, secret);
+        return decode.role;
+    }
+    return token;
 }
 
 const getDecodedToken = () => {
