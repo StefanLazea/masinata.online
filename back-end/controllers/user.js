@@ -1,4 +1,5 @@
 const User = require("../models").User;
+const Role = require("../helpers/role");
 
 const getDetailsById = async (req, res) => {
     let userDetails = await User.findOne({
@@ -54,8 +55,23 @@ const getAllUsersData = async (req, res) => {
     return res.status(400).send({ "message": "Something went wrong with the data recieved." })
 };
 
+const getAllAdmins = async (req, res) => {
+    try {
+        let users = await Car.findAll({
+            where: { role: Role.Admin }
+        });
+        return res.status(200).send(users);
+    }
+    catch (err) {
+        return res.status(404).send({ message: "Not found" });
+    }
+
+    return res.status(200).send(cars);
+}
+
 module.exports = {
     getDetailsById,
     updateDetailsById,
-    getAllUsersData
+    getAllUsersData,
+    getAllAdmins,
 }

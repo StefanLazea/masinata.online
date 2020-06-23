@@ -1,5 +1,5 @@
 module.exports = {
-    Admin: "paper-admin",
+    Admin: "garage-admin",
     User: "user",
     AppAdmin: "app-admin"
 }

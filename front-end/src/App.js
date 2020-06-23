@@ -49,14 +49,14 @@ class App extends React.Component {
 
           <MainLayout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
-              <Route path="/" exact component={RequireAuth(DashboardPage, ['user', 'app-admin', 'paper-admin'])} />
-              <Route exact path="/tables" component={RequireAuth(TablePage, ['app-admin', 'paper-admin'])} />
-              <Route exact path="/user-profile" component={RequireAuth(UserProfilePage, ['user', 'app-admin'])} />
+              <Route path="/" exact component={RequireAuth(DashboardPage, ['user', 'app-admin', 'garage-admin'])} />
+              <Route exact path="/tables" component={RequireAuth(TablePage, ['app-admin', 'garage-admin'])} />
+              <Route exact path="/user-profile" component={RequireAuth(UserProfilePage, ['user', 'garage-admin'])} />
               <Route exact path="/add/car" component={RequireAuth(AddCar, ['user'])} />
-              <Route exact path="/car-profile/:id" component={RequireAuth(CarProfilePage, ['user', 'app-admin', 'paper-admin'])} />
-              <Route exact path="/garages" component={RequireAuth(Garage, ['user', 'app-admin', 'app-admin'])} />
-              <Route exact path="/add/car/:id/paper" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'paper-admin'])} />
-              <Route exact path="/renew/car/:id/paper/:type" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'paper-admin'])} />
+              <Route exact path="/car-profile/:id" component={RequireAuth(CarProfilePage, ['user', 'app-admin', 'garage-admin'])} />
+              <Route exact path="/garages" component={RequireAuth(Garage, ['user', 'app-admin', 'garage-admin'])} />
+              <Route exact path="/add/car/:id/paper" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'garage-admin'])} />
+              <Route exact path="/renew/car/:id/paper/:type" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'garage-admin'])} />
 
             </React.Suspense>
           </MainLayout>

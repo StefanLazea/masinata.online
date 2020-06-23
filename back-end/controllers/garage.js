@@ -13,6 +13,7 @@ const createGarage = async (req, res) => {
     let garage = {
         name: req.body.name,
         userId: req.body.user_id,
+        adminId: null
     };
 
     if (req.body.name === "" || req.body.name === null) {
@@ -75,6 +76,18 @@ const updateGarageById = async (req, res) => {
     }
 };
 
+const getAllGaragesForAdmin = async (req, res) => {
+    try {
+        await Garage.findAll({
+            where: { adminId: req.params.id }
+        }).then(
+            (garages) => { return res.status(200).send(garages) });
+    }
+    catch (err) {
+        return res.status(404).send({ message: "Not found" });
+    }
+}
+
 module.exports = {
     getGarages,
     createGarage,
@@ -82,4 +95,5 @@ module.exports = {
     getGarageById,
     deleteGarageById,
     updateGarageById,
+    getAllGaragesForAdmin,
 }

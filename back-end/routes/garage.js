@@ -9,5 +9,7 @@ router.put("/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), GarageCont
 router.get("/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), GarageController.getGarageById);
 router.delete("/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), GarageController.deleteGarageById);
 router.get("/user/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), GarageController.getGaragesByUserId);
+router.get("/admin/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), GarageController.getAllGaragesForAdmin);
+
 
 module.exports = router;
