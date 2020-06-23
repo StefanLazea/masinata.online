@@ -9,6 +9,7 @@ export default function GarageDetailsCard({
     garage_id,
     name,
     history,
+    admin,
     onItemClickDeleteGarage,
     onItemClickEditGarage,
     ...restProps
@@ -29,6 +30,23 @@ export default function GarageDetailsCard({
             });
     });
 
+    const getButtons = () => {
+        return <>{
+            !admin ?
+                <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteGarage(e, garage_id) }}>
+                    <i className="fa fa-trash"></i>
+                </Button>
+                : null
+        }
+            {
+                !admin ?
+                    <Button className="btn-warning" onClick={(e) => { onItemClickEditGarage(e, garage_id, name) }}>
+                        <i className="fa fa-pencil"></i>
+                    </Button>
+                    : null
+            }
+        </>;
+    }
     return (
         <>
             <Col lg="4" md="12" sm="12" xs="12">
@@ -36,12 +54,7 @@ export default function GarageDetailsCard({
                     <CardHeader>
                         <div className="d-flex align-items-center">
                             <CardTitle>Garajul <strong>{name}</strong></CardTitle>
-                            <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteGarage(e, garage_id) }}>
-                                <i className="fa fa-trash"></i>
-                            </Button>
-                            <Button className="btn-warning" onClick={(e) => { onItemClickEditGarage(e, garage_id, name) }}>
-                                <i className="fa fa-pencil"></i>
-                            </Button>
+                            {getButtons()}
                         </div>
                     </CardHeader>
                     <CardBody>
@@ -51,7 +64,6 @@ export default function GarageDetailsCard({
                             </CardTitle>
                             <Badge color="success" pill className="ml-auto">{carsNumber}</Badge>
                         </div>
-
                         <CardTitle>
                             Admin garaj
                             <Button className="btn-success">

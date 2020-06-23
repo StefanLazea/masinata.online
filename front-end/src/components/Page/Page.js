@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from '../../utils/propTypes';
 import bn from '../../utils/bemnames';
 import { Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import TokenService from '../../services/Token.js';
+import Role from '../../services/Roles.js';
 import Typography from '../Typography';
 import './Page.css';
 
@@ -40,14 +42,16 @@ export default function Page({
               ))}
           </Breadcrumb>
         )}
-        {addCarButton ?
+        {addCarButton && TokenService.getUserRole() === Role.User ?
           <Button className="btn-success ml-auto align-middle" id="addCar" onClick={(e) => history.push("/add/car")}>Adauga o noua masina</Button>
           : null
         }
-        {addGarageButton ?
+
+        {addGarageButton && TokenService.getUserRole() === Role.User ?
           <Button className="btn-success align-middle" id="addGarage" onClick={(e) => { onClickCreateGarage(e) }}>Creeaza garaj</Button>
           : null
         }
+
       </div>
       {children}
     </Tag>

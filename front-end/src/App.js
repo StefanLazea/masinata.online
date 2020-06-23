@@ -51,7 +51,7 @@ class App extends React.Component {
             <React.Suspense fallback={<PageSpinner />}>
               <Route path="/" exact component={RequireAuth(DashboardPage, ['user', 'app-admin', 'garage-admin'])} />
               <Route exact path="/tables" component={RequireAuth(TablePage, ['app-admin', 'garage-admin'])} />
-              <Route exact path="/user-profile" component={RequireAuth(UserProfilePage, ['user', 'garage-admin'])} />
+              <Route exact path="/user-profile" component={RequireAuth(UserProfilePage, ['user', 'app-admin', 'garage-admin'])} />
               <Route exact path="/add/car" component={RequireAuth(AddCar, ['user'])} />
               <Route exact path="/car-profile/:id" component={RequireAuth(CarProfilePage, ['user', 'app-admin', 'garage-admin'])} />
               <Route exact path="/garages" component={RequireAuth(Garage, ['user', 'app-admin', 'garage-admin'])} />

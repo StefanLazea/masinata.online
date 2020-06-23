@@ -29,6 +29,13 @@ const getGaragesById = (id) => {
         });
 };
 
+const getAdminsGarages = () => {
+    return Axios.get(`${getBasename()}/garages/admin/${getUserId()}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+}
+
 const deleteGarage = (id) => {
     return Axios.delete(`${getBasename()}/garages/${id}`,
         {
@@ -56,4 +63,5 @@ module.exports = {
     createGarage,
     deleteGarage,
     updateGarage,
+    getAdminsGarages
 };

@@ -27,7 +27,14 @@ export default class Garage extends React.Component {
             garageName: "",
             editGarageId: null,
             hasTokenExpired: false,
+            adminView: TokenService.checkAdmin(),
         }
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+        this.getUserGarages();
+        console.log(this.state.adminView)
     }
 
     handleChange = async (e) => {
@@ -103,7 +110,7 @@ export default class Garage extends React.Component {
     }
 
     getUserGarages = () => {
-        GarageService.getGaragesByUserId()
+        (!this.state.adminView ? GarageService.getGaragesByUserId() : GarageService.getAdminsGarages())
             .then((res) => {
                 this.setState({ garages: res.data });
             })
@@ -121,14 +128,13 @@ export default class Garage extends React.Component {
         this.setState({ displayCreateGarageCard: false })
     }
 
+    onCancelEditButtonClick = () => {
+        this.setState({ editGarageId: false })
+    }
+
     onItemClickEditGarage = (e, garage_id, garage_name) => {
         this.setState({ garageName: garage_name })
         this.setState({ editGarageId: garage_id });
-    }
-
-    componentDidMount() {
-        this._isMounted = true;
-        this.getUserGarages();
     }
 
     render() {
@@ -156,7 +162,6 @@ export default class Garage extends React.Component {
                             />
                             : null
                     }
-
                     {
                         this.state.editGarageId ?
                             <GarageAddEditCard
@@ -164,7 +169,7 @@ export default class Garage extends React.Component {
                                 garage_id={this.state.editGarageId}
                                 garage_name={this.state.garageName}
                                 handleChange={this.handleChange}
-                                onCancelButtonClick={this.onCancelButtonClick}
+                                onCancelButtonClick={this.onCancelEditButtonClick}
                                 submitMethod={this.updateGarage}
                             /> : null
                     }
@@ -176,6 +181,7 @@ export default class Garage extends React.Component {
                                 garage_id={garage.id}
                                 name={garage.name}
                                 history={this.props.history}
+                                admin={this.state.adminView}
                                 onItemClickEditGarage={this.onItemClickEditGarage}
                                 onItemClickDeleteGarage={this.onItemClickDeleteGarage}
                             />

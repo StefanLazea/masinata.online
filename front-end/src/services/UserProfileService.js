@@ -1,6 +1,5 @@
 const Axios = require('axios');
 const { getToken, getUserId } = require("./Token.js");
-const Role = require("./Roles.js");
 
 const getBasename = () => {
     return process.env.REACT_APP_BACK_END_URL;

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Cookies = require('js-cookie');
-
+const Role = require('./Roles');
 const secret = process.env.REACT_APP_TOKEN_SECRET;
 
 const getUserId = () => {
@@ -15,8 +15,10 @@ const getUserRole = () => {
     if (token) {
         const trimmedToken = token.split(" ")[1];
         const decode = jwt.decode(trimmedToken, secret);
+        console.log(decode.role);
         return decode.role;
     }
+
     return token;
 }
 
@@ -44,6 +46,12 @@ const removeTokenFromLocalStorage = () => {
     localStorage.removeItem('token');
 }
 
+const checkAdmin = () => {
+    if (getUserRole()) {
+        return getUserRole() !== Role.User;
+    }
+    return false;
+}
 module.exports = {
     getUserId,
     getUserRole,
@@ -52,4 +60,5 @@ module.exports = {
     setTokenInCookies,
     getDecodedToken,
     removeTokenFromLocalStorage,
+    checkAdmin,
 }
