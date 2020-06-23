@@ -3,7 +3,7 @@ import TokenService from "../services/Token.js";
 import { Redirect } from "react-router-dom";
 import { toast } from 'react-toastify';
 
-export default function (ComposedComponent) {
+export default function (ComposedComponent, allowedRoles) {
 
     class RequireAuth extends React.Component {
 

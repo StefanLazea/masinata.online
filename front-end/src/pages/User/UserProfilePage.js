@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from '../components/Page/Page';
+import Page from '../../components/Page/Page';
 import {
   Badge,
   Button,
@@ -16,12 +16,14 @@ import {
   Label,
   Row,
 } from 'reactstrap';
-import UserProfileService from '../services/UserProfileService.js';
+import UserProfileService from '../../services/UserProfileService.js';
+import CarsService from '../../services/CarsService.js';
 import { Redirect } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import './UserProfilePage.css';
 
 
 export default class UserProfilePage extends React.Component {
@@ -33,9 +35,25 @@ export default class UserProfilePage extends React.Component {
         firstname: '',
       },
       hasTokenExpired: false,
+      numberOfCars: 0
     }
     this.getUserDetails();
+    this.getCarsNumber();
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  getCarsNumber = () => {
+    CarsService.getAllCarsByUserId()
+      .then((res) =>
+        this.setState({ numberOfCars: res.data.length }))
+      .catch((err) => {
+        console.log(err.response)
+        toast("An error occurred, please try later!");
+        if (err.response.status === 403) {
+          toast("Your session has expired. Please login!");
+          this.setState({ hasTokenExpired: true });
+        }
+      });
   }
 
   getUserDetails = () => {
@@ -84,10 +102,10 @@ export default class UserProfilePage extends React.Component {
     }
 
     return (
-      <Page title="User profile" breadcrumbs={[{ name: 'user profile', active: true }]} >
+      <Page title="Profile" breadcrumbs={[{ name: 'Profile', active: true }]} >
         <Row>
           <Col xl={6} lg={12} md={12}>
-            <Card>
+            <Card id="userDetails">
               <CardHeader>
                 <Badge color="warning" pill className="float-right">
                   Not fully completed
@@ -228,6 +246,31 @@ export default class UserProfilePage extends React.Component {
               </CardBody>
             </Card>
           </Col>
+          <Col xl={6} lg={12} md={12}>
+            <Card>
+              <CardBody>
+                <div className="d-flex align-items-center">
+                  <img id="avatar" src="https://api.adorable.io/avatars/173/abott@adorable.png" className="rounded-circle mx-auto" alt="avatar"></img>
+                </div>
+                <div id="statistics" className="d-flex align-items-center">
+                  <Badge color="primary" className="mx-auto">
+                    <i className="fa fa-car"> {this.state.numberOfCars}</i>
+                  </Badge>
+                  <Badge color="primary" className="mx-auto">
+                    <i className="fa fa-home"> {this.state.numberOfCars}</i>
+                  </Badge>
+                  <Badge color="primary" className="mx-auto">
+                    <i className="fa fa-paperclip"> {this.state.numberOfCars}</i>
+                  </Badge>
+                </div>
+                <div id="userEmail" className="d-flex align-items-center">
+                  <Label className="mx-auto">{this.state.user.email}</Label>
+                </div>
+
+              </CardBody>
+            </Card>
+          </Col>
+
         </Row>
       </Page >
     );

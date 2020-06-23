@@ -23,7 +23,7 @@ const sidebarBackground = {
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/user-profile', name: 'User profile', exact: false, Icon: MdPerson },
+  { to: '/user-profile', name: 'Profile', exact: false, Icon: MdPerson },
   { to: '/garages', name: 'Garages', exact: false, Icon: MdPerson },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
   { to: '/login', name: 'Logout', exact: false, Icon: MdExitToApp }

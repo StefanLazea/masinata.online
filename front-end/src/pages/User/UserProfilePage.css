@@ -1,0 +1,19 @@
+#avatar {
+    margin-top: -50px;
+}
+
+
+#statistics {
+    margin-top: 5%;
+    font-size: 25px;
+}
+
+#userEmail{
+    margin-top: 5%;
+}
+
+@media screen and (max-width: 1200px){
+    #userDetails {
+        margin-bottom: 50px;
+    }
+}

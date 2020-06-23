@@ -12,7 +12,7 @@ import './styles/reduction.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DashboardPage = React.lazy(() => import('./pages/Dashboard/DashboardPage'));
-const UserProfilePage = React.lazy(() => import('./pages/UserProfilePage'));
+const UserProfilePage = React.lazy(() => import('./pages/User/UserProfilePage'));
 const TablePage = React.lazy(() => import('./pages/Car/TableListingPage'));
 const CarProfilePage = React.lazy(() => import('./pages/Car/Profile/CarProfile'));
 const AddCar = React.lazy(() => import('./pages/Car/AddCar/AddCar'));
