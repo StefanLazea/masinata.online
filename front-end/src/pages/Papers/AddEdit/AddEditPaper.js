@@ -84,20 +84,34 @@ export default class AddEditPaper extends React.Component {
         console.log(this.state.paper)
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
+    updatepPaper = () => {
+
+    }
+
+    createFormData = () => {
         let formData = new FormData();
         formData.append('details', this.state.paper.details);
         formData.append('type', this.state.paper.type);
-        formData.append('expirationDate', this.state.paper.expirationDate);
-        formData.append('beginDate', this.state.paper.beginDate);
+        formData.append('expirationDate', this.state.paper.expiration_date);
+        formData.append('beginDate', this.state.paper.begin_date);
         formData.append('period', this.state.paper.period);
         formData.append('cost', this.state.paper.cost);
         formData.append('companyName', this.state.paper.companyName);
         formData.append('document', this.state.file);
         formData.append('renew', this.state.renew);
         formData.append('car_id', this.props.match.params.id);
+        console.log(formData)
+        return formData;
+    }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (this.state.renew) {
+            this.updatepPaper();
+        }
+
+        let formData = this.createFormData();
         if (this.state.file) {
             PaperService.addFormDataPaper(formData)
                 .then((res) => {

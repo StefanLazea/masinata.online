@@ -41,12 +41,12 @@ const createPaperForCar = async (req, res) => {
     let paper = {
         details: req.body.details,
         type: req.body.type,
-        expirationDate: req.body.expiration_date,
+        expirationDate: req.body.expirationDate,
         period: req.body.period,
         cost: req.body.cost,
         carId: req.body.car_id,
         companyName: req.body.company_name,
-        beginDate: req.body.begin_date,
+        beginDate: req.body.beginDate,
         document: location,
         renew: req.body.renew
     }
