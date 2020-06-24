@@ -22,7 +22,7 @@ const createGarage = (data) => {
         });
 };
 
-const getGaragesById = (id) => {
+const getGarageById = (id) => {
     return Axios.get(`${getBasename()}/garages/${id}`,
         {
             headers: { "Authorization": getToken() }
@@ -59,7 +59,7 @@ const updateGarage = (id, data) => {
 
 module.exports = {
     getGaragesByUserId,
-    getGaragesById,
+    getGarageById,
     createGarage,
     deleteGarage,
     updateGarage,

@@ -120,7 +120,7 @@ export default class CarProfile extends React.Component {
     }
 
     getGarageInfo = (id) => {
-        GarageService.getGaragesById(id)
+        GarageService.getGarageById(id)
             .then((res) => {
                 this.setState({ garage: res.data.message });
             })

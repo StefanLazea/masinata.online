@@ -8,6 +8,7 @@ import './AdminSelect.css';
 export default function AdminSelect({
     name,
     history,
+    defaultValue,
     handleChange,
     ...restProps
 }) {
@@ -40,6 +41,7 @@ export default function AdminSelect({
                         name="adminId"
                         id="admin_id"
                         onChange={(e) => { handleChange(e) }}
+                        value={defaultValue ? defaultValue : ''}
                     >
                         <option>Selectecteaza admin</option>
                         {

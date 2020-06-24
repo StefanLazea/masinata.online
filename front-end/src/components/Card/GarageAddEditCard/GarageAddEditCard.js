@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from '../../../utils/propTypes';
+import GarageService from '../../../services/GarageService.js';
 import AdminSelect from '../../../components/AdminSelect/AdminSelect.js';
 import { Button, Card, Col, CardHeader, CardTitle, CardBody, Label, Input, Row } from 'reactstrap';
 import './GarageAddEditCard.css'
@@ -14,9 +15,22 @@ export default function GarageAddEditCard({
     submitMethod,
     ...restProps
 }) {
+    const [garage, setGarage] = useState({});
     useEffect(() => {
-        console.log(garage_name, garage_id)
-    })
+        const getGarageDetails = () => {
+            GarageService.getGarageById(garage_id)
+                .then((res) => {
+                    setGarage(res.data.message)
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
+        }
+        if (garage_id) {
+            getGarageDetails();
+        }
+
+    }, [garage_id]);
 
     return (
         <>
@@ -46,11 +60,13 @@ export default function GarageAddEditCard({
                                     type="name"
                                     name="garageName"
                                     id="name"
+                                    defaultValue={garage.name}
                                     onChange={e => handleChange(e)}
                                 />
                             </Col>
                             <AdminSelect
                                 name="Selecteaza adminstrator"
+                                defaultValue={garage.adminId}
                                 handleChange={e => handleChange(e)}
                             />
                             <Col>
