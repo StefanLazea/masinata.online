@@ -3,18 +3,21 @@ import PropTypes from '../../../utils/propTypes';
 import { Button, Card, Col, CardHeader, CardTitle, CardBody, Badge } from 'reactstrap';
 import { toast } from 'react-toastify';
 import CarsService from '../../../services/CarsService.js';
+import UserService from '../../../services/UserProfileService.js';
 import './GarageDetailsCard.css'
 
 export default function GarageDetailsCard({
     garage_id,
     name,
     history,
-    admin,
+    adminView,
+    adminId,
     onItemClickDeleteGarage,
     onItemClickEditGarage,
     ...restProps
 }) {
     const [carsNumber, setCarsNumber] = useState(0);
+    const [admin, setAdmin] = useState({});
 
     useEffect(() => {
         CarsService.getCarsByGarageId(garage_id)
@@ -30,16 +33,24 @@ export default function GarageDetailsCard({
             });
     });
 
+    useEffect(() => {
+        UserService.getAdminDetails(adminId)
+            .then(res => setAdmin(res.data))
+            .catch((err) => {
+                console.log(err.response)
+            });
+    }, [adminId])
+
     const getButtons = () => {
         return <>{
-            !admin ?
+            !adminView ?
                 <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteGarage(e, garage_id) }}>
                     <i className="fa fa-trash"></i>
                 </Button>
                 : null
         }
             {
-                !admin ?
+                !adminView ?
                     <Button className="btn-warning" onClick={(e) => { onItemClickEditGarage(e, garage_id, name) }}>
                         <i className="fa fa-pencil"></i>
                     </Button>
@@ -64,12 +75,14 @@ export default function GarageDetailsCard({
                             </CardTitle>
                             <Badge color="success" pill className="ml-auto">{carsNumber}</Badge>
                         </div>
-                        <CardTitle>
-                            Admin garaj
-                            <Button className="btn-success">
-                                <i className="fa fa-eye"></i>
-                            </Button>
+                        <div className="d-flex align-items-center">
+
+                            <CardTitle>
+                                Admin garaj
                         </CardTitle>
+                            <Badge color="success" pill className="ml-auto">{admin.email}</Badge>
+
+                        </div>
                     </CardBody>
                 </Card>
             </Col>

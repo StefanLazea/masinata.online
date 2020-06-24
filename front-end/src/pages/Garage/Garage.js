@@ -181,7 +181,8 @@ export default class Garage extends React.Component {
                                 garage_id={garage.id}
                                 name={garage.name}
                                 history={this.props.history}
-                                admin={this.state.adminView}
+                                adminView={this.state.adminView}
+                                adminId={garage.adminId}
                                 onItemClickEditGarage={this.onItemClickEditGarage}
                                 onItemClickDeleteGarage={this.onItemClickDeleteGarage}
                             />

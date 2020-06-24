@@ -66,9 +66,27 @@ const getAllAdmins = async (req, res) => {
     }
 }
 
+const getAdminDetailsById = async (req, res) => {
+    let userDetails = await User.findOne({
+        attributes: [
+            "email",
+            "lastname",
+            "firstname",
+            "address",
+            "phone"
+        ], where: { id: req.params.id }
+    });
+
+    if (userDetails != null) {
+        return res.status(200).send(userDetails);
+    }
+    return res.status(400).send({ "message": "Something went wrong with the data recieved." })
+}
+
 module.exports = {
     getDetailsById,
     updateDetailsById,
     getAllUsersData,
     getAllAdmins,
+    getAdminDetailsById,
 }

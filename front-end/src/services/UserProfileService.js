@@ -23,8 +23,15 @@ const getAllPaperAdmins = () => {
     });
 }
 
+const getAdminDetails = (id) => {
+    return Axios.get(`${getBasename()}/user/admin/${id}`, {
+        headers: { "Authorization": getToken() }
+    });
+}
+
 module.exports = {
     getUserDetails,
     updateUserDetails,
-    getAllPaperAdmins
+    getAllPaperAdmins,
+    getAdminDetails
 };
