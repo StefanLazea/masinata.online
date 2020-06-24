@@ -193,7 +193,7 @@ export default class Garage extends React.Component {
                                 <Card>
                                     <CardBody className="text-center">
                                         <CardTitle>Nu exista nici un garaj!</CardTitle>
-                                        <Button className="btn-success" onClick={(e) => this.setState({ redirectToAddCarPage: true })} >Adauga un garaj</Button>
+                                        <Button className="btn-success" onClick={(e) => this.setState({ displayCreateGarageCard: true })} >Adauga un garaj</Button>
                                     </CardBody>
                                 </Card>
                             </div>

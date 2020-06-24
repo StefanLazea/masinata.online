@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             period: Sequelize.STRING,
             cost: Sequelize.INTEGER,
             document: Sequelize.STRING,
-            renew: Sequelize.BOOLEAN
+            renew: DataTypes.BOOLEAN
         },
         {
             underscored: true
