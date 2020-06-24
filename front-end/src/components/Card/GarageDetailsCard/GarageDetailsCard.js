@@ -76,12 +76,13 @@ export default function GarageDetailsCard({
                             <Badge color="success" pill className="ml-auto">{carsNumber}</Badge>
                         </div>
                         <div className="d-flex align-items-center">
-
-                            <CardTitle>
-                                Admin garaj
-                        </CardTitle>
-                            <Badge color="success" pill className="ml-auto">{admin.email}</Badge>
-
+                            {!adminView ?
+                                <>
+                                    <CardTitle>Admin garaj</CardTitle>
+                                    <Badge color="success" pill className="ml-auto">{admin.email}</Badge>
+                                </>
+                                : null
+                            }
                         </div>
                     </CardBody>
                 </Card>
@@ -91,16 +92,9 @@ export default function GarageDetailsCard({
 };
 
 GarageDetailsCard.propTypes = {
-    avatar: PropTypes.string,
-    avatarSize: PropTypes.number,
-    title: PropTypes.string,
-    subtitle: PropTypes.string,
-    text: PropTypes.string,
-    className: PropTypes.string,
     history: PropTypes.object,
 };
 
 GarageDetailsCard.defaultProps = {
-    avatarSize: 80,
 };
 
