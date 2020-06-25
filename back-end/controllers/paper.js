@@ -1,5 +1,6 @@
 const Paper = require('../models').Paper;
 const path = require("path");
+const fs = require("fs");
 
 const getPapersForCar = async (req, res) => {
     let papers;
@@ -109,8 +110,67 @@ const getPaperDetailsForCar = async (req, res) => {
     return res.status(200).send(papers);
 }
 
-const updatePaper = (req, res) => {
-    //todo 
+const saveDocument = (file, specifiName) => {
+    let location = "";
+
+    let relativeLocation = "../private/docs/" + specifiName + ".png";
+    location = path.resolve(__dirname, relativeLocation);
+
+    file.mv(location, err => {
+        if (err) {
+            console.log(err);
+            return { message: "A aparut o eroare la incarcarea imaginii!" };
+        }
+    });
+
+    return location;
+}
+
+
+/**
+ * Todo
+ * check for ui body
+ * check for error in the savingResult function
+ * create another entry in the database with renew field?? (this will brake the image getting) -> with rca -> renew rca
+ *
+ */
+const updatePaper = async (req, res) => {
+    let hasOldDoc = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
+    let savingResult;
+    if (hasOldDoc) {
+        const endDate = hasOldDoc.expirationDate.toISOString().slice(0, 10);
+        let historyFileLocation = path.resolve(__dirname, "../private/docs/OLD-" + req.body.type + "-" + req.body.car_id + "-" + endDate + ".png");
+        fs.renameSync(hasOldDoc.document, historyFileLocation);
+
+        if (req.files) {
+            savingResult = saveDocument(req.files.document, req.body.type + "-" + req.body.car_id + "-" + req.body.expirationDate.toISOString().slice(0, 10));
+        }
+
+    }
+
+
+    return res.send("ok")
+
+
+    // let paper = {
+    //     details: req.body.details,
+    //     type: req.body.type,
+    //     expirationDate: req.body.expirationDate,
+    //     period: req.body.period,
+    //     cost: req.body.cost,
+    //     carId: req.body.car_id,
+    //     companyName: req.body.company_name,
+    //     beginDate: req.body.beginDate,
+    //     document: location,
+    //     renew: req.body.renew
+    // }
+
+    // try {
+    //     await Paper.create(paper);
+    // } catch (err) {
+    //     return res.status(500).send({ message: err });
+    // }
+    // return res.status(200).send({ message: "Document added successfully" })
 
 }
 

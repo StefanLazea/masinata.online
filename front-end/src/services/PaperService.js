@@ -49,9 +49,20 @@ const checkTypes = (id) => {
     return Axios.get(`${getBasename()}/check/paper/car/${id}`);
 }
 
+const updatePaper = (carId, type, data) => {
+    return Axios.put(`${getBasename()}/papers/renew/${type}/car/${carId}`, JSON.stringify(data),
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getToken()
+            }
+        });
+}
+
 export default {
     addPaper,
     addFormDataPaper,
     checkTypes,
-    getData
+    getData,
+    updatePaper
 };

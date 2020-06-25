@@ -75,21 +75,27 @@ export default class AddEditPaper extends React.Component {
         await this.setState({
             file: e.target.files[0],
         })
-        console.log(this.state.file)
     }
 
     handleCheckboxChange = async (e) => {
         const paper = { ...this.state.paper, [e.target.name]: e.target.checked }
         await this.setState(() => ({ paper }))
-        console.log(this.state.paper)
     }
 
-    updatepPaper = () => {
-
+    updatePaper = (formData) => {
+        PaperService.updatePaper(this.state.carId, this.state.paper.type, formData)
+            .then((res) => {
+                toast(res.data.message);
+                this.setState({ redirectToCarProfile: true })
+            })
+            .catch((err) => {
+                console.log(err.response)
+            });
     }
 
     createFormData = () => {
         let formData = new FormData();
+        console.log(this.state.paper.renew)
         formData.append('details', this.state.paper.details);
         formData.append('type', this.state.paper.type);
         formData.append('expirationDate', this.state.paper.expiration_date);
@@ -98,36 +104,36 @@ export default class AddEditPaper extends React.Component {
         formData.append('cost', this.state.paper.cost);
         formData.append('companyName', this.state.paper.companyName);
         formData.append('document', this.state.file);
-        formData.append('renew', this.state.renew);
+        formData.append('renew', this.state.paper.renew === undefined ? false : this.state.paper.renew);
         formData.append('car_id', this.props.match.params.id);
-        console.log(formData)
         return formData;
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-
-        if (this.state.renew) {
-            this.updatepPaper();
-        }
-
         let formData = this.createFormData();
+
         if (this.state.file) {
-            PaperService.addFormDataPaper(formData)
-                .then((res) => {
-                    toast(res.data.message);
-                    this.setState({ redirectToCarProfile: true })
-                })
-                .catch((err) => {
-                    console.log(err)
-                    if (err.response.status === 409) {
-                        toast("Documentul deja exista. Selectati optiunea de reinoire!")
-                    }
-                    if (err.response.status === 403) {
-                        toast("Your session has expired. Please login!");
-                        this.setState({ hasTokenExpired: true });
-                    }
-                });
+            console.log(this.state.renew, formData.get('renew'))
+            if (this.state.paper.renew) {
+                this.updatePaper(formData);
+            } else {
+                PaperService.addFormDataPaper(formData)
+                    .then((res) => {
+                        toast(res.data.message);
+                        this.setState({ redirectToCarProfile: true })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        if (err.response.status === 409) {
+                            toast("Documentul deja exista. Selectati optiunea de reinoire!")
+                        }
+                        if (err.response.status === 403) {
+                            toast("Your session has expired. Please login!");
+                            this.setState({ hasTokenExpired: true });
+                        }
+                    });
+            }
         } else {
             toast("Trebuie adaugata o imagine");
         }
@@ -278,7 +284,7 @@ export default class AddEditPaper extends React.Component {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Button className="mx-auto" onClick={(e) => { this.handleSubmit(e) }}>Salveaza masina</Button>
+                                    <Button className="mx-auto" onClick={(e) => { this.handleSubmit(e) }}>{this.state.paper.renew ? 'Reinnoire' : 'Salveaza documentul'}</Button>
                                 </Row>
                             </CardBody>
                         </Card>
