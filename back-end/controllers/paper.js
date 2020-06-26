@@ -135,6 +135,7 @@ const saveDocument = (file, specifiName) => {
  *
  */
 const updatePaper = async (req, res) => {
+    console.log(res.body, req.files)
     let hasOldDoc = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
     let savingResult;
     if (hasOldDoc) {
@@ -143,34 +144,18 @@ const updatePaper = async (req, res) => {
         fs.renameSync(hasOldDoc.document, historyFileLocation);
 
         if (req.files) {
-            savingResult = saveDocument(req.files.document, req.body.type + "-" + req.body.car_id + "-" + req.body.expirationDate.toISOString().slice(0, 10));
+            var event = new Date(req.body.expirationDate);
+
+            let date = JSON.stringify(event)
+            date = date.slice(1, 11)
+            console.log(date)
+            savingResult = saveDocument(req.files.document, req.body.type + "-" + req.body.car_id + "-" + date);
         }
 
     }
 
 
     return res.send("ok")
-
-
-    // let paper = {
-    //     details: req.body.details,
-    //     type: req.body.type,
-    //     expirationDate: req.body.expirationDate,
-    //     period: req.body.period,
-    //     cost: req.body.cost,
-    //     carId: req.body.car_id,
-    //     companyName: req.body.company_name,
-    //     beginDate: req.body.beginDate,
-    //     document: location,
-    //     renew: req.body.renew
-    // }
-
-    // try {
-    //     await Paper.create(paper);
-    // } catch (err) {
-    //     return res.status(500).send({ message: err });
-    // }
-    // return res.status(200).send({ message: "Document added successfully" })
 
 }
 

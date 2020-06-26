@@ -50,7 +50,7 @@ const checkTypes = (id) => {
 }
 
 const updatePaper = (carId, type, data) => {
-    return Axios.put(`${getBasename()}/papers/renew/${type}/car/${carId}`, JSON.stringify(data),
+    return Axios.put(`${getBasename()}/papers/renew/${type}/car/${carId}`, data,
         {
             headers: {
                 "Content-Type": "application/json",
