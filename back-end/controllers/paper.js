@@ -133,8 +133,12 @@ const saveDocument = (file, specifiName) => {
  * check for error in the savingResult function
  * create another entry in the database with renew field?? (this will brake the image getting) -> with rca -> renew rca
  *
+ * 
+ * todo 26.05
+ * when new renew is on, create new entry in the db 
+ * the old one just update the fields: document and type with OLD-RCA
  */
-const updatePaper = async (req, res) => {
+const renewPaper = async (req, res) => {
     console.log(res.body, req.files)
     let hasOldDoc = await checkIfCarHasDocumentOfType(req.params.type, req.params.id);
     let savingResult;
@@ -159,11 +163,16 @@ const updatePaper = async (req, res) => {
 
 }
 
+const updatePaper = (req, res) => {
+
+}
+
 module.exports = {
     getPapersForCar,
     createPaperForCar,
     getPaperByTypeForCar,
     getPaperDetailsForCar,
+    renewPaper,
+    checkForPaper,
     updatePaper,
-    checkForPaper
 }
