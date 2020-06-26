@@ -163,8 +163,31 @@ const renewPaper = async (req, res) => {
 
 }
 
-const updatePaper = (req, res) => {
+const updatePaper = async (req, res) => {
+    let paper = {
+        details: req.body.details,
+        type: req.body.type,
+        expirationDate: req.body.expiration_date,
+        period: req.body.period,
+        cost: req.body.cost,
+        carId: req.body.car_id,
+        companyName: req.body.company_name,
+        beginDate: req.body.begin_date,
+    }
 
+    try {
+        await Paper.update(
+            paper,
+            {
+                where:
+                    { type: req.params.type, carId: req.body.car_id }
+            }
+        );
+
+        return res.status(200).send({ message: `Documentul ${req.params.type} a fost actualizat cu success` });
+    } catch (err) {
+        return res.status(500).send({ message: "Something went wrong" });
+    }
 }
 
 module.exports = {

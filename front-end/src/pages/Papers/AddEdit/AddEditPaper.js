@@ -266,8 +266,8 @@ export default class AddEditPaper extends React.Component {
                                                 </Row> : null
                                             }
                                             <Row>
-                                                <Label for="details" sm={3}>Detalii</Label>
-                                                <Col sm={9}>
+                                                <Label for="details" sm={2}>Detalii</Label>
+                                                <Col sm={10}>
                                                     <Input
                                                         type="textarea"
                                                         name="details"
