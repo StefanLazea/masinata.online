@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from '../../../utils/propTypes';
 import { Button, Card, Col, CardHeader, CardTitle, CardSubtitle, CardImg, CardBody, Badge } from 'reactstrap';
+import PaperService from '../../../services/PaperService.js';
 import './CarDetailsCard.css'
 
 const getBasename = () => {
@@ -18,10 +19,19 @@ export default function CarDetailsCard({
     onItemClickDeleteCar,
     ...restProps
 }) {
+    const [docs, setDocsPills] = useState({});
 
     const redirectToProfile = (e) => {
         history.push(`/car-profile/${car_id}`)
     }
+
+    //todo set docs in order to render pills with correct values
+    useEffect(() => {
+        PaperService.checkTypes(car_id)
+            .then(res => {
+                setDocsPills(res.data);
+            });
+    }, [car_id])
 
     return (
         <>
