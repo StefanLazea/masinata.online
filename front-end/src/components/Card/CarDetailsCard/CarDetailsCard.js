@@ -31,7 +31,27 @@ export default function CarDetailsCard({
             .then(res => {
                 setDocsPills(res.data);
             });
-    }, [car_id])
+    }, [car_id]);
+
+    const getDocsPills = () => {
+        return <>
+            {
+                docs.ITP !== 0 ?
+                    <Badge color="success" pill className="ml-auto">ITP</Badge>
+                    : null
+            }
+            {
+                docs.RCA !== 0 ?
+                    < Badge color="warning" pill className={docs.ITP === 0 ? "ml-auto" : "mr-1"}>RCA</Badge>
+                    : null
+            }
+            {
+                docs.Rovigneta !== 0 ?
+                    <Badge color="danger" pill className={docs.ITP === 0 && docs.RCA === 0 ? "ml-auto" : "mr-1"}>Rovigneta</Badge>
+                    : null
+            }
+        </>
+    }
 
     return (
         <>
@@ -56,9 +76,7 @@ export default function CarDetailsCard({
                             <CardTitle>
                                 {brand} {model}
                             </CardTitle>
-                            <Badge color="success" pill className="ml-auto">ITP</Badge>
-                            <Badge color="warning" pill className="mr-1">RCA</Badge>
-                            <Badge color="danger" pill className="mr-1">Rovigneta</Badge>
+                            {getDocsPills()}
                         </div>
 
                     </CardBody>
