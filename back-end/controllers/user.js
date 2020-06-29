@@ -4,6 +4,7 @@ const Role = require("../helpers/role");
 const getDetailsById = async (req, res) => {
     let userDetails = await User.findOne({
         attributes: [
+            "id",
             "role",
             "email",
             "lastname",

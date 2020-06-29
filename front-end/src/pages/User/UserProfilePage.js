@@ -18,6 +18,7 @@ import {
 } from 'reactstrap';
 import UserProfileService from '../../services/UserProfileService.js';
 import CarsService from '../../services/CarsService.js';
+import GarageService from '../../services/GarageService.js';
 import { Redirect } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
@@ -35,11 +36,20 @@ export default class UserProfilePage extends React.Component {
         firstname: '',
       },
       hasTokenExpired: false,
-      numberOfCars: 0
+      numberOfCars: 0,
+      numberOfGarages: 0
     }
     this.getUserDetails();
     this.getCarsNumber();
+    this.getGaragesNumber();
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  getGaragesNumber = () => {
+    GarageService.getGaragesByUserId(this.state.user.id)
+      .then(response => {
+        this.setState({ numberOfGarages: response.data.length });
+      })
   }
 
   getCarsNumber = () => {
@@ -47,12 +57,7 @@ export default class UserProfilePage extends React.Component {
       .then((res) =>
         this.setState({ numberOfCars: res.data.length }))
       .catch((err) => {
-        console.log(err.response)
         toast("An error occurred, please try later!");
-        if (err.response.status === 403) {
-          toast("Your session has expired. Please login!");
-          this.setState({ hasTokenExpired: true });
-        }
       });
   }
 
@@ -257,7 +262,7 @@ export default class UserProfilePage extends React.Component {
                     <i className="fa fa-car"> {this.state.numberOfCars}</i>
                   </Badge>
                   <Badge color="warning" className="mx-auto">
-                    <i className="fa fa-home"> {this.state.numberOfCars}</i>
+                    <i className="fa fa-home"> {this.state.numberOfGarages}</i>
                   </Badge>
                   <Badge color="warning" className="mx-auto">
                     <i className="fa fa-paperclip"> {this.state.numberOfCars}</i>

@@ -183,11 +183,14 @@ export default class CarProfile extends React.Component {
                             <CardHeader>
                                 <CardTitle>
                                     <div className="d-flex align-items-center">
-                                        <Badge color="primary">
+                                        <Badge id="numberPlate" color="primary">
                                             <span className="pb-2 align-middle badge-text-size">{this.state.car.licence_plate}
                                             </span>
                                         </Badge>
-                                        <Button id="shareCar" className="btn-success ml-auto">
+                                        <Button id="downloadDetails" className="btn-primary ml-auto">
+                                            <i className="fa fa-download"></i>
+                                        </Button>
+                                        <Button id="shareCar" className="btn-success">
                                             <i className="fa fa-share"></i>
                                         </Button>
                                         <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
