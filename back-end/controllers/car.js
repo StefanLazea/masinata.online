@@ -157,6 +157,22 @@ const deleteCarById = async (req, res) => {
     await carFound.destroy().then(() => { return res.send({ message: "Car deleted" }) });
 };
 
+const getCarsByAdminId = async (req, res) => {
+    let carsFound;
+    try {
+        await Car.findAll({
+            include: [{
+                model: Garage,
+                where: { adminId: req.params.id }
+            }]
+        }).then((cars) => carsFound = cars);
+    }
+    catch (err) {
+        return res.status(409).send({ message: "No elements found in the database", err });
+    }
+    return res.status(200).send(carsFound);
+}
+
 module.exports = {
     getCarsByUserId,
     getAllCars,
@@ -167,4 +183,5 @@ module.exports = {
     addGarageToCar,
     updateCarById,
     deleteCarById,
+    getCarsByAdminId,
 }

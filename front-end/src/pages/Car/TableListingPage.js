@@ -2,7 +2,7 @@ import Page from '../../components/Page/Page';
 import React from 'react';
 import { Redirect } from "react-router-dom";
 import CarsService from '../../services/CarsService.js';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { Badge } from "reactstrap";
 
@@ -67,6 +67,7 @@ export default class TablePage extends React.Component {
                       <th>Year</th>
                       <th>User ID</th>
                       <th>Ecologic</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,6 +81,11 @@ export default class TablePage extends React.Component {
                           <td>{car.year}</td>
                           <td>{car.userId}</td>
                           <td>{this.getBadge(car.eco)}</td>
+                          <td>
+                            <Button className="btn-warning">
+                              <i className="fa fa-eye"></i>
+                            </Button>
+                          </td>
                         </tr>
                       )
                     }

@@ -13,5 +13,6 @@ router.get("/user/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), CarCo
 router.post("/add/garage", authorize([Role.User, Role.Admin, Role.AppAdmin]), CarController.addGarageToCar);
 router.get("/garage/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), CarController.getCarsFromGarage);
 router.get("/image/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), CarController.getCarImage);
+router.get("/admin/:id", authorize([Role.Admin, Role.AppAdmin]), CarController.getCarsByAdminId);
 
 module.exports = router;
