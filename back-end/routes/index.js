@@ -5,9 +5,11 @@ const userRouter = require('./user');
 const garageRouter = require('./garage');
 const notesRouter = require("./note");
 const papersRouter = require("./paper");
+const notificationsRouter = require("./notification");
 const CarController = require("../controllers/car");
 const PaperController = require("../controllers/paper.js");
 const MailController = require("../controllers/mail.js");
+
 const { authorize } = require("../services/authorize");
 const Role = require("../helpers/role");
 
@@ -17,6 +19,7 @@ router.use("/user", authorize([Role.User, Role.Admin, Role.AppAdmin]), userRoute
 router.use("/garages", authorize([Role.User, Role.Admin, Role.AppAdmin]), garageRouter);
 router.use("/notes", authorize([Role.User, Role.Admin, Role.AppAdmin]), notesRouter);
 router.use("/papers", authorize([Role.User, Role.Admin, Role.AppAdmin]), papersRouter);
+router.use("/notify", notificationsRouter);
 
 router.post("/email/password", MailController.sendForgotPasswordEmail)
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const webpush = require('web-push');
 const cors = require('cors');
 const uploader = require('express-fileupload');
 const model = require('./models');
@@ -18,6 +19,10 @@ app.use(cookieParser());
 
 // model.sequelize.sync({ force: true });
 model.sequelize.sync();
+const PUBLIC_VAPID = process.env.PUBLIC_VAPID_KEY;
+const PRIVATE_VAPID = process.env.PRIVATE_VAPID_KEY;
+
+webpush.setVapidDetails('mailto:lazeastefan@gmail.com', PUBLIC_VAPID, PRIVATE_VAPID);
 
 app.use('/', express.static('../front-end/build'));
 
