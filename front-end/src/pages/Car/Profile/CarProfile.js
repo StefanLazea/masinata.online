@@ -19,6 +19,7 @@ import CarsService from '../../../services/CarsService.js';
 import GarageService from '../../../services/GarageService.js';
 import PapersService from '../../../services/PaperService.js';
 import NoteService from '../../../services/NoteService.js';
+import TokenService from '../../../services/Token.js';
 import NotesCard from '../../../components/Card/NotesCard/NotesCard.js';
 import * as _ from "lodash";
 
@@ -48,7 +49,8 @@ export default class CarProfile extends React.Component {
             carId: '',
             notes: [],
             addNote: false,
-            filterNotes: ''
+            filterNotes: '',
+            adminView: TokenService.checkAdmin(),
         };
     }
 
@@ -71,6 +73,7 @@ export default class CarProfile extends React.Component {
         this.getCarById();
         this.checkTypes();
         this.getNotes();
+        console.log(this.state.adminView)
     }
 
     refreshList = (message = '') => {
@@ -325,6 +328,7 @@ export default class CarProfile extends React.Component {
                                         name={"Face parte din garajul"}
                                         handleChange={this.handleChange}
                                         garage_id={this.state.car.garageId}
+                                        adminView={this.state.adminView}
                                         count={0}
                                     />
                                     : null
