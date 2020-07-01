@@ -21,6 +21,7 @@ import PapersService from '../../../services/PaperService.js';
 import NoteService from '../../../services/NoteService.js';
 import TokenService from '../../../services/Token.js';
 import NotesCard from '../../../components/Card/NotesCard/NotesCard.js';
+import SubmitButtonCard from '../../../components/Card/SubmitButtonCard/SubmitButton.js';
 import * as _ from "lodash";
 
 import GarageSelect from '../../../components/GarageSelect/GarageSelect';
@@ -190,13 +191,17 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">{this.state.car.licence_plate}
                                             </span>
                                         </Badge>
-                                        <Button id="downloadDetails" className="btn-primary ml-auto">
-                                            <i className="fa fa-download"></i>
-                                        </Button>
-                                        <Button id="shareCar" className="btn-success">
-                                            <i className="fa fa-share"></i>
-                                        </Button>
-                                        <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
+                                        {!this.state.adminView ?
+                                            <>
+                                                <Button id="downloadDetails" className="btn-primary ml-auto">
+                                                    <i className="fa fa-download"></i>
+                                                </Button>
+                                                <Button id="shareCar" className="btn-success">
+                                                    <i className="fa fa-share"></i>
+                                                </Button>
+                                            </>
+                                            : null}
+                                        <Badge color="success" className={!this.state.adminView ? "badge-text-size" : "badge-text-size ml-auto"}>{this.state.car.vin}</Badge>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
@@ -335,13 +340,15 @@ export default class CarProfile extends React.Component {
                                 }
                             </CardBody>
                         </Card>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>
-                                    <Button className="d-flex mx-auto" onClick={(e) => this.updateCar(e)}>Salveaza modificarile</Button>
-                                </CardTitle>
-                            </CardHeader>
-                        </Card>
+
+                        {!this.state.adminView ?
+                            <SubmitButtonCard
+                                name="Salveaza modificarile"
+                                updateCar={this.updateCar}
+                            />
+                            : null
+                        }
+
                         <Card>
                             <CardHeader>
                                 <CardTitle>
@@ -350,17 +357,20 @@ export default class CarProfile extends React.Component {
                                             <span className="pb-2 align-middle badge-text-size">Acte
                                             </span>
                                         </Badge>
-                                        <Button id="addPaper" className="btn-success ml-auto" onClick={this.redirectToAddPaper}>
-                                            <i className="fa fa-plus"></i>
-                                        </Button>
+                                        {!this.state.adminView ?
+                                            <Button id="addPaper" className="btn-success ml-auto" onClick={this.redirectToAddPaper}>
+                                                <i className="fa fa-plus"></i>
+                                            </Button>
+                                            : null
+                                        }
                                         {this.state.renewDocumentButton ?
-                                            <Button id="renewPaper" className="btn-warning" onClick={this.redirectToRenewPage}>
+                                            <Button id="renewPaper" className={this.state.adminView ? "btn-warning ml-auto" : "btn-warning"} onClick={this.redirectToRenewPage}>
                                                 <i className="fa fa-pencil"></i>
                                             </Button>
 
                                             : null
                                         }
-                                        <Badge color="success" className="badge-text-size">{this.state.car.vin}</Badge>
+                                        <Badge color="success" className={this.state.adminView && !this.state.renewDocumentButton ? "badge-text-size ml-auto" : "badge-text-size"}> {this.state.car.vin}</Badge>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
@@ -392,10 +402,12 @@ export default class CarProfile extends React.Component {
                                             <option value="createdAt">dupa data adaugarii</option>
                                             <option value="urgent">dupa urgenta</option>
                                         </Input>
-
-                                        <Button id="addPaper" className="btn-success" onClick={() => { this.setState({ addNote: !this.state.addNote }) }}>
-                                            <i className="fa fa-plus"></i>
-                                        </Button>
+                                        {!this.state.adminView ?
+                                            <Button id="addPaper" className="btn-success" onClick={() => { this.setState({ addNote: !this.state.addNote }) }}>
+                                                <i className="fa fa-plus"></i>
+                                            </Button>
+                                            : null
+                                        }
                                     </div>
                                 </CardTitle>
                             </CardHeader>
@@ -418,7 +430,7 @@ export default class CarProfile extends React.Component {
                                                 note={note}
                                                 refreshList={this.refreshList}
                                             />)
-                                        : null}
+                                        : <h6>Nu exista notite</h6>}
 
                                 </Row>
                             </CardBody>
