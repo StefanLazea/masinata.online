@@ -1,6 +1,7 @@
 import Page from '../../components/Page/Page';
 import { CarDetailsCard } from '../../components/Card';
 import CarsService from '../../services/CarsService.js';
+import TokenService from '../../services/Token.js';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
 import React from 'react';
@@ -14,6 +15,7 @@ import {
 } from 'reactstrap';
 import './DashboardPage.css';
 
+
 export default class DashboardPage extends React.Component {
   constructor(props) {
     super(props);
@@ -21,12 +23,14 @@ export default class DashboardPage extends React.Component {
       cars: [],
       hasTokenExpired: false,
       isDeleteButtonClicked: false,
-      redirectToAddCarPage: false
+      redirectToAddCarPage: false,
+      adminView: TokenService.checkAdmin(),
     }
   }
 
   getCars = () => {
-    CarsService.getAllCarsByUserId()
+    //         (!this.state.adminView ? GarageService.getGaragesByUserId() : GarageService.getAdminsGarages())
+    (!this.state.adminView ? CarsService.getAllCarsByUserId() : CarsService.getAllCarsByAdminId())
       .then((res) => {
         this.setState({ cars: res.data })
         console.log(res.data)

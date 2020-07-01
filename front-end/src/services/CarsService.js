@@ -19,6 +19,13 @@ const getAllCarsByUserId = () => {
         });
 };
 
+const getAllCarsByAdminId = () => {
+    return Axios.get(`${getBasename()}/cars/admin/${getUserId()}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+};
+
 const getCarById = (id) => {
     return Axios.get(`${getBasename()}/cars/${id}`,
         {
@@ -89,6 +96,7 @@ module.exports = {
     createCarUsingFormData,
     getAllCars,
     getAllCarsByUserId,
+    getAllCarsByAdminId,
     getCarById,
     deleteCar,
     updateCar,
