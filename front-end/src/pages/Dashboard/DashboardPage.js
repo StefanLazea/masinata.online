@@ -29,7 +29,6 @@ export default class DashboardPage extends React.Component {
   }
 
   getCars = () => {
-    //         (!this.state.adminView ? GarageService.getGaragesByUserId() : GarageService.getAdminsGarages())
     (!this.state.adminView ? CarsService.getAllCarsByUserId() : CarsService.getAllCarsByAdminId())
       .then((res) => {
         this.setState({ cars: res.data })
@@ -59,6 +58,7 @@ export default class DashboardPage extends React.Component {
 
   componentDidMount() {
     this.getCars();
+    console.log("aici", this.state.adminView)
   }
 
   render() {
@@ -86,6 +86,7 @@ export default class DashboardPage extends React.Component {
                 model={car.model}
                 brand={car.brand}
                 vin={car.vin}
+                admin={this.state.adminView}
                 history={this.props.history}
                 onItemClickDeleteCar={this.onItemClickDeleteCar}
               />)

@@ -15,6 +15,7 @@ export default function CarDetailsCard({
     licence_plate,
     vin,
     year,
+    adminView,
     history,
     onItemClickDeleteCar,
     ...restProps
@@ -25,7 +26,6 @@ export default function CarDetailsCard({
         history.push(`/car-profile/${car_id}`)
     }
 
-    //todo set docs in order to render pills with correct values
     useEffect(() => {
         PaperService.checkTypes(car_id)
             .then(res => {
@@ -53,6 +53,20 @@ export default function CarDetailsCard({
         </>
     }
 
+    const getHeaderCardButtons = () => {
+        return <>
+            {adminView ?
+                <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteCar(e, car_id) }}>
+                    <i className="fa fa-trash"></i>
+                </Button>
+                : null}
+
+            <Button className={adminView ? "btn-success" : "ml-auto btn-success"} onClick={(e) => { redirectToProfile(e) }}>
+                <i className="fa fa-eye"></i>
+            </Button>
+        </>
+    }
+
     return (
         <>
             <Col lg="4" md="12" sm="12" xs="12">
@@ -60,12 +74,7 @@ export default function CarDetailsCard({
                     <CardHeader>
                         <div className="d-flex align-items-center">
                             <CardTitle><strong>{licence_plate}</strong></CardTitle>
-                            <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteCar(e, car_id) }}>
-                                <i className="fa fa-trash"></i>
-                            </Button>
-                            <Button className="btn-success" onClick={(e) => { redirectToProfile(e) }}>
-                                <i className="fa fa-eye"></i>
-                            </Button>
+                            {getHeaderCardButtons()}
                         </div>
                         <CardSubtitle>VIN {vin}</CardSubtitle>
                     </CardHeader>
@@ -93,6 +102,7 @@ CarDetailsCard.propTypes = {
     subtitle: PropTypes.string,
     text: PropTypes.string,
     className: PropTypes.string,
+    adminView: PropTypes.bool,
     history: PropTypes.object,
 };
 
