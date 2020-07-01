@@ -86,7 +86,7 @@ export default class DashboardPage extends React.Component {
                 model={car.model}
                 brand={car.brand}
                 vin={car.vin}
-                admin={this.state.adminView}
+                adminView={this.state.adminView}
                 history={this.props.history}
                 onItemClickDeleteCar={this.onItemClickDeleteCar}
               />)

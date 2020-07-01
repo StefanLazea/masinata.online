@@ -54,14 +54,15 @@ export default function CarDetailsCard({
     }
 
     const getHeaderCardButtons = () => {
+        console.log(adminView)
         return <>
-            {adminView ?
+            {!adminView ?
                 <Button className="ml-auto btn-danger" onClick={(e) => { onItemClickDeleteCar(e, car_id) }}>
                     <i className="fa fa-trash"></i>
                 </Button>
                 : null}
 
-            <Button className={adminView ? "btn-success" : "ml-auto btn-success"} onClick={(e) => { redirectToProfile(e) }}>
+            <Button className={!adminView ? "btn-success" : "ml-auto btn-success"} onClick={(e) => { redirectToProfile(e) }}>
                 <i className="fa fa-eye"></i>
             </Button>
         </>
