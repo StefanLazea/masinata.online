@@ -102,7 +102,7 @@ export default class AddEditPaper extends React.Component {
         formData.append('beginDate', this.state.paper.begin_date);
         formData.append('period', this.state.paper.period);
         formData.append('cost', this.state.paper.cost);
-        formData.append('companyName', this.state.paper.companyName);
+        formData.append('company_name', this.state.paper.companyName);
         formData.append('document', this.state.file);
         formData.append('renew', this.state.paper.renew === undefined ? false : this.state.paper.renew);
         formData.append('car_id', this.props.match.params.id);

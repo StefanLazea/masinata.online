@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
             'createdAt': {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW
-            }
+            },
+            'endpoint': DataTypes.STRING,
+            'p256': DataTypes.STRING,
+            'auth': DataTypes.STRING
         },
         {
             underscored: true
