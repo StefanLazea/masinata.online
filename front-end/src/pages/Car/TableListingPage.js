@@ -14,7 +14,8 @@ export default class TablePage extends React.Component {
       cars: [],
       hasTokenExpired: false,
       carIdView: '',
-      carNumber: ''
+      carNumber: '',
+      selectedRowUserId: ''
     }
     this.getCars();
   }
@@ -83,6 +84,7 @@ export default class TablePage extends React.Component {
                             <Button className="btn-warning" onClick={(e) => {
                               this.setState({ carIdView: car.id });
                               this.setState({ carNumber: car.licence_plate });
+                              this.setState({ selectedRowUserId: car.userId });
                             }}>
                               <i className="fa fa-eye"></i>
                             </Button>
@@ -108,9 +110,12 @@ export default class TablePage extends React.Component {
             {
               this.state.carIdView ?
                 <Card className="mb-3">
-                  <CardHeader>Acte pentru <strong>{this.state.carNumber}</strong> </CardHeader>
+                  <CardHeader>Acte pentru <strong>{this.state.carNumber}</strong></CardHeader>
                   <CardBody>
-                    <PaperTable carId={this.state.carIdView} />
+                    <PaperTable
+                      carId={this.state.carIdView}
+                      userId={this.state.selectedRowUserId}
+                    />
                   </CardBody>
                 </Card>
                 : null

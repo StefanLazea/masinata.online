@@ -11,6 +11,12 @@ const getUserDetails = () => {
     });
 };
 
+const getUserDetailsById = (id) => {
+    return Axios.get(`${getBasename()}/user/details/${id}`, {
+        headers: { "Authorization": getToken() }
+    });
+};
+
 const updateUserDetails = (user) => {
     return Axios.put(`${getBasename()}/user/details/${getUserId()}`, JSON.stringify(user), {
         headers: { "Content-Type": "application/json", "Authorization": getToken() }
@@ -33,5 +39,6 @@ module.exports = {
     getUserDetails,
     updateUserDetails,
     getAllPaperAdmins,
-    getAdminDetails
+    getAdminDetails,
+    getUserDetailsById
 };

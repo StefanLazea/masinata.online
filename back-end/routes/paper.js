@@ -4,7 +4,6 @@ const Role = require("../helpers/role");
 const PaperController = require("../controllers/paper");
 
 router.get("/car/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.getPapersForCar);
-//for admin use
 router.get("/", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.getPapersForCar);
 router.post("/", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.createPaperForCar);
 router.put("/:type", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.updatePaper);

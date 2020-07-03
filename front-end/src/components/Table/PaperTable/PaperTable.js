@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from '../../../utils/propTypes';
 import { Button, Table } from 'reactstrap';
 import PaperService from '../../../services/PaperService.js';
+import UserService from '../../../services/UserProfileService.js';
 import Utils from '../../../services/Utils.js';
 import './PaperTable.css'
 
@@ -11,16 +12,21 @@ import './PaperTable.css'
 
 export default function PaperTable({
     carId,
+    userId,
     ...restProps
 }) {
     const [docs, setDocsPills] = useState([]);
+    const [user, setUserDetails] = useState({});
+    useEffect(() => {
+        UserService.getUserDetailsById(userId)
+            .then(res => {
+                setUserDetails(res.data);
+            })
+    }, [userId])
 
-    // const formatData = (data) => {
-    //     var event = new Date(data);
-    //     let date = JSON.stringify(event)
-    //     date = date.slice(1, 11)
-    //     return date;
-    // }
+    const handleNotification = () => {
+        console.log("push notification engaged")
+    }
 
     useEffect(() => {
         PaperService.getPapersForCar(carId)
@@ -51,7 +57,7 @@ export default function PaperTable({
                         docs.map(paper =>
                             <tr key={paper.id}>
                                 <td>
-                                    <Button className="btn-warning">
+                                    <Button className="btn-warning" onClick={(e) => handleNotification()}>
                                         <i className="fa fa-bell"></i>
                                     </Button>
                                 </td>
@@ -61,15 +67,10 @@ export default function PaperTable({
                                 <td>{paper.companyName}</td>
                                 <td>{paper.period}</td>
                                 <td>{paper.cost}</td>
-
-
-
-                                {/* <td>{car.model}</td>
-                                <td>{car.brand}</td>
-                                <td>{car.vin}</td>
-                                <td>{car.year}</td>
-                                <td>{car.userId}</td> */}
-
+                                <td>{user.lastname} {user.firstname}</td>
+                                <td>{user.phone}</td>
+                                {/* todo show button for viewing paper page */}
+                                <td></td>
                             </tr>
                         )
                     }
@@ -79,10 +80,9 @@ export default function PaperTable({
     );
 };
 
-
-
 PaperTable.propTypes = {
     carId: PropTypes.string,
+    userId: PropTypes.string,
     history: PropTypes.object,
 };
 
