@@ -59,10 +59,18 @@ const updatePaper = (carId, type, data) => {
         });
 }
 
+const getPapersForCar = (car_id) => {
+    return Axios.get(`${getBasename()}/papers/car/${car_id}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+}
+
 export default {
     addPaper,
     addFormDataPaper,
     checkTypes,
     getData,
-    updatePaper
+    updatePaper,
+    getPapersForCar,
 };
