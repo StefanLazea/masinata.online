@@ -16,6 +16,13 @@ export default function GarageAddEditCard({
     ...restProps
 }) {
     const [garage, setGarage] = useState({});
+    const [adminId, setAdmin] = useState("");
+
+    const handleSelectChange = (e) => {
+        handleChange(e);
+        setAdmin(e.target.value);
+    }
+
     useEffect(() => {
         const getGarageDetails = () => {
             GarageService.getGarageById(garage_id)
@@ -66,8 +73,8 @@ export default function GarageAddEditCard({
                             </Col>
                             <AdminSelect
                                 name="Selecteaza adminstrator"
-                                defaultValue={garage.adminId}
-                                handleChange={e => handleChange(e)}
+                                defaultValue={garage.adminId ? garage.adminId : adminId}
+                                handleChange={e => handleSelectChange(e)}
                             />
                             <Col>
                                 <Row>
