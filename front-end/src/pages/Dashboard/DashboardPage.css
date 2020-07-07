@@ -2,3 +2,9 @@
     margin-right: 1%;
     margin-bottom: 1%;
 }
+
+.spinner-border {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5%;
+}

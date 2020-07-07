@@ -11,7 +11,8 @@ import {
   CardBody,
   CardTitle,
   Col,
-  Row
+  Row,
+  Spinner,
 } from 'reactstrap';
 import './DashboardPage.css';
 
@@ -25,10 +26,12 @@ export default class DashboardPage extends React.Component {
       isDeleteButtonClicked: false,
       redirectToAddCarPage: false,
       adminView: TokenService.checkAdmin(),
+      loading: true,
     }
   }
 
   getCars = () => {
+    this.setState({ loading: !this.state.loading });
     (!this.state.adminView ? CarsService.getAllCarsByUserId() : CarsService.getAllCarsByAdminId())
       .then((res) => {
         this.setState({ cars: res.data })
@@ -76,6 +79,11 @@ export default class DashboardPage extends React.Component {
         addCarButton={this.state.cars.length === 0 ? false : true}
         history={this.props.history}
       >
+        {this.state.loading ?
+          <Spinner color="primary" />
+          : null
+        }
+
         <Row>
           {this.state.cars.length > 0 ?
             this.state.cars.map(car =>
