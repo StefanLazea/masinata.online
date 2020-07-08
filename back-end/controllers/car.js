@@ -1,6 +1,7 @@
 const Car = require('../models').Car;
 const Garage = require('../models').Garage;
 const path = require("path");
+const Validator = require('../helpers/validation/car');
 
 const getCarsByUserId = async (req, res) => {
     let cars;
@@ -72,6 +73,11 @@ const createCar = async (req, res) => {
         garageId: req.body.garage_id,
     }
 
+    let error = Validator.validateCreation(car);
+    if (error) {
+        return res.status(400).send(error)
+    }
+
     try {
         await Car.create(car);
     } catch (err) {
@@ -134,6 +140,12 @@ const updateCarById = async (req, res) => {
         userId: req.body.userId,
         garageId: req.body.garageId,
     }
+
+    // let error = Validator.validateUserDetails(userDetails);
+    // if (error) {
+    //     return res.status(400).send(error)
+    // }
+
     try {
         await Car.update(
             car,

@@ -31,8 +31,8 @@ const navItems = [
 ];
 
 const navItemsAdmin = [
-  { to: '/tables', name: 'Tabele', exact: false, Icon: MdBorderAll },
-  { to: '/pending', name: 'Pending', exact: false, Icon: MdAddCircle },
+  { to: '/tables', name: 'Informaţii', exact: false, Icon: MdBorderAll },
+  { to: '/pending', name: 'Cereri', exact: false, Icon: MdAddCircle },
 ];
 
 const bem = bn.create('sidebar');
