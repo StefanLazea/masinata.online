@@ -18,7 +18,7 @@ let schemaCreation = Joi.object({
     }),
     pollution_grade: Joi.string().min(3).allow(''),
     avatar_photo: Joi.string().allow(''),
-    eco: Joi.boolean(),
+    eco: Joi.boolean().allow(null),
     userId: Joi.string(),
     garageId: Joi.string().allow(null),
 });

@@ -107,6 +107,21 @@ export default class CarProfile extends React.Component {
         this.setState({ notes: _.orderBy(this.state.notes, [e.target.value], ['desc']) })
     }
 
+    handleError = (e) => {
+        if (e.response !== undefined) {
+            console.log(e.response)
+            let errorMessage = e.response.data;
+            if (typeof errorMessage === 'object') {
+                for (let error of Object.values(errorMessage)) {
+                    toast(error);
+                }
+            } else {
+                toast(errorMessage);
+            }
+        }
+    }
+
+
     getCarById = () => {
         CarsService.getCarById(this.props.match.params.id)
             .then((res) => {
@@ -157,7 +172,7 @@ export default class CarProfile extends React.Component {
         CarsService.updateCar(this.props.match.params.id, this.state.car)
             .then((res) => { toast(res.data.message); })
             .catch((err) => {
-                toast("An error occurred, please try later!");
+                this.handleError(err);
                 if (err.response.status === 403) {
                     toast("Your session has expired. Please login!");
                     this.setState({ hasTokenExpired: true });
@@ -336,7 +351,12 @@ export default class CarProfile extends React.Component {
                                         adminView={this.state.adminView}
                                         count={0}
                                     />
-                                    : null
+                                    :
+                                    <GarageSelect
+                                        name={"Adauga la un garaj"}
+                                        handleChange={this.handleChange}
+                                        adminView={this.state.adminView}
+                                    />
                                 }
                             </CardBody>
                         </Card>
