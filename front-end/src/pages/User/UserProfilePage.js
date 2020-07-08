@@ -7,11 +7,8 @@ import {
   CardHeader,
   CardBody,
   Col,
-  InputGroup,
-  InputGroupAddon,
   Form,
   FormGroup,
-  FormText,
   Input,
   Label,
   Row,
@@ -21,9 +18,6 @@ import CarsService from '../../services/CarsService.js';
 import GarageService from '../../services/GarageService.js';
 import { Redirect } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index.es";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import './UserProfilePage.css';
 
 
@@ -31,7 +25,6 @@ export default class UserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPasswordShown: false,
       user: {
         firstname: '',
       },
@@ -55,10 +48,7 @@ export default class UserProfilePage extends React.Component {
   getCarsNumber = () => {
     CarsService.getAllCarsByUserId()
       .then((res) =>
-        this.setState({ numberOfCars: res.data.length }))
-      .catch((err) => {
-        toast("An error occurred, please try later!");
-      });
+        this.setState({ numberOfCars: res.data.length }));
   }
 
   getUserDetails = () => {
@@ -67,7 +57,6 @@ export default class UserProfilePage extends React.Component {
         this.setState({ user: res.data });
       })
       .catch((err) => {
-        console.log(err.response)
         if (err.response.status === 403) {
           toast("Your session has expired. Please login!");
           this.setState({ hasTokenExpired: true });
@@ -85,35 +74,41 @@ export default class UserProfilePage extends React.Component {
     UserProfileService.updateUserDetails(this.state.user)
       .then((res) => { toast(res.data.message); })
       .catch((err) => {
-        console.log(err.response)
-        toast("An error occurred, please try later!");
         if (err.response.status === 403) {
           toast("Your session has expired. Please login!");
           this.setState({ hasTokenExpired: true });
         }
+        this.handleError(err);
       });
   }
 
-  togglePasswordVisibility = () => {
-    const { isPasswordShown } = this.state;
-    this.setState({ isPasswordShown: !isPasswordShown });
-  };
+  handleError = (e) => {
+    if (e.response !== undefined) {
+      console.log(e.response)
+      let errorMessage = e.response.data;
+      if (typeof errorMessage === 'object') {
+        for (let error of Object.values(errorMessage)) {
+          toast(error);
+        }
+      } else {
+        toast(errorMessage);
+      }
+    }
+  }
 
   render() {
-    const { isPasswordShown } = this.state;
-
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
     }
 
     return (
-      <Page title="Profile" breadcrumbs={[{ name: 'Profile', active: true }]} >
+      <Page title="Profil" breadcrumbs={[{ name: 'Profil', active: true }]} >
         <Row>
           <Col xl={6} lg={12} md={12}>
             <Card id="userDetails">
               <CardHeader>
                 <Badge color="warning" pill className="float-right">
-                  Not fully completed
+                  Incomplet
                 </Badge>
                 <Badge color="success" pill className="float-right">
                   {this.state.user.role}
@@ -124,7 +119,7 @@ export default class UserProfilePage extends React.Component {
                   <FormGroup row>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="firstname">Firstname</Label>
+                        <Label for="firstname">Prenume</Label>
                         <Input
                           type="firstname"
                           name="firstname"
@@ -136,7 +131,7 @@ export default class UserProfilePage extends React.Component {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="lastname">Lastname</Label>
+                        <Label for="lastname">Nume</Label>
                         <Input
                           id="lastname"
                           type="lastname"
@@ -148,96 +143,59 @@ export default class UserProfilePage extends React.Component {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label for="exampleEmail" sm={2}>
-                      Email
-                  </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="email"
-                        name="email"
-                        defaultValue={this.state.user.email}
-                        onChange={this.handleChange}
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label for="examplePassword" sm={2}>
-                      Password
-                  </Label>
-                    <Col sm={10}>
-                      <InputGroup>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="email">Email</Label>
                         <Input
-                          data-toggle="password"
-                          type={(isPasswordShown) ? "text" : "password"}
-                          name="password"
-                          placeholder="password"
+                          type="text"
+                          name="email"
+                          id="email"
+                          defaultValue={this.state.user.email}
+                          onChange={this.handleChange}
                         />
-                        <InputGroupAddon addonType="append">
-                          <Button color="secondary" onClick={this.togglePasswordVisibility}>
-                            <FontAwesomeIcon icon={isPasswordShown ? faEye : faEyeSlash} />
-                          </Button>
-                        </InputGroupAddon>
-                      </InputGroup>
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="phone">Telefon</Label>
+                        <Input
+                          type="text"
+                          name="phone"
+                          id="phone"
+                          defaultValue={this.state.user.phone}
+                          onChange={this.handleChange}
+                        />
+                      </FormGroup>
                     </Col>
                   </FormGroup>
+
                   <FormGroup row>
-                    <Label for="phone" sm={2}>
-                      Phone
-                  </Label>
-                    <Col sm={10}>
-                      <Input
-                        type="text"
-                        name="phone"
-                        defaultValue={this.state.user.phone}
-                        onChange={this.handleChange} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label for="exampleFile" sm={2}>
-                      File
-                  </Label>
-                    <Col sm={10}>
-                      <Input type="file" name="file" />
-                      <FormText color="muted">
-                        This is some placeholder block-level help text for the
-                        above input. It's a bit lighter and easily wraps to a new
-                        line.
-                      </FormText>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label sm={2} for="exampleAddress">Address</Label>
+                    <Label sm={2} for="address">Adresa</Label>
                     <Col sm={10}>
                       <Input
                         type="text"
                         name="address"
-                        id="exampleAddress"
+                        id="address"
                         defaultValue={this.state.user.address}
                         onChange={this.handleChange} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Label sm={2} for="exampleAddress2">Address 2</Label>
-                    <Col sm={10}>
-                      <Input type="text" name="address2" id="exampleAddress2" placeholder="Apartment, studio, or floor" />
                     </Col>
                   </FormGroup>
                   <Row>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="exampleCity">City</Label>
+                        <Label for="exampleCity">Oras</Label>
                         <Input type="text" name="city" id="exampleCity" />
                       </FormGroup>
                     </Col>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for="exampleState">State</Label>
+                        <Label for="exampleState">Judet</Label>
                         <Input type="text" name="state" id="exampleState" />
                       </FormGroup>
                     </Col>
                     <Col md={2}>
                       <FormGroup>
-                        <Label for="exampleZip">Zip</Label>
+                        <Label for="exampleZip">Cod</Label>
                         <Input type="text" name="zip" id="exampleZip" />
                       </FormGroup>
                     </Col>

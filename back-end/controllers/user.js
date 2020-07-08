@@ -1,5 +1,6 @@
 const User = require("../models").User;
 const Role = require("../helpers/role");
+const Validator = require("../helpers/validation/user");
 
 const getDetailsById = async (req, res) => {
     let userDetails = await User.findOne({
@@ -28,8 +29,13 @@ const updateDetailsById = async (req, res) => {
         firstname: req.body.firstname,
         address: req.body.address,
         phone: req.body.phone,
-        secondAddress: req.body.second_address
     }
+
+    let error = Validator.validateUserDetails(userDetails);
+    if (error) {
+        return res.status(400).send(error)
+    }
+
     await User.update(
         userDetails,
         {

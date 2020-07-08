@@ -34,7 +34,7 @@ export default function Page({
         {breadcrumbs && (
           <Breadcrumb className={bem.e('breadcrumb')}>
             <BreadcrumbItem>Acasa</BreadcrumbItem>
-            {breadcrumbs.length &&
+            {breadcrumbs.length !== 0 &&
               breadcrumbs.map(({ name, active }, index) => (
                 <BreadcrumbItem key={index} active={active}>
                   {name}

@@ -12,6 +12,13 @@ let schema = Joi.object({
     companyName: isAdmin === true ? Joi.string().min(3) : Joi.string().allow('')
 });
 
+let userDetailsSchema = Joi.object({
+    lastname: Joi.string().alphanum().min(3).max(20).required(),
+    firstname: Joi.string().alphanum().min(3).max(20).required(),
+    address: Joi.string().min(3).required(),
+    phone: Joi.string().pattern(new RegExp('^[0-9]+$')).max(10).required()
+});
+
 let options = { abortEarly: false };
 
 const validateUser = (credentials, isPaperAdmin) => {
@@ -29,6 +36,21 @@ const validateUser = (credentials, isPaperAdmin) => {
     }
 }
 
+const validateUserDetails = (userDetails) => {
+    const { error, value } = userDetailsSchema.validate(userDetails, options);
+    let errors = {};
+    if (error) {
+        error.details.forEach((errorItem) => {
+            let message = errorItem.message;
+            key = message.split('"')[1];
+            message = message.split('"').join("");
+            errors[key] = message;
+        })
+        return errors;
+    }
+}
+
 module.exports = {
     validateUser,
+    validateUserDetails,
 }

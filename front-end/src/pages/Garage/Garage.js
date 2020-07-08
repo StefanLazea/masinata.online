@@ -144,8 +144,8 @@ export default class Garage extends React.Component {
         return (
             <Page
                 className="Garages"
-                title="Garage"
-                breadcrumbs={[{ name: 'Garage', active: true }]}
+                title="Garaje"
+                breadcrumbs={[{ name: 'Garaje', active: true }]}
                 addGarageButton={true}
                 addCarButton={true}
                 onClickCreateGarage={this.onClickCreateGarage}

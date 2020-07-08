@@ -24,14 +24,14 @@ const sidebarBackground = {
 };
 
 const navItems = [
-  { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/user-profile', name: 'Profile', exact: false, Icon: MdPerson },
-  { to: '/garages', name: 'Garages', exact: false, Icon: MdPerson },
+  { to: '/', name: 'Acasa', exact: true, Icon: MdDashboard },
+  { to: '/user-profile', name: 'Profil utilizator', exact: false, Icon: MdPerson },
+  { to: '/garages', name: 'Garaje', exact: false, Icon: MdPerson },
   { to: '/login', name: 'Logout', exact: false, Icon: MdExitToApp }
 ];
 
 const navItemsAdmin = [
-  { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
+  { to: '/tables', name: 'Tabele', exact: false, Icon: MdBorderAll },
   { to: '/pending', name: 'Pending', exact: false, Icon: MdAddCircle },
 ];
 

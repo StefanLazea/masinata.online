@@ -57,8 +57,11 @@ export default function PaperTable({
                         docs.map(paper =>
                             <tr key={paper.id}>
                                 <td>
-                                    <Button className="btn-warning" onClick={(e) => handleNotification()}>
+                                    <Button className="btn-warning disabled" onClick={(e) => handleNotification()}>
                                         <i className="fa fa-bell"></i>
+                                    </Button>
+                                    <Button className="btn-primary" onClick={(e) => handleNotification()}>
+                                        <i className="fa fa-envelope"></i>
                                     </Button>
                                 </td>
                                 <td>{paper.type}</td>
