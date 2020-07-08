@@ -25,7 +25,7 @@ let schemaCreation = Joi.object({
 
 let options = { abortEarly: false };
 
-const validateCreation = (form) => {
+const validateCar = (form) => {
     const { error, value } = schemaCreation.validate(form, options);
     let errors = {};
     if (error) {
@@ -39,21 +39,6 @@ const validateCreation = (form) => {
     }
 }
 
-const validateUpdate = (userDetails) => {
-    const { error, value } = userDetailsSchema.validate(userDetails, options);
-    let errors = {};
-    if (error) {
-        error.details.forEach((errorItem) => {
-            let message = errorItem.message;
-            key = message.split('"')[1];
-            message = message.split('"').join("");
-            errors[key] = message;
-        })
-        return errors;
-    }
-}
-
 module.exports = {
-    validateCreation,
-    validateUpdate,
+    validateCar,
 }

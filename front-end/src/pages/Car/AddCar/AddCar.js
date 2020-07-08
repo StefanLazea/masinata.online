@@ -46,6 +46,20 @@ export default class AddCar extends React.Component {
             });
     }
 
+    handleError = (e) => {
+        if (e.response !== undefined) {
+            console.log(e.response)
+            let errorMessage = e.response.data;
+            if (typeof errorMessage === 'object') {
+                for (let error of Object.values(errorMessage)) {
+                    toast(error);
+                }
+            } else {
+                toast(errorMessage);
+            }
+        }
+    }
+
     handleChange = async (e) => {
         const car = { ...this.state.car, [e.target.name]: e.target.value }
         await this.setState(() => ({ car }))
@@ -97,7 +111,7 @@ export default class AddCar extends React.Component {
                 })
                 .catch((err) => {
                     console.log(err)
-                    toast("An error occurred, please try later!");
+                    this.handleError(err);
                     if (err.response.status === 403) {
                         toast("Your session has expired. Please login!");
                         this.setState({ hasTokenExpired: true });

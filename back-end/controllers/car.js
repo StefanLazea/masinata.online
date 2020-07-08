@@ -73,7 +73,7 @@ const createCar = async (req, res) => {
         garageId: req.body.garage_id,
     }
 
-    let error = Validator.validateCreation(car);
+    let error = Validator.validateCar(car);
     if (error) {
         return res.status(400).send(error)
     }
@@ -141,10 +141,10 @@ const updateCarById = async (req, res) => {
         garageId: req.body.garageId,
     }
 
-    // let error = Validator.validateUserDetails(userDetails);
-    // if (error) {
-    //     return res.status(400).send(error)
-    // }
+    let error = Validator.validateCar(car);
+    if (error) {
+        return res.status(400).send(error)
+    }
 
     try {
         await Car.update(
