@@ -79,7 +79,7 @@ export default function CarDetailsCard({
                         </div>
                         <CardSubtitle>VIN {vin}</CardSubtitle>
                     </CardHeader>
-                    <CardImg src={`${getBasename()}/car/image/${car_id}`} alt="Card image cap" />
+                    <CardImg height="250px" src={`${getBasename()}/car/image/${car_id}`} alt="Card image cap" />
 
                     <CardBody>
                         <div className="d-flex align-items-center">
