@@ -17,6 +17,15 @@ export default function PaperTable({
     const [docs, setDocsPills] = useState([]);
     const [loading, setLoading] = useState(false);
     const [user, setUserDetails] = useState({});
+    const [adminDetails, setAdminDetails] = useState({});
+
+
+    useEffect(() => {
+        UserService.getUserDetails()
+            .then(res => {
+                setAdminDetails(res.data);
+            })
+    }, [])
 
     useEffect(() => {
         UserService.getUserDetailsById(userId)
@@ -32,8 +41,8 @@ export default function PaperTable({
             paperType: paper.type,
             lastname: user.lastname,
             licencePlate: car.licence_plate,
-            adminEmail: "lazea@gmail.com",
-            telephone: "stefan",
+            adminEmail: adminDetails.email,
+            telephone: adminDetails.phone,
         }
         setLoading(!loading);
         PaperService.notifyExpiration(body)
@@ -69,7 +78,7 @@ export default function PaperTable({
                         <th>Cost</th>
                         <th>Utilizator</th>
                         <th>Numar telefon</th>
-                        <th>Vizualizare detaliata</th>
+                        {/* <th>Vizualizare detaliata</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -93,7 +102,7 @@ export default function PaperTable({
                                 <td>{user.lastname} {user.firstname}</td>
                                 <td>{user.phone}</td>
                                 {/* todo show button for viewing paper page */}
-                                <td></td>
+                                {/* <td></td> */}
                             </tr>
                         )
                     }
