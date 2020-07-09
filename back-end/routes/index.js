@@ -19,6 +19,7 @@ router.use("/notes", authorize([Role.User, Role.Admin, Role.AppAdmin]), notesRou
 router.use("/papers", authorize([Role.User, Role.Admin, Role.AppAdmin]), papersRouter);
 
 router.post("/email/password", MailController.sendForgotPasswordEmail)
+router.post("/email/expiration", authorize([Role.Admin, Role.AppAdmin]), MailController.sendPaperExpirationEmail)
 
 router.get("/car/image/:id", CarController.getCarImage);
 router.get("/paper/:type/car/:id", PaperController.getPaperByTypeForCar);
