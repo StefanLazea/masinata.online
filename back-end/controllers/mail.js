@@ -18,7 +18,11 @@ const sendPaperExpirationEmail = (req, res) => {
     }
 
     if (body.email.length) {
-        MailService.sendExpirationMail(body)
+        MailService.sendExpirationMail(body).then(resp => {
+            if (resp) {
+                res.status(200).send({ message: resp });
+            }
+        });
     }
 }
 

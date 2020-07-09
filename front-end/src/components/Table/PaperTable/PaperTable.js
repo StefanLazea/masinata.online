@@ -5,18 +5,19 @@ import PaperService from '../../../services/PaperService.js';
 import UserService from '../../../services/UserProfileService.js';
 import Utils from '../../../services/Utils.js';
 import './PaperTable.css'
-
-// const getBasename = () => {
-//     return process.env.REACT_APP_BACK_END_URL;
-// };
+import { toast } from 'react-toastify';
+import { Spinner } from 'reactstrap';
 
 export default function PaperTable({
     carId,
     userId,
+    car,
     ...restProps
 }) {
     const [docs, setDocsPills] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [user, setUserDetails] = useState({});
+
     useEffect(() => {
         UserService.getUserDetailsById(userId)
             .then(res => {
@@ -24,8 +25,22 @@ export default function PaperTable({
             })
     }, [userId])
 
-    const handleNotification = () => {
-        console.log("push notification engaged")
+    const handleNotification = (e, paper) => {
+        e.preventDefault();
+        const body = {
+            email: user.email,
+            paperType: paper.type,
+            lastname: user.lastname,
+            licencePlate: car.licence_plate,
+            adminEmail: "lazea@gmail.com",
+            telephone: "stefan",
+        }
+        setLoading(!loading);
+        PaperService.notifyExpiration(body)
+            .then((res) => {
+                toast("Notificare trimisa");
+                setLoading(false);
+            });
     }
 
     useEffect(() => {
@@ -37,6 +52,11 @@ export default function PaperTable({
 
     return (
         <>
+            {
+                loading ?
+                    < Spinner color="primary" />
+                    : null
+            }
             <Table responsive>
                 <thead>
                     <tr>
@@ -60,7 +80,7 @@ export default function PaperTable({
                                     <Button className="btn-warning disabled" onClick={(e) => handleNotification()}>
                                         <i className="fa fa-bell"></i>
                                     </Button>
-                                    <Button className="btn-primary" onClick={(e) => handleNotification()}>
+                                    <Button className="btn-primary" onClick={(e) => handleNotification(e, paper)}>
                                         <i className="fa fa-envelope"></i>
                                     </Button>
                                 </td>

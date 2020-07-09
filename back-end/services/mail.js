@@ -88,8 +88,7 @@ const notifyExpirationMailTemplate = (mailProps) => {
     return mail;
 }
 
-const sendExpirationMail = (reqBody) => {
-    //todo get user lastname and generate token including name
+const sendExpirationMail = async (reqBody) => {
     let emailData = notifyExpirationMailTemplate(reqBody);
 
     const resetData = {
@@ -100,9 +99,12 @@ const sendExpirationMail = (reqBody) => {
         html: emailData
     }
 
-    mailgun.messages().send(resetData, function (error, body) {
-        console.log(body);
-    });
+    try {
+        let result = await mailgun.messages().send(resetData);
+        return result.message;
+    } catch (err) {
+        return false;
+    }
 }
 
 module.exports = {

@@ -13,6 +13,7 @@ let schema = Joi.object({
 });
 
 let userDetailsSchema = Joi.object({
+    email: Joi.string().email().required(),
     lastname: Joi.string().alphanum().min(3).max(20).required(),
     firstname: Joi.string().alphanum().min(3).max(20).required(),
     address: Joi.string().min(3).required(),

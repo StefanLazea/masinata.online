@@ -25,6 +25,7 @@ const getDetailsById = async (req, res) => {
 
 const updateDetailsById = async (req, res) => {
     userDetails = {
+        email: req.body.email,
         lastname: req.body.lastname,
         firstname: req.body.firstname,
         address: req.body.address,
