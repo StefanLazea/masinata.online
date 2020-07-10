@@ -9,6 +9,6 @@ router.post("/", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperControl
 router.put("/:type", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.updatePaper);
 router.get("/renew/:type/car/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.getPaperDetailsForCar);
 router.put("/renew/:type/car/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.renewPaper);
-router.delete("/:type/car/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.getPaperDetailsForCar);
+router.get("/:type/car/:id", authorize([Role.User, Role.Admin, Role.AppAdmin]), PaperController.getPaperDetailsForCar);
 
 module.exports = router;

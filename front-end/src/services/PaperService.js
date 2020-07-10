@@ -76,6 +76,15 @@ const notifyExpiration = (data) => {
         });
 };
 
+
+const getPaperDetailsForCar = (type, car_id) => {
+    return Axios.get(`${getBasename()}/papers/${type}/car/${car_id}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+}
+
+
 export default {
     addPaper,
     addFormDataPaper,
@@ -83,5 +92,6 @@ export default {
     getData,
     updatePaper,
     getPapersForCar,
-    notifyExpiration
+    notifyExpiration,
+    getPaperDetailsForCar
 };

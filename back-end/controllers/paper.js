@@ -94,20 +94,16 @@ const checkIfCarHasDocumentOfType = (documentType, id) => {
     }
 }
 
-//TODO
 const getPaperDetailsForCar = async (req, res) => {
-    let paper;
     try {
-        await Paper.findOne({
+        const paperFound = await await Paper.findOne({
             where: { type: req.params.type, carId: req.params.id }
-        }).then(
-            (paperFound) => { paper = paperFound });
+        });
+        return res.status(200).send(paperFound);
     }
     catch (err) {
         return res.status(404).send({ message: "Not found" });
     }
-
-    return res.status(200).send(papers);
 }
 
 const saveDocument = (file, specifiName) => {
