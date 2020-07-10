@@ -7,6 +7,7 @@ import {
   MdBorderAll,
   MdDashboard,
   MdPerson,
+  MdHome,
   MdAddCircle
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
@@ -26,7 +27,7 @@ const sidebarBackground = {
 const navItems = [
   { to: '/', name: 'Acasa', exact: true, Icon: MdDashboard },
   { to: '/user-profile', name: 'Profil utilizator', exact: false, Icon: MdPerson },
-  { to: '/garages', name: 'Garaje', exact: false, Icon: MdPerson },
+  { to: '/garages', name: 'Garaje', exact: false, Icon: MdHome },
   { to: '/login', name: 'Logout', exact: false, Icon: MdExitToApp }
 ];
 

@@ -46,7 +46,7 @@ export default class CarProfile extends React.Component {
             garage: {},
             renewDocumentButton: false,
             indexImageSelected: null,
-            imageTest: [],
+            papersImages: [],
             carId: '',
             notes: [],
             addNote: false,
@@ -62,7 +62,7 @@ export default class CarProfile extends React.Component {
                 for (let itemType in res.data) {
                     console.log(itemType)
                     if (res.data[itemType] === 1) {
-                        this.setState({ imageTest: [...this.state.imageTest, PapersService.getData(this.props.match.params.id)[i]] })
+                        this.setState({ papersImages: [...this.state.papersImages, PapersService.getData(this.props.match.params.id)[i]] })
                     }
                     i++;
                 }
@@ -144,22 +144,15 @@ export default class CarProfile extends React.Component {
                 this.setState({ garage: res.data.message });
             })
             .catch((err) => {
-                if (err.response.status === 403) {
-                    toast("Your session has expired. Please login!");
-                    this.setState({ hasTokenExpired: true });
-                }
+                console.log(err);
             });
     }
 
     getNotes = () => {
         NoteService.getAllNotes(this.props.match.params.id).then((res) => {
             this.setState({ notes: res.data });
-            // this.setState({ notes: _.orderBy(res.data, ['distance'], ['desc']) })
         }).catch((err) => {
-            if (err.response.status === 403) {
-                toast("Your session has expired. Please login!");
-                this.setState({ hasTokenExpired: true });
-            }
+            console.log(err)
         });
     }
 
@@ -194,8 +187,8 @@ export default class CarProfile extends React.Component {
         return (
             <Page
                 className="CarProfile"
-                title="Car Profile"
-                breadcrumbs={[{ name: 'Car Profile', active: true }]}>
+                title="Profil autovehicul"
+                breadcrumbs={[{ name: 'Profil', active: true }]}>
                 <Row>
                     <Col className="col-xs-12 col-sm-12 col-md-12">
                         <Card>
@@ -384,19 +377,27 @@ export default class CarProfile extends React.Component {
                                             : null
                                         }
                                         {this.state.renewDocumentButton ?
-                                            <Button id="renewPaper" className={this.state.adminView ? "btn-warning ml-auto" : "btn-warning"} onClick={this.redirectToRenewPage}>
+                                            <Button id="renewPaper"
+                                                className={this.state.adminView ? "btn-warning ml-auto" : "btn-warning"}
+                                                onClick={this.redirectToRenewPage}>
                                                 <i className="fa fa-pencil"></i>
                                             </Button>
 
                                             : null
                                         }
+
                                         <Badge color="success" className={this.state.adminView && !this.state.renewDocumentButton ? "badge-text-size ml-auto" : "badge-text-size"}> {this.state.car.vin}</Badge>
                                     </div>
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                {this.state.imageTest.length > 0 ?
-                                    < ImageGallery items={this.state.imageTest} onSlide={(index) => this.selectDocumentForRenew(index)} />
+                                {this.state.papersImages.length > 0 ?
+                                    <ImageGallery
+                                        ref={this.refImage}
+                                        items={this.state.papersImages}
+                                        // onSlide={(index) => this.selectDocumentForRenew(index)}
+                                        onClick={(e) => { console.log(e.target.src) }}
+                                    />
                                     : <h5>Nu sunt imagini</h5>
                                 }
                             </CardBody>
