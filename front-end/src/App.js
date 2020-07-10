@@ -56,8 +56,7 @@ class App extends React.Component {
               <Route exact path="/car-profile/:id" component={RequireAuth(CarProfilePage, ['user', 'app-admin', 'garage-admin'])} />
               <Route exact path="/garages" component={RequireAuth(Garage, ['user', 'app-admin', 'garage-admin'])} />
               <Route exact path="/add/car/:id/paper" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'garage-admin'])} />
-              <Route exact path="/renew/car/:id/paper/:type" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'garage-admin'])} />
-
+              <Route exact path="/renew/:type/car/:id" component={RequireAuth(AddEditPaper, ['user', 'app-admin', 'garage-admin'])} />
             </React.Suspense>
           </MainLayout>
           <Redirect to="/" />

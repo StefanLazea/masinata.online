@@ -84,6 +84,12 @@ const getPaperDetailsForCar = (type, car_id) => {
         });
 }
 
+const getPaperDetailsForCarCustom = (url) => {
+    return Axios.get(`${getBasename()}/papers/${url}`,
+        {
+            headers: { "Authorization": getToken() }
+        });
+}
 
 export default {
     addPaper,

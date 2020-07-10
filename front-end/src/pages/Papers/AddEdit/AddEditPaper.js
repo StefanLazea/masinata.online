@@ -14,6 +14,7 @@ import { Redirect } from "react-router-dom";
 import React from 'react';
 import { toast } from 'react-toastify';
 import PaperService from '../../../services/PaperService.js';
+import Utils from '../../../services/Utils.js';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import './AddEditPaper.css';
@@ -33,15 +34,17 @@ export default class AddEditPaper extends React.Component {
             endDate: undefined,
             renew: false,
             carId: '',
-            carType: '',
             redirectToCarProfile: false,
+            paperType: false,
         }
     }
 
     componentDidMount = async () => {
-        await this.setState({ carId: this.props.match.params.id })
-        await this.setState({ carType: this.props.match.params.type })
-        console.log(this.state.carId, this.state.carType)
+        let type = this.props.match.params.type;
+        if (type !== undefined) {
+            this.setState({ paperType: type });
+        }
+        this.setState({ carId: this.props.match.params.id })
     }
 
     handleBeginDateChange = async (day) => {
@@ -70,16 +73,15 @@ export default class AddEditPaper extends React.Component {
         })
     }
 
-    handleImagePreview = async (e) => {
-        toast("ura")
-        await this.setState({
+    handleImagePreview = (e) => {
+        this.setState({
             file: e.target.files[0],
         })
     }
 
-    handleCheckboxChange = async (e) => {
+    handleCheckboxChange = (e) => {
         const paper = { ...this.state.paper, [e.target.name]: e.target.checked }
-        await this.setState(() => ({ paper }))
+        this.setState(() => ({ paper }))
     }
 
     updatePaper = (formData) => {
@@ -93,25 +95,9 @@ export default class AddEditPaper extends React.Component {
             });
     }
 
-    createFormData = () => {
-        let formData = new FormData();
-        console.log(this.state.paper.renew)
-        formData.append('details', this.state.paper.details);
-        formData.append('type', this.state.paper.type);
-        formData.append('expirationDate', this.state.paper.expiration_date);
-        formData.append('beginDate', this.state.paper.begin_date);
-        formData.append('period', this.state.paper.period);
-        formData.append('cost', this.state.paper.cost);
-        formData.append('companyName', this.state.paper.companyName);
-        formData.append('document', this.state.file);
-        formData.append('renew', this.state.paper.renew === undefined ? false : this.state.paper.renew);
-        formData.append('car_id', this.props.match.params.id);
-        return formData;
-    }
-
     handleSubmit = (e) => {
         e.preventDefault();
-        let formData = this.createFormData();
+        let formData = Utils.createFormData(this.state.paper, this.state.file, this.props.match.params.id);
 
         if (this.state.file) {
             console.log(this.state.renew, formData.get('renew'))

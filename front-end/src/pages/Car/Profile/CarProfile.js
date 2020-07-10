@@ -52,6 +52,7 @@ export default class CarProfile extends React.Component {
             addNote: false,
             filterNotes: '',
             adminView: TokenService.checkAdmin(),
+            selectedPaperType: '',
         };
     }
 
@@ -89,12 +90,18 @@ export default class CarProfile extends React.Component {
     }
 
     redirectToRenewPage = () => {
-        let selectedDocumentType = this.state.images[this.state.indexImageSelected].thumbnailLabel;
-        this.props.history.push(`/renew/car/${this.props.match.params.id}/paper/${selectedDocumentType}`)
+        console.log(this.state.selectedPaperType)
+        this.props.history.push(`/renew/${this.state.selectedPaperType}/car/${this.props.match.params.id}`)
     }
 
     redirectToAddPaper = () => {
         this.props.history.push(`/add/car/${this.state.car.id}/paper`)
+    }
+
+    redirectToEditPage = (e) => {
+        const type = e.target.src.split('/')[5];
+        this.setState({ renewDocumentButton: true });
+        this.setState({ selectedPaperType: type });
     }
 
     handleChange = async (e) => {
@@ -120,7 +127,6 @@ export default class CarProfile extends React.Component {
             }
         }
     }
-
 
     getCarById = () => {
         CarsService.getCarById(this.props.match.params.id)
@@ -171,12 +177,6 @@ export default class CarProfile extends React.Component {
                     this.setState({ hasTokenExpired: true });
                 }
             });
-    }
-
-    selectDocumentForRenew = (index) => {
-        this.setState({ renewDocumentButton: true });
-        this.setState({ indexImageSelected: index });
-        console.log(this.state.indexImageSelected, this.state.renewDocumentButton)
     }
 
     render() {
@@ -396,7 +396,7 @@ export default class CarProfile extends React.Component {
                                         ref={this.refImage}
                                         items={this.state.papersImages}
                                         // onSlide={(index) => this.selectDocumentForRenew(index)}
-                                        onClick={(e) => { console.log(e.target.src) }}
+                                        onClick={(e) => { this.redirectToEditPage(e) }}
                                     />
                                     : <h5>Nu sunt imagini</h5>
                                 }
