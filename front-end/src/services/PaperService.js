@@ -99,5 +99,6 @@ export default {
     updatePaper,
     getPapersForCar,
     notifyExpiration,
-    getPaperDetailsForCar
+    getPaperDetailsForCar,
+    getPaperDetailsForCarCustom
 };

@@ -35,7 +35,7 @@ export default class AddEditPaper extends React.Component {
             renew: false,
             carId: '',
             redirectToCarProfile: false,
-            paperType: false,
+            paperType: "",
         }
     }
 
@@ -44,7 +44,10 @@ export default class AddEditPaper extends React.Component {
         if (type !== undefined) {
             this.setState({ paperType: type });
         }
-        this.setState({ carId: this.props.match.params.id })
+        this.setState({ carId: this.props.match.params.id }, () => {
+            this.getPaperForRenew();
+        })
+
     }
 
     handleBeginDateChange = async (day) => {
@@ -95,12 +98,16 @@ export default class AddEditPaper extends React.Component {
             });
     }
 
+    getPaperForRenew = () => {
+        PaperService.getPaperDetailsForCar(this.state.paperType, this.state.carId)
+            .then((res) => console.log(res.data))
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         let formData = Utils.createFormData(this.state.paper, this.state.file, this.props.match.params.id);
 
         if (this.state.file) {
-            console.log(this.state.renew, formData.get('renew'))
             if (this.state.paper.renew) {
                 this.updatePaper(formData);
             } else {
@@ -139,8 +146,8 @@ export default class AddEditPaper extends React.Component {
         return (
             <Page
                 className="AddPaper"
-                title="Adaugare document"
-                breadcrumbs={[{ name: 'Adaugare document', active: true }]}>
+                title={this.state.paperType ? `Modificare document ${this.state.paperType}` : "Adaugare document"}
+                breadcrumbs={[{ name: 'Document', active: true }]}>
 
                 <Row>
                     <Col className="col-xs-12 col-sm-12 col-md-12">
@@ -174,11 +181,14 @@ export default class AddEditPaper extends React.Component {
 
                                             <Row>
                                                 <Col sm={10}>
-                                                    <Input type="file" name="file" onChange={(e) => {
-                                                        this.handleImagePreview(e);
-                                                        this.handleChangeFile(e);
-                                                    }
-                                                    } />
+                                                    <Input
+                                                        type="file"
+                                                        name="file"
+                                                        onChange={(e) => {
+                                                            this.handleImagePreview(e);
+                                                            this.handleChangeFile(e);
+                                                        }}
+                                                    />
                                                     <FormText color="muted">
                                                         Adauga fotografia principala pe care vrei sa o afisam in profilul
                                                         masinii tale.
