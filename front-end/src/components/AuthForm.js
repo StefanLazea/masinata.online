@@ -188,24 +188,26 @@ class AuthForm extends React.Component {
           : null
         }
         <Row>
-          <Col style={{ 'margin-left': '10px' }}>
+          <Col style={{ 'margin-left': '5px' }}>
             <Label check>
               <Input type="checkbox" />{' '}
               {this.isSignup ? 'Accept termenii si conditiile' : 'Remember me'}
             </Label>
           </Col>
-          <Col className="d-flex align-items-center">
-            <Button
-              color="link"
-              style={{ 'padding': '0' }}
-              className="ml-auto"
-              onClick={(e) => this.handleForgotPassword(e)}
-            >
-              Am uitat parola
+          {this.isLogin ?
+            <Col className="d-flex align-items-center">
+              <Button
+                color="link"
+                style={{ 'padding': '0' }}
+                className="ml-auto"
+                onClick={(e) => this.handleForgotPassword(e)}
+              >
+                Am uitat parola
             </Button>
-          </Col>
+            </Col>
+            : null
+          }
         </Row>
-
 
         <hr />
         <Button
