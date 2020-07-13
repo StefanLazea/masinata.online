@@ -91,10 +91,20 @@ const getAdminDetailsById = async (req, res) => {
     return res.status(400).send({ "message": "Something went wrong with the data recieved." })
 }
 
+
+const deleteUser = async (req, res) => {
+    let userFound = await User.findByPk(req.params.id);
+    if (!userFound) {
+        return res.status(404).send({ message: "User not found" });
+    }
+    await userFound.destroy().then(() => { return res.send({ message: "User deleted" }) });
+}
+
 module.exports = {
     getDetailsById,
     updateDetailsById,
     getAllUsersData,
     getAllAdmins,
     getAdminDetailsById,
+    deleteUser
 }

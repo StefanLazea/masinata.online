@@ -35,10 +35,17 @@ const getAdminDetails = (id) => {
     });
 }
 
+const deleteUser = () => {
+    return Axios.delete(`${getBasename()}/user/${getUserId()}`, {
+        headers: { "Authorization": getToken() }
+    });
+}
+
 module.exports = {
     getUserDetails,
     updateUserDetails,
     getAllPaperAdmins,
     getAdminDetails,
-    getUserDetailsById
+    getUserDetailsById,
+    deleteUser
 };

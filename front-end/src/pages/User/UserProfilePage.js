@@ -96,6 +96,15 @@ export default class UserProfilePage extends React.Component {
     }
   }
 
+  deleteUser = (e) => {
+    e.preventDefault();
+    UserProfileService.deleteUser()
+      .then((res) => {
+        toast(res.data.message);
+        this.setState({ hasTokenExpired: true });
+      }).catch((err) => { console.log(err) })
+  }
+
   render() {
     if (this.state.hasTokenExpired === true) {
       return <Redirect to="/login" />
@@ -107,6 +116,11 @@ export default class UserProfilePage extends React.Component {
           <Col xl={6} lg={12} md={12}>
             <Card id="userDetails">
               <CardHeader>
+                <Button
+                  className="ml-auto btn-danger"
+                  onClick={(e) => this.deleteUser(e)}
+                ><i className="fa fa-trash"></i>
+                </Button>
                 <Badge color="warning" pill className="float-right">
                   Incomplet
                 </Badge>
@@ -229,12 +243,11 @@ export default class UserProfilePage extends React.Component {
                 <div id="userEmail" className="d-flex align-items-center">
                   <Label className="mx-auto">{this.state.user.email}</Label>
                 </div>
-
               </CardBody>
             </Card>
           </Col>
 
-        </Row>
+        </Row >
       </Page >
     );
 
