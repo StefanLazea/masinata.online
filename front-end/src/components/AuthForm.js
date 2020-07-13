@@ -1,7 +1,7 @@
 import logo200Image from '../assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Row, Col } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { Redirect } from "react-router-dom";
 import AuthService from '../services/AuthService.js';
@@ -57,6 +57,10 @@ class AuthForm extends React.Component {
         toast(errorMessage);
       }
     }
+  }
+
+  handleForgotPassword = (e) => {
+
   }
 
   handleSubmit = event => {
@@ -183,12 +187,26 @@ class AuthForm extends React.Component {
           </div>
           : null
         }
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" />{' '}
-            {this.isSignup ? 'Accept termenii si conditiile' : 'Remember me'}
-          </Label>
-        </FormGroup>
+        <Row>
+          <Col style={{ 'margin-left': '10px' }}>
+            <Label check>
+              <Input type="checkbox" />{' '}
+              {this.isSignup ? 'Accept termenii si conditiile' : 'Remember me'}
+            </Label>
+          </Col>
+          <Col className="d-flex align-items-center">
+            <Button
+              color="link"
+              style={{ 'padding': '0' }}
+              className="ml-auto"
+              onClick={(e) => this.handleForgotPassword(e)}
+            >
+              Am uitat parola
+            </Button>
+          </Col>
+        </Row>
+
+
         <hr />
         <Button
           size="lg"
@@ -214,7 +232,7 @@ class AuthForm extends React.Component {
         </div>
 
         {children}
-      </Form>
+      </Form >
     );
   }
 }
