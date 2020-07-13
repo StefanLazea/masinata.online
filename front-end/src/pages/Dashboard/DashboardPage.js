@@ -104,7 +104,10 @@ export default class DashboardPage extends React.Component {
                 <Card>
                   <CardBody className="text-center">
                     <CardTitle>Nu exista nici o masina!</CardTitle>
-                    <Button className="btn-success" onClick={(e) => this.setState({ redirectToAddCarPage: true })} >Adauga masina</Button>
+                    {this.state.adminView ?
+                      null :
+                      <Button className="btn-success" onClick={(e) => this.setState({ redirectToAddCarPage: true })} >Adauga masina</Button>
+                    }
                   </CardBody>
                 </Card>
               </div>

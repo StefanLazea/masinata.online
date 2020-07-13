@@ -19,7 +19,7 @@ const register = async (res, credentials, isPaperAdmin) => {
     let user = {
         email: credentials.email,
         password: ePassword,
-        role: isPaperAdmin ? Role.Admin : Role.User,
+        role: isPaperAdmin ? Role.AppAdmin : Role.User,
         company_name: credentials.companyName
     }
 

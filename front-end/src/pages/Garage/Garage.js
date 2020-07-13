@@ -34,7 +34,6 @@ export default class Garage extends React.Component {
     componentDidMount() {
         this._isMounted = true;
         this.getUserGarages();
-        console.log(this.state.adminView)
     }
 
     handleChange = async (e) => {
@@ -193,7 +192,10 @@ export default class Garage extends React.Component {
                                 <Card>
                                     <CardBody className="text-center">
                                         <CardTitle>Nu exista nici un garaj!</CardTitle>
-                                        <Button className="btn-success" onClick={(e) => this.setState({ displayCreateGarageCard: true })} >Adauga un garaj</Button>
+                                        {this.state.adminView ?
+                                            null :
+                                            < Button className="btn-success" onClick={(e) => this.setState({ displayCreateGarageCard: true })} >Adauga un garaj</Button>
+                                        }
                                     </CardBody>
                                 </Card>
                             </div>
@@ -201,7 +203,7 @@ export default class Garage extends React.Component {
                     }
                 </Row>
 
-            </Page>
+            </Page >
         );
     }
 }
