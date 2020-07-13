@@ -17,7 +17,7 @@ const generateResetPasswordContent = function (mailProps) {
         '</table>' +
         '<table style="padding: 10px;font-size:14px; width:100%;"><tr>' +
         '<td style="padding:10px;font-size:14px; width:100%;">' +
-        '<p>Hi,' + mailProps.lastname + '</p>' +
+        '<p>Salut, ' + mailProps.email + '</p>' +
         '<p><br /> Ai cerut resetarea parolei. Pentru a face lucrul acesta, apasa pe urmatorul link:</p>' +
         '<p><a href="' + mailProps.url + 'style="color:blue;font-size:12px;">' + mailProps.url + '</p>' +
         '<p>Link-ul expira intr-o ora.</p><p> </p><p>Multumim,</p><p>Echipa MasinaMea.online</p></td></tr>' +
@@ -42,22 +42,24 @@ const sendRegistrationEmail = (email) => {
     });
 }
 
-const sendRenewPassword = (email) => {
-    //todo get user lastname and generate token including name
-    let data = { lastname: 'stefan', url: 'https://masinamea.online' }
+const sendRenewPassword = async (body) => {
+    let data = { email: body, url: 'https://masinamea.online' }
     let emailData = generateResetPasswordContent(data);
 
     const resetData = {
         from: "lazeastefan97@gmail.com",
-        to: email,
+        to: data.email,
         subject: "Reset password",
         test: JSON.stringify(data),
         html: emailData
     }
 
-    mailgun.messages().send(resetData, function (error, body) {
-        console.log(body);
-    });
+    try {
+        let result = await mailgun.messages().send(resetData);
+        return result.message;
+    } catch (err) {
+        return false;
+    }
 }
 
 const notifyExpirationMailTemplate = (mailProps) => {

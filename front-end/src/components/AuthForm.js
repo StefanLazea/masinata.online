@@ -60,7 +60,14 @@ class AuthForm extends React.Component {
   }
 
   handleForgotPassword = (e) => {
+    if (this.state.email === " ") {
+      toast("Pentru resetare este necesara introducerea email-ului")
+    }
 
+    AuthService.resetPassword({ email: this.state.email })
+      .then((res) => {
+        toast("A fost trimis un mail pentru resetarea parolei")
+      });
   }
 
   handleSubmit = event => {
@@ -188,7 +195,7 @@ class AuthForm extends React.Component {
           : null
         }
         <Row>
-          <Col style={{ 'margin-left': '5px' }}>
+          <Col style={{ marginLeft: '5px' }}>
             <Label check>
               <Input type="checkbox" />{' '}
               {this.isSignup ? 'Accept termenii si conditiile' : 'Remember me'}

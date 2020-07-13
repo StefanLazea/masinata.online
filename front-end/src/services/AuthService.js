@@ -19,8 +19,16 @@ const login = (form) => {
         })
 };
 
+const resetPassword = (form) => {
+    return Axios.post(`${getBasename()}/email/reset-password`, JSON.stringify(form),
+        {
+            headers: { "Content-Type": "application/json" }
+        });
+};
+
 module.exports = {
     register,
-    login
+    login,
+    resetPassword
 }
 

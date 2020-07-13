@@ -2,9 +2,12 @@ const MailService = require('../services/mail');
 
 const sendForgotPasswordEmail = async (req, res) => {
     const email = req.body.email;
-    if (email.length) {
-        MailService.sendRenewPassword(req.body.email)
-    }
+
+    MailService.sendRenewPassword(email).then(resp => {
+        if (resp) {
+            res.status(200).send({ message: resp });
+        }
+    });
 }
 
 const sendPaperExpirationEmail = (req, res) => {
