@@ -1,5 +1,6 @@
 # licenta
 
+App's purpose is to keep track of personal cars details, like: car details, papers details (in Romania the tehnical inspection, the insurance, tax road), notes about the state of the car. Cars can be gather into garages.
 
 ## Build on production for SW to work
 - install serve: ```npm i serve -g```
