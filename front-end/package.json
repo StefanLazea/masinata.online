@@ -6,15 +6,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
-<<<<<<< HEAD
     "axios": "^0.24.0",
     "bootstrap": "4.3.1",
     "chart.js": "^2.9.4",
-=======
-    "axios": "^0.21.1",
-    "bootstrap": "4.3.1",
-    "chart.js": "2.9.4",
->>>>>>> df929b74f9ebe9850da6eab02e915116f35441c2
     "classnames": "^2.2.6",
     "d3-geo": "^1.11.3",
     "faker": "^4.1.0",
